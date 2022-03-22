@@ -13,9 +13,9 @@ module allocator_separable #(
   // Standard
   input wire                 clk,
   input wire                 reset,
-  // NUM_RESS requests for each requestor (out of NUM_REQS)
+  // 'NUM_RESS' requests for each requestor (out of NUM_REQS)
   input wire  [NUM_RESS-1:0] requests[NUM_REQS-1:0],
-  // NUM_REQS grants for each resource (out of NUM_RESS)
+  // 'NUM_REQS' grants for each resource (out of NUM_RESS)
   output wire [NUM_REQS-1:0] grants[NUM_RESS-1:0]
 );
 
