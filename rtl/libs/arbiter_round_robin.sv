@@ -8,8 +8,7 @@
 
 module arbiter_round_robin #(
     parameter NUM_REQS = 4
-)
-(
+) (
     // Standard inputs
     input     clk, reset,
     // Requests signal
