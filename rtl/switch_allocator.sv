@@ -7,6 +7,7 @@
 module switch_allocator #(
     parameter NUM_PORTS = 4
 ) (
+    input logic clk, reset,
     input logic [NUM_PORTS-1:0]  port_requests[NUM_PORTS-1:0],
     output logic [NUM_PORTS-1:0] allocated_ports[NUM_PORTS-1:0]
 );
