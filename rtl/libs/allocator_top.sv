@@ -16,7 +16,7 @@ module allocator_top #(
 );
     if (`ALLOCATOR_TYPE == `WAVEFRONT_ALLOCATOR) begin
         allocator_wavefront #(
-            .NUM_REQS(NUM_REQS)
+            .NUM_REQS(NUM_REQS),
             .NUM_RESS(NUM_RESS)
         ) allocator (
             .clk(clk),
@@ -27,7 +27,7 @@ module allocator_top #(
     end
     else begin
         allocator_separable #(
-            .NUM_REQS(NUM_REQS)
+            .NUM_REQS(NUM_REQS),
             .NUM_RESS(NUM_RESS)
         ) allocator (
             .clk(clk),
