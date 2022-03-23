@@ -24,7 +24,7 @@ module arbiter_top #(
             .grants(grants)
         );
     end
-    else
+    else begin
         arbiter_matrix #(
             .NUM_REQS(NUM_REQS)
         ) arbiter (
