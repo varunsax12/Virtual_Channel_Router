@@ -14,9 +14,9 @@ module select_vc #(
     // Standard inputs
     input logic clk, reset,
     // Out direction of each VC
-    input logic [PORT_BITS-1:0] vc_direction [NUM_VC-1:0],
+    input logic [NUM_PORTS-1:0] vc_direction [NUM_VC-1:0],
     // Selected direction for this input port
-    input logic [PORT_BITS-1:0] sel_direction,
+    input logic [NUM_PORTS-1:0] sel_direction,
     // Index of VC to dispatch
     output logic [VC_BITS-1:0]  vc_index
 );
