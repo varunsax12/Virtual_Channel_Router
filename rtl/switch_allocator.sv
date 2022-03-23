@@ -1,5 +1,8 @@
 // Description: Module for the switch allocator.
 // Inputs: Which output ports do all VCs in the input port ask for
+// File Details
+//    Author: Varun Saxena
+//    GT id: 903562211
 
 module switch_allocator #(
     parameter NUM_PORTS = 4
