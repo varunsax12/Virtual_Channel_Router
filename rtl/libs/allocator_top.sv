@@ -4,7 +4,7 @@
 
 module allocator_top #(
   parameter NUM_REQS = 4,
-  parameter NUM_RESS = 4
+  parameter NUM_RESS = NUM_REQS
 ) (
     // Standard
     input wire                 clk,
