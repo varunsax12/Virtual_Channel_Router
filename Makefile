@@ -26,8 +26,8 @@ all:    simv
 # Modify starting here
 #####
 
-TESTBENCH = 	testbench/tb_arbiter_round_robin.sv	 
-SIMFILES =	arbiter_round_robin.sv	
+TESTBENCH = 	testbench/tb_vc_req_2_port_req.sv	 
+SIMFILES =	rtl/libs/arbiter_round_robin.sv	rtl/vc_req_2_port_req.sv
 SYNFILES = synth/pipeline.vg
 
 # For visual debugger
