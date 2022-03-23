@@ -19,4 +19,10 @@
 // Switch to indicate whether to arbiter in select_vc or encoder
 `define SELECT_VC_ARBITRATE   0
 
+// Direction encoding
+`define NORTH   2'b00
+`define SOUTH   2'b01
+`define EAST    2'b10
+`define WEST    2'b11
+
 `endif

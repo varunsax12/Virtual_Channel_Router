@@ -26,9 +26,9 @@ all:    simv
 # Modify starting here
 #####
 
-TESTBENCH = 	testbench/tb_select_vc.sv
-SIMFILES =	rtl/libs/*.sv	rtl/vc_req_2_port_req.sv \
-	rtl/select_vc.sv VR_define.vh
+TESTBENCH = 	testbench/tb_route_compute.sv
+SIMFILES =	rtl/libs/*.sv	rtl/*.sv \
+	VR_define.vh
 SYNFILES = synth/pipeline.vg
 
 # For visual debugger

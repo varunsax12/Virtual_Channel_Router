@@ -12,7 +12,7 @@ module switch_allocator #(
 );
 
     allocator_top #(
-        .NUM_REQS(NUM_PORTS),
+        .NUM_REQS(NUM_PORTS)
     ) sw_alloc (
         .clk(clk),
         .reset(reset),
