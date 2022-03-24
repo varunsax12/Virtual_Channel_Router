@@ -15,3 +15,4 @@ ECE 6115: Project of configurable virtual channel router
 1. Buffer management (optional)
 2. Integration buffers
 3. Integration top
+4. Evaluate VC/buffer turnaround time
