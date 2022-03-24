@@ -26,6 +26,7 @@ all:    simv
 # Modify starting here
 #####
 
+#TESTBENCH = 	testbench/libs/tb_allocator_wavefront.sv
 TESTBENCH = 	testbench/tb_router_top.sv
 SIMFILES =	rtl/libs/*.sv	rtl/*.sv \
 	VR_define.vh

@@ -11,18 +11,22 @@
 `define WAVEFRONT_ALLOCATOR   2
 
 // Arbiter selection switch
-`define ARBITER_TYPE          1
+`define ARBITER_TYPE          2
 
 // Allocator select switch
-`define ALLOCATOR_TYPE        1
+`define ALLOCATOR_TYPE        2
 
 // Switch to indicate whether to arbiter in select_vc or encoder
 `define SELECT_VC_ARBITRATE   0
 
+// Flit data width
+`define FLIT_DATA_WIDTH       32
+
 // Direction encoding
-`define NORTH   2'b00
-`define SOUTH   2'b01
-`define EAST    2'b10
-`define WEST    2'b11
+`define NORTH   3'b000
+`define SOUTH   3'b001
+`define EAST    3'b010
+`define WEST    3'b011
+`define EJECT   3'b100
 
 `endif

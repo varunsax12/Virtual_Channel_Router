@@ -33,7 +33,7 @@ module tb_arbiter_round_robin();
         $display("here.......");
         @(negedge clk); reset = 1;
         @(negedge clk); reset = 0;
-        requests = 12;
+        requests = 1;
 
         #200;
         $finish;

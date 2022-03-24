@@ -40,7 +40,7 @@ module arbiter_matrix #(
 
     // Update Policy
     always @(posedge clk) begin
-        if(!reset) begin
+        if(reset) begin
             // Reset matrix with preference for 0 over all, 1 over 2+, 2 over 3+
             foreach(weight_mat[m]) begin
                 foreach(weight_mat[m][n]) begin

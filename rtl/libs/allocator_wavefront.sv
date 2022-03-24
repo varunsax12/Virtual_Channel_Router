@@ -43,6 +43,7 @@ module allocator_wavefront #(
             .data(requests[i]),
             .out_data(local_requests[i])
         );
+
         one_hot_rotate #(
             .NUM_PORTS(NUM_PORTS),
             .SHIFT_LEFT(1)
@@ -52,13 +53,11 @@ module allocator_wavefront #(
             .out_data(grants[i])
         );
     end
-    //assign grants = local_grants;
-    //assign local_requests = requests;
 
     array_wavefront #(
         .NUM_PORTS(NUM_PORTS)
     ) arr_wv (
-        .g_priority(g_priority),
+        .g_priority(NUM_PORTS'(1'b1)),
         .requests(local_requests),
         .grants(local_grants)
     );
@@ -124,20 +123,40 @@ module priority_block_wv #(
 
     reg [NUM_PORTS-1:0] g_priority_state;
 
-    logic [NUM_PORTS-1:0] local_or;
+    // Calculate wave of grants across the diagonals
+    logic [NUM_PORTS-1:0]   diagonal_grants_ordered [NUM_PORTS-1:0];
+    logic [NUM_PORTS-1:0]   diagonal_grants;
+    // Idea: For each diagonal, we cannot do a for loop OR operation
+    // as it would create a combinatorial loop.
+    // So, for each diagonal, first populate the ordered array based
+    // on the column for (i+j)%NUM_PORT element. 
+    // Then take the OR of each ordered element. This will avoid loops
     for (genvar i = 0; i < NUM_PORTS; ++i) begin
-        assign local_or[i] = |grants[i];
+        for (genvar j = 0; j < NUM_PORTS; ++j) begin
+            assign diagonal_grants_ordered[(i+j)%NUM_PORTS][j] = grants[i][j];
+        end
     end
-    logic global_or;
-    assign global_or = |local_or;
+    // Reduce ordered array into single
+    for (genvar i = 0; i < NUM_PORTS; ++i) begin
+        assign diagonal_grants[i] = |diagonal_grants_ordered[i];
+    end
+    
+    logic [NUM_PORTS-1:0] arb_priority_grants;
+    arbiter_top #(
+        .NUM_REQS(NUM_PORTS)
+    ) wv_priority (
+        .clk(clk),
+        .reset(reset),
+        .requests(diagonal_grants),
+        // Grant/g_priority calculated
+        .grants(arb_priority_grants)
+    );
 
     always @(posedge clk) begin
         if (reset)
             g_priority_state <= 1;
         else begin
-            //if (|global_or)
-                g_priority_state <= {g_priority_state[NUM_PORTS-2:0], g_priority_state[NUM_PORTS-1]};
-            // else latch the old g_priority again 
+            g_priority_state <= {arb_priority_grants[NUM_PORTS-2:0], arb_priority_grants[NUM_PORTS-1]};
         end
     end
 
@@ -178,7 +197,7 @@ module array_wavefront #(
         for (genvar j = 0; j < NUM_PORTS; ++j) begin
             logic x_in, y_in;
             // conditional for diagonal handling
-            if ((i+j)%NUM_PORTS == 0 && i != 0 &&  j != 0) begin
+            if ((i+j)%NUM_PORTS != 0) begin
                 assign x_in = x[i][j];
                 assign y_in = y[i][j];
             end
