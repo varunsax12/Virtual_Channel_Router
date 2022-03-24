@@ -13,16 +13,65 @@ module router_top #(
     parameter PORT_BITS = $clog2(NUM_PORTS),
     parameter VC_BITS = $clog2(NUM_VC)
 ) (
+    // Standard signals
     input  logic   clk, reset,
+
+    // Input flits
+    input logic    [`FLIT_DATA_WIDTH-1:0] input_data [NUM_PORTS-1:0],
+    input logic    [NUM_PORTS-1:0]        input_valid,
+
     input  logic   [NUM_VC*NUM_PORTS-1:0] vc_availability,
-    output logic   [VC_BITS-1:0]          vc_index [NUM_PORTS-1:0],
-    output logic   [NUM_PORTS-1:0]        vc_read_valid
+
+    // Router output
+    output logic [`FLIT_DATA_WIDTH-1:0] out_data [NUM_PORTS-1:0],
+    output logic [NUM_PORTS-1:0]        out_valid
 );
 
     /************************************
     *          VC                       *
     ************************************/
-    reg [`FLIT_DATA_WIDTH-1:0]      vc_buffer [NUM_PORTS-1:0][NUM_VC-1:0];
+    // VC buffers
+    reg [`FLIT_DATA_WIDTH-1:0]        vc_buffer [NUM_PORTS-1:0][NUM_VC-1:0];
+    // Valid signal (also used as empty signal using bitwise not)
+    reg  [NUM_VC-1:0]                 vc_valid  [NUM_PORTS-1:0];
+    wire [NUM_VC-1:0]                 vc_empty  [NUM_PORTS-1:0];
+
+    // Generate empty signals
+    for (genvar i = 0; i < NUM_PORTS; ++i) begin
+        assign vc_empty[i] = ~vc_valid[i];
+    end
+
+    // Keep a track of the first empty VC per PORT
+    logic [VC_BITS-1:0]   empty_vc_index [NUM_PORTS-1:0];
+    for (genvar i = 0; i < NUM_PORTS; ++i) begin
+        priority_encoder #(
+            .NUM_INPUTS(NUM_VC)
+        ) empty_vc_encoder (
+            .in_signals(vc_empty[i]),
+            .out_index(empty_vc_index[i])
+        );
+    end
+
+
+    /************************************
+    *          Buffer write             *
+    ************************************/
+    for (genvar i = 0; i < NUM_PORTS; ++i) begin
+        always @(posedge clk) begin
+            if (reset) begin
+                // Clear the VCs
+                vc_valid[i] <= 0;
+            end
+            // assign the incoming flits to the correct buffers
+            else begin
+                if (input_valid[i]) begin
+                    // Write the input flit data
+                    vc_buffer[i][empty_vc_index[i]] <= input_data[i];
+                    vc_valid[i][empty_vc_index[i]] <= 1;
+                end
+            end
+        end
+    end
 
 
     /************************************
@@ -53,7 +102,7 @@ module router_top #(
                 .index(vc_direction),
                 .out_one_hot(one_hot_direction)
             );
-            assign dst_port[i*NUM_VC+j] = one_hot_direction[NUM_PORTS-1:0];
+            assign dst_port[i*NUM_VC+j] = vc_valid[i][j] ? one_hot_direction[NUM_PORTS-1:0] : 0;
         end
     end
 
@@ -111,6 +160,12 @@ module router_top #(
     /************************************
     *       Buffer read                 *
     ************************************/
+    // To denote if the data from a port is being read (based on allocation)
+    logic   [NUM_PORTS-1:0]        vc_read_valid;
+
+    // VC index to read per port
+    logic   [VC_BITS-1:0]          vc_index [NUM_PORTS-1:0];
+
     for (genvar i = 0; i < NUM_PORTS; ++i) begin
         assign vc_read_valid[i] = |allocated_ports[i];
         select_vc #(
@@ -124,5 +179,38 @@ module router_top #(
             .vc_index(vc_index[i])
         );
     end
+
+    // Invalidate or clear the VC being sent out
+    // Done at negedge of clk to avoid race condition
+    for (genvar i = 0; i < NUM_PORTS; ++i) begin
+        always @(negedge clk) begin
+            if (vc_read_valid[i]) begin
+                vc_valid[i][vc_index[i]] <= 0;
+            end
+        end
+    end
+
+    // Read buffers
+    reg [`FLIT_DATA_WIDTH-1:0]  out_buffer_data_per_port [NUM_PORTS-1:0];
+    for (genvar i = 0; i < NUM_PORTS; ++i) begin
+        always @(posedge clk) begin
+            if (vc_read_valid[i]) begin
+                out_buffer_data_per_port[i] <= vc_buffer[i][vc_index[i]];
+            end
+        end
+    end
+
+    /************************************
+    *       Switch traversal            *
+    ************************************/
+    crossbar #(
+        .NUM_PORTS(NUM_PORTS)
+    ) cxb (
+        .in_vc_data(out_buffer_data_per_port),
+        .vc_mapping(allocated_ports),
+        .valid(vc_read_valid),
+        .out_data(out_data),
+        .out_valid(out_valid)
+    );
 
 endmodule
