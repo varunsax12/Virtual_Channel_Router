@@ -1,4 +1,7 @@
 // Description: Module for the router top
+// File Details
+//    Author: Varun Saxena
+//    GT id: 903562211
 
 module router_top #(
     parameter NUM_PORTS = 5,
@@ -9,7 +12,8 @@ module router_top #(
     input  logic   clk, reset,
     input  logic   [NUM_PORTS-1:0]        dst_port [NUM_VC*NUM_PORTS-1:0],
     input  logic   [NUM_VC*NUM_PORTS-1:0] vc_availability,
-    output logic   [VC_BITS-1:0]          vc_index [NUM_PORTS-1:0]
+    output logic   [VC_BITS-1:0]          vc_index [NUM_PORTS-1:0],
+    output logic   [NUM_PORTS-1:0]        vc_read_valid
 );
 
     /************************************
@@ -42,7 +46,10 @@ module router_top #(
     logic [NUM_PORTS*NUM_VC-1:0][NUM_PORTS*NUM_VC-1:0] vc_grants;
     logic [NUM_PORTS-1:0]       port_req  [NUM_PORTS-1:0];
     logic [NUM_PORTS-1:0] allocated_ports [NUM_PORTS-1:0];
-    assign vc_grants = {<<{allocated_ip_vcs}};
+    // Conver the array struct between allocated_ip_vcs and vc_grants
+    for (genvar i = 0; i < NUM_PORTS*NUM_VC; ++i) begin
+        assign vc_grants[i] = allocated_ip_vcs[i];
+    end
     vc_req_2_port_req #(
         .NUM_PORTS(NUM_PORTS),
         .NUM_VC(NUM_VC)
@@ -63,9 +70,8 @@ module router_top #(
     /************************************
     *       Buffer read                 *
     ************************************/
-
     for (genvar i = 0; i < NUM_PORTS; ++i) begin
-
+        assign vc_read_valid[i] = |allocated_ports[i];
         select_vc #(
             .NUM_VC(NUM_VC),
             .NUM_PORTS(NUM_PORTS)

@@ -26,7 +26,7 @@ all:    simv
 # Modify starting here
 #####
 
-TESTBENCH = 	testbench/tb_route_compute.sv
+TESTBENCH = 	testbench/tb_router_top.sv
 SIMFILES =	rtl/libs/*.sv	rtl/*.sv \
 	VR_define.vh
 SYNFILES = synth/pipeline.vg
