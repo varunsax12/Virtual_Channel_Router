@@ -10,9 +10,9 @@ ECE 6115: Project of configurable virtual channel router
 6. Crossbar switch
 7. Integration allocation stage
 8. Integration route compute
+9. Integration buffers
 
 # TODO:
 1. Buffer management (optional)
-2. Integration buffers
-3. Integration top
-4. Evaluate VC/buffer turnaround time
+2. Integration top
+3. Evaluate VC/buffer turnaround time
