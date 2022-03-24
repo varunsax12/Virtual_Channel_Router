@@ -9,7 +9,6 @@ module router_top #(
     input  logic   clk, reset,
     input  logic   [NUM_PORTS-1:0]        dst_port [NUM_VC*NUM_PORTS-1:0],
     input  logic   [NUM_VC*NUM_PORTS-1:0] vc_availability,
-    input  logic   [PORT_BITS-1:0]        vc_direction [NUM_VC-1:0],
     output logic   [VC_BITS-1:0]          vc_index [NUM_PORTS-1:0]
 );
 
@@ -30,6 +29,11 @@ module router_top #(
         .allocated_ip_vcs(allocated_ip_vcs)
     );
 
+    logic   [NUM_PORTS-1:0]        vc_direction [NUM_PORTS-1:0][NUM_VC-1:0];
+    // Convert the 2D array of dst port into 3D array splitting across i/p VC and port
+    for (genvar i = 0; i < NUM_PORTS; ++i) begin
+        assign vc_direction[i] = dst_port[(i+1)*NUM_VC-1-:NUM_VC];
+    end
 
     /************************************
     *       Switch Allocation           *
@@ -61,14 +65,6 @@ module router_top #(
     ************************************/
 
     for (genvar i = 0; i < NUM_PORTS; ++i) begin
-        // Convert the allocated port into a direction
-        logic [PORT_BITS-1:0] sel_direction;
-        one_hot_2_index #(
-            .NUM_BITS(NUM_PORTS)
-        ) port2dir (
-            .one_hot_input(allocated_ports[i]),
-            .output_index(sel_direction)
-        );
 
         select_vc #(
             .NUM_VC(NUM_VC),
@@ -76,8 +72,8 @@ module router_top #(
         ) svc (
             .clk(clk),
             .reset(reset),
-            .vc_direction(vc_direction),
-            .sel_direction(sel_direction),
+            .vc_direction(vc_direction[i]),
+            .sel_direction(allocated_ports[i]),
             .vc_index(vc_index[i])
         );
     end
