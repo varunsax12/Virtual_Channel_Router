@@ -12,8 +12,15 @@ module tb_vc_allocator;
     parameter NUM_VCS = 4;
     parameter PORT_BITS = $clog2(NUM_PORTS);
     parameter VC_BITS = $clog2(NUM_VCS);
-    reg clk, rstn;
-    reg [NUM_VCS*NUM_PORTS-1:0] vc_availability;
+    reg clk, reset;
+    
+    logic [`FLIT_DATA_WIDTH-1:0] input_data [NUM_PORTS-1:0];
+    logic [NUM_PORTS-1:0] input_valid;
+
+    // Signals from downstream routers for each non-local port
+    logic dwnstr_router_increment [NUM_PORTS-1:0];
+    // Signals to upstream routers for each current router port
+    logic upstr_router_increment [NUM_PORTS-1:0];
 
     // Waveform compatible
     wire [NUM_VCS*NUM_PORTS-1:0] [NUM_PORTS-1:0] wv_dst_ports;
@@ -27,8 +34,11 @@ module tb_vc_allocator;
         .NUM_VC(NUM_VCS)
     ) rt (
         .clk(clk),
-        .reset(rstn),
-        .vc_availability(vc_availability),
+        .reset(reset),
+        .input_data(input_data),
+        .input_valid(input_valid),
+        .dwnstr_router_increment(dwnstr_router_increment),
+        .upstr_router_increment(upstr_router_increment),
         .out_data(out_data),
         .out_valid(out_valid)
     );
@@ -37,9 +47,9 @@ module tb_vc_allocator;
         $dumpfile("test.vcd");
         $dumpvars;
         clk = 0;
-        @(negedge clk) rstn = 0;
-        @(negedge clk) rstn = 1;
-        @(negedge clk) rstn = 0;
+        @(negedge clk) reset = 0;
+        @(negedge clk) reset = 1;
+        @(negedge clk) reset = 0;
 
         for (int i = 0; i < NUM_PORTS; ++i) begin
             for (int j = 0; j < NUM_VCS; ++j) begin
@@ -48,9 +58,18 @@ module tb_vc_allocator;
                 $display("Port = %d, VC = %d, dest = %d", i, j, rt.vc_buffer[i][j][`FLIT_DATA_WIDTH-1-:4]);
             end
         end
-        foreach(vc_availability[i]) begin
-            vc_availability[i] = 1;
+    
+        // Input_data and 
+        foreach(input_data[i]) begin
+            input_data[i] = 1;
+            input_valid[i] = 1;
         end
+        foreach(dwnstr_router_increment[i]) begin
+            if(i==0)
+                dwnstr_router_increment[i] = 1;
+            dwnstr_router_increment[i] = 0;
+        end
+    
         $display("VC BUFFER STATE PER OPERATION:");
         for (int i = 0; i < NUM_PORTS; ++i) begin
             for (int j = 0; j < NUM_VCS; ++j) begin
