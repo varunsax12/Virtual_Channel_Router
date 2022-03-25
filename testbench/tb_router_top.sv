@@ -18,9 +18,9 @@ module tb_vc_allocator;
     logic [NUM_PORTS-1:0] input_valid;
 
     // Signals from downstream routers for each non-local port
-    logic dwnstr_router_increment [NUM_PORTS-1:0];
+    logic dwnstr_router_increment [NUM_PORTS-2:0];
     // Signals to upstream routers for each current router port
-    logic upstr_router_increment [NUM_PORTS-1:0];
+    logic upstr_router_increment [NUM_PORTS-2:0];
 
     // Waveform compatible
     wire [NUM_VCS*NUM_PORTS-1:0] [NUM_PORTS-1:0] wv_dst_ports;
@@ -42,6 +42,14 @@ module tb_vc_allocator;
         .out_data(out_data),
         .out_valid(out_valid)
     );
+
+    always @(posedge clk) begin
+        $display("VC UP&DOWN STREAM SIGNALS:");
+        for (int i = 0; i < NUM_PORTS-1; ++i) begin
+            $display("Signals, port=%d, dwnstr_router_increment=%b, upstr_router_increment=%b, old_vc_availability:%b, new_vc_availability:%b", i, dwnstr_router_increment[i], upstr_router_increment[i], rt.old_vc_availability, rt.vc_availability);
+        end
+        $display("\n\n");
+    end
 
     initial begin
         $dumpfile("test.vcd");
@@ -65,11 +73,11 @@ module tb_vc_allocator;
             input_valid[i] = 1;
         end
         foreach(dwnstr_router_increment[i]) begin
+            dwnstr_router_increment[i] = 0;
             if(i==0)
                 dwnstr_router_increment[i] = 1;
-            dwnstr_router_increment[i] = 0;
         end
-    
+
         $display("VC BUFFER STATE PER OPERATION:");
         for (int i = 0; i < NUM_PORTS; ++i) begin
             for (int j = 0; j < NUM_VCS; ++j) begin

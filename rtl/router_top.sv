@@ -21,10 +21,10 @@ module router_top #(
     input logic    [NUM_PORTS-1:0]        input_valid,
 
     // Signals from downstream routers for each non-local port
-    input logic dwnstr_router_increment [NUM_PORTS-1:0],
+    input logic dwnstr_router_increment [NUM_PORTS-2:0],
 
     // Router output
-    output logic upstr_router_increment [NUM_PORTS-1:0],
+    output logic upstr_router_increment [NUM_PORTS-2:0],
     output logic [`FLIT_DATA_WIDTH-1:0] out_data [NUM_PORTS-1:0],
     output logic [NUM_PORTS-1:0]        out_valid
 );
@@ -112,6 +112,7 @@ module router_top #(
     *       VC Availability             *
     ************************************/
     /*
+    NOTE: Need to consider only NUM_PORTS-1 ports for downstream and upstream, as local port as port[NUM_PORTS-2]
     router_top will take the following inputs=>
         1. dwnstr_router_increment[NUM_PORTS-2:0] signals for each of its ports except local, external signals
         2. curr_router_decrement[NUM_PORTS-2:0] signals from the switch allocator continously
@@ -123,13 +124,25 @@ module router_top #(
 
     instantiate this combinatorial ckt and use the new_vc_availability=>
     update_vca #(.NUM_PORTS(NUM_PORTS),.NUM_VCS(NUM_VCS)) uvca (.curr_router_decrement(curr_router_decrement),
-    .dwn_router_increment(dwn_router_increment), .old_vc_availability(old_vc_availability),
+    .dwnstr_router_increment(dwnstr_router_increment), .old_vc_availability(old_vc_availability),
     .new_vc_availability(new_vc_availability));
     */
     localparam NUM_VCS = NUM_VC;
     logic [NUM_VC*NUM_PORTS-1:0] vc_availability;
     logic [NUM_VC*NUM_PORTS-1:0] allocated_ip_vcs [NUM_VC*NUM_PORTS-1:0];
-    logic [NUM_PORTS-1:0] allocated_ports [NUM_PORTS-1:0];    
+    logic [NUM_PORTS-1:0] allocated_ports [NUM_PORTS-1:0];
+    // Connect expanded dwnstr_router_increment 
+    logic exdwnstr_router_increment [NUM_PORTS-1:0];
+    for(genvar i=0; i<NUM_PORTS; i=i+1) begin
+        //Mask local port with 0
+        assign exdwnstr_router_increment[i] = (i!=NUM_PORTS-1) ? dwnstr_router_increment[i] : 0;
+    end
+    // Connect shrunk upstr_router_increment
+    logic exupstr_router_increment [NUM_PORTS-1:0];
+    for(genvar i=0; i<NUM_PORTS-1; i=i+1) begin
+        //Connects only non-local ports
+        assign upstr_router_increment[i] = exupstr_router_increment[i];
+    end
     // Expand [NUM_PORTS-1:0] old_allocated_ports [NUM_PORTS-1:0] to [NUM_VCS*NUM_PORTS-1:0] old_allocated_ip_vcs [NUM_VCS*NUM_PORTS-1:0]
     logic [NUM_VCS*NUM_PORTS-1:0] final_allocated_ip_vcs [NUM_VCS*NUM_PORTS-1:0];
     // Iterate over every ip vc
@@ -164,8 +177,8 @@ module router_top #(
     end
     // Instantiate module to update vc_availability
     logic curr_router_decrement [NUM_PORTS-1:0] ; // Updated in the end of VC Availability
-    update_vca #(.NUM_PORTS(NUM_PORTS),.NUM_VCS(NUM_VCS)) uvca (.cur_router_decrement(curr_router_decrement),
-    .dwn_router_increment(dwnstr_router_increment), .old_vc_availability(old_vc_availability),
+    update_vca #(.NUM_PORTS(NUM_PORTS),.NUM_VCS(NUM_VCS)) uvca (.curr_router_decrement(curr_router_decrement),
+    .dwnstr_router_increment(exdwnstr_router_increment), .old_vc_availability(old_vc_availability),
     .new_vc_availability(vc_availability));
     // Increment & Decrement based on Current router decisions=>
     // Get the requested op vcs for every ip vc
@@ -185,16 +198,16 @@ module router_top #(
     //logic upstr_router_increment [NUM_PORTS-1:0];
     always_comb begin
         for(int i=0; i<NUM_PORTS; i=i+1) begin
-            upstr_router_increment[i] = 0;
+            exupstr_router_increment[i] = 0;
             for(int j=0; j<NUM_VCS; j=j+1) begin
                 if( 
                     (|requested_op_vcs[i*NUM_VCS+j]!=0) && 
                     !(|(allocated_ip_vcs[i*NUM_VCS+j] & requested_op_vcs[i*NUM_VCS+j]))
                 ) begin
-                    upstr_router_increment[i] = 1;
+                    exupstr_router_increment[i] = 1;
                     curr_router_decrement[i] = 0;
                 end else begin
-                    upstr_router_increment[i] = 0;
+                    exupstr_router_increment[i] = 0;
                     curr_router_decrement[i] = 1;                    
                 end
             end
