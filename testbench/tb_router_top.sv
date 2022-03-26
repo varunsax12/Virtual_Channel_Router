@@ -45,6 +45,7 @@ module tb_vc_allocator;
 
     task display();
         $display("Time = %0d", $time);
+
         $display("**********INPUT SIGNALS******************");
         $display("Reset = %b", reset);
         $display("Input:");
@@ -59,6 +60,48 @@ module tb_vc_allocator;
             $display("\tout_data[%0d]=%b", i , out_data[i]);
         end
         $display("\tout_valid=%b", out_valid);
+
+        $display("\n**********VC BUFFER STATUS******************");
+        for (int i = 0; i < NUM_PORTS; ++i) begin
+            for (int j = 0; j < NUM_VCS; ++j) begin
+                $display("Port=%0d, VC=%0d, vc_valid=%b, vc_empty=%b, vc_buffer=%b", i, j, rt.vc_valid[i][j], rt.vc_empty[i][j], rt.vc_buffer[i][j]);
+            end
+        end
+
+        $display("\n**********BUFFER WRITE******************");
+        for (int i = 0; i < NUM_PORTS; ++i) begin
+            $display("Port=%0d, empty_vc_index=%0d", i, rt.empty_vc_index[i]);
+        end
+
+        $display("\n**********ROUTE COMPUTE******************");
+        for (int i = 0; i < NUM_PORTS; ++i) begin
+            for (int j = 0; j < NUM_VCS; ++j) begin
+                $display("Port=%0d, VC=%0d, dst_port=%b", i, j, rt.dst_port[i*NUM_VCS+j]);
+            end
+        end
+
+        $display("\n**********VC AVALABILITY******************");
+
+        $display("\n**********VC ALLOCATION******************");
+        for (int i = 0; i < NUM_PORTS; ++i) begin
+            for (int j = 0; j < NUM_VCS; ++j) begin
+                $display("Port=%0d, VC=%0d, allocated_ip_vcs=%b", i, j, rt.allocated_ip_vcs[i*NUM_VCS+j]);
+            end
+        end
+
+        $display("\n**********SA ALLOCATION******************");
+        for (int i = 0; i < NUM_PORTS; ++i) begin
+            $display("Port=%0d, sa_allocated_ports=%b", i, rt.sa_allocated_ports[i]);
+        end
+
+        $display("\n**********BUFFER READ******************");
+        for (int i = 0; i < NUM_PORTS; ++i) begin
+            $display("Port=%0d, vc_index=%0d", i, rt.vc_index[i]);
+        end
+        for (int i = 0; i < NUM_PORTS; ++i) begin
+            $display("Port=%0d, out_buffer_data_per_port=%b", i, rt.out_buffer_data_per_port[i]);
+        end
+
     endtask
 
     initial begin
@@ -87,60 +130,6 @@ module tb_vc_allocator;
                 dwnstr_router_increment[i] = 1;
         end
         #9;
-        // $display("VC BUFFER STATE PER OPERATION:");
-        // for (int i = 0; i < NUM_PORTS; ++i) begin
-        //     for (int j = 0; j < NUM_VCS; ++j) begin
-        //         $display("Buffer, port=%d, vc=%d, valid=%b, data=%b", i, j, rt.vc_valid[i][j], rt.vc_buffer[i][j]);
-        //     end
-        // end
-        // for (int i = 0; i < 1; ++i) begin
-        //     // NOTE: In current test setup, takes 2 cycles to reach switch traversed state
-        //     @(negedge clk);
-        //     //@(negedge clk);
-        //     // @(negedge clk) begin
-        //     //     vc_availability[0] = 0;
-        //     // end
-        //     for (int i = 0; i < NUM_PORTS; ++i) begin
-        //         for (int j = 0; j < NUM_VCS; ++j) begin
-        //             $display("Port req, Port = %d, VC = %d, %b", i, j, rt.dst_port[i*NUM_VCS+j]);
-        //         end
-        //     end
-        //     for (int i = 0; i < NUM_PORTS; ++i) begin
-        //         for (int j = 0; j < NUM_VCS; ++j) begin
-        //             $display("VC alloc, %d, %b, %b", i, rt.vca.available_op_vcs[i*NUM_VCS+j], rt.allocated_ip_vcs[i*NUM_VCS+j]);
-        //         end
-        //     end
-        //     for (int i = 0; i < NUM_PORTS; ++i) begin
-        //         for (int j = 0; j < NUM_VCS; ++j) begin
-        //             $display("VC alloc..2, %d, %b", i, rt.vc_grants[i*NUM_VCS+j]);
-        //         end
-        //     end
-        //     for (int i = 0; i < NUM_PORTS; ++i) begin
-        //         $display("req2port , %d, %b", i, rt.port_req[i]);
-        //     end
-        //     for (int i = 0; i < NUM_PORTS; ++i) begin
-        //         $display("SAlloc, %d, %b", i, rt.allocated_ports[i]);
-        //     end
-        //     for (int i = 0; i < NUM_PORTS; ++i) begin
-        //         $display("vc index = %d, %b, %b", i, rt.vc_index[i], rt.vc_read_valid[i]);
-        //     end
-        //     for (int i = 0; i < NUM_PORTS; ++i) begin
-        //         $display("buffer read, %d, %b", i, rt.out_buffer_data_per_port[i]);
-        //     end
-        //     for (int i = 0; i < NUM_PORTS; ++i) begin
-        //         $display("vc_read_valid, %d, %b", i, rt.vc_read_valid[i]);
-        //     end
-        //     $display("OUTPUT DATA:");
-        //     for (int i = 0; i < NUM_PORTS; ++i) begin
-        //         $display("port index = %d, valid=%b, data=%b", i, out_valid[i], out_data[i]);
-        //     end
-        //     $display("VC BUFFER STATE:");
-        //     for (int i = 0; i < NUM_PORTS; ++i) begin
-        //         for (int j = 0; j < NUM_VCS; ++j) begin
-        //             $display("Buffer, port=%d, vc=%d, valid=%b, data=%b", i, j, rt.vc_valid[i][j], rt.vc_buffer[i][j]);
-        //         end
-        //     end
-        // end
         display();
         @(negedge clk) $finish;
     end
