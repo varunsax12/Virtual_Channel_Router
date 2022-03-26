@@ -42,16 +42,14 @@ module vc_availability #(
     .dwnstr_router_increment(dwnstr_router_increment), .old_vc_availability(old_vc_availability),
     .new_vc_availability(new_vc_availability));
     */
+    
     localparam local_port_index = 0;
-
     // Connect expanded dwnstr_router_increment 
     logic exdwnstr_router_increment [NUM_PORTS-1:0];
-    for(genvar i=0; i<NUM_PORTS; i=i+1) begin
+    assign exdwnstr_router_increment[local_port_index] = 0;
+    for(genvar i=0; i<NUM_PORTS-1; i=i+1) begin
         //Mask local port with 0
-        if(i!=local_port_index)
-            assign exdwnstr_router_increment[i] = dwnstr_router_increment[i];
-        else
-            assign exdwnstr_router_increment[i] = 0;
+        assign exdwnstr_router_increment[i+1] = dwnstr_router_increment[i];
     end
     
     // Connect shrunk upstr_router_increment
@@ -76,13 +74,20 @@ module vc_availability #(
     end
     
     // Convert to old_vc_availability vector
+    logic [NUM_VCS*NUM_PORTS-1:0] comb_old_vc_unavailability;
     logic [NUM_VCS*NUM_PORTS-1:0] comb_old_vc_availability;
     always_comb begin
-        comb_old_vc_availability = 0;
+        comb_old_vc_unavailability = 0;
+        //NOTE: The below nested for will store all the vcs that are unavailable.
+        //We invert the output after the for to get available vcs
         for(int i=0; i<NUM_PORTS; i=i+1) begin
             for(int j=0; j<NUM_VCS; j=j+1) begin
-                comb_old_vc_availability = comb_old_vc_availability | final_allocated_ip_vcs[i*NUM_VCS+j];
+                comb_old_vc_unavailability = comb_old_vc_unavailability | final_allocated_ip_vcs[i*NUM_VCS+j];
             end
+        end
+        //Invert and store each bit
+        for(int i=0; i<NUM_PORTS*NUM_VCS; i=i+1) begin
+            comb_old_vc_availability[i] = !comb_old_vc_unavailability[i];
         end
     end
     
