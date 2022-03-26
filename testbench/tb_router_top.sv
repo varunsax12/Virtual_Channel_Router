@@ -81,6 +81,12 @@ module tb_vc_allocator;
         end
 
         $display("\n**********VC AVALABILITY******************");
+        for(int i = 0; i < NUM_PORTS; ++i) begin
+            $display("VCAvailability, Port=%0d, curr_router_decrement:%b, old_vc_availability:%b, new_vc_availability:%b", i, rt.vcavail.curr_router_decrement[i], rt.vcavail.old_vc_availability, rt.vc_availability);
+            for(int j = 0; j < NUM_VCS; ++j) begin
+                $display("ipvc:%0d, requested_op_vcs:%b, allocated_op_vcs:%b", (i*NUM_VCS+j), rt.vcavail.requested_op_vcs[i*NUM_VCS+j], rt.vcavail.allocated_ip_vcs[i*NUM_VCS+j]);
+            end
+        end
 
         $display("\n**********VC ALLOCATION******************");
         for (int i = 0; i < NUM_PORTS; ++i) begin
