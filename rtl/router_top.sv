@@ -124,7 +124,7 @@ module router_top #(
     /************************************
     *       VC Availability             *
     ************************************/
-    localparam NUM_VCS = NUM_VC;
+
     logic [NUM_VC*NUM_PORTS-1:0] vc_availability;
     logic [NUM_VC*NUM_PORTS-1:0] allocated_ip_vcs [NUM_VC*NUM_PORTS-1:0];
     logic [NUM_PORTS-1:0] sa_allocated_ports [NUM_PORTS-1:0];
@@ -132,7 +132,7 @@ module router_top #(
     // Computes VC Availability based on down stream router increments and current router assignees
     vc_availability #(
         .NUM_PORTS(NUM_PORTS),
-        .NUM_VCS(NUM_VCS)
+        .NUM_VCS(NUM_VC)
     ) vcavail (
         .clk(clk),
         .reset(reset),

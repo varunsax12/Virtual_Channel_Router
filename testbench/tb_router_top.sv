@@ -44,7 +44,7 @@ module tb_vc_allocator;
     );
 
     task display();
-        $display("Time = %0d", $time);
+        $display("\n\n********************Time = %0d***********", $time);
 
         $display("**********INPUT SIGNALS******************");
         $display("Reset = %b", reset);
@@ -135,8 +135,9 @@ module tb_vc_allocator;
             if(i==0)
                 dwnstr_router_increment[i] = 1;
         end
-        #9;
-        display();
+        for (int i = 0; i < 3; ++i) begin
+            @(negedge clk) display();
+        end
         @(negedge clk) $finish;
     end
 
