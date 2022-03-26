@@ -143,8 +143,9 @@ module tb_vc_allocator;
         //#9 display();
         for (int i = 0; i < 3; ++i) begin
             @(negedge clk);
+            display();
         end
-        display();
+        //display();
         //#11 display();
         $finish;
     end

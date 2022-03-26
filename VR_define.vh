@@ -14,7 +14,7 @@
 `define ARBITER_TYPE          2
 
 // Allocator select switch
-`define ALLOCATOR_TYPE        2
+`define ALLOCATOR_TYPE        1
 
 // Switch to indicate whether to arbiter in select_vc or encoder
 `define SELECT_VC_ARBITRATE   0
