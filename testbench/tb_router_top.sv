@@ -83,15 +83,16 @@ module tb_vc_allocator;
         $display("\n**********VC AVALABILITY******************");
         for(int i = 0; i < NUM_PORTS; ++i) begin
             $display("VCAvailability, Port=%0d, curr_router_decrement:%b, old_vc_availability:%b, new_vc_availability:%b", i, rt.vcavail.curr_router_decrement[i], rt.vcavail.old_vc_availability, rt.vc_availability);
-            for(int j = 0; j < NUM_VCS; ++j) begin
-                $display("ipvc:%0d, requested_op_vcs:%b, allocated_op_vcs:%b, final_allocated_op_vcs:%b", (i*NUM_VCS+j), rt.vcavail.requested_op_vcs[i*NUM_VCS+j], rt.allocated_ip_vcs[i*NUM_VCS+j], rt.vcavail.final_allocated_ip_vcs[i*NUM_VCS+j]);
-            end
+            //for(int j = 0; j < NUM_VCS; ++j) begin
+            //    $display("ipvc:%0d, requested_op_vcs:%b, allocated_op_vcs:%b, final_allocated_op_vcs:%b", (i*NUM_VCS+j), rt.vcavail.requested_op_vcs[i*NUM_VCS+j], rt.allocated_ip_vcs[i*NUM_VCS+j], rt.vcavail.final_allocated_ip_vcs[i*NUM_VCS+j]);
+            //end
         end
 
         $display("\n**********VC ALLOCATION******************");
         for (int i = 0; i < NUM_PORTS; ++i) begin
             for (int j = 0; j < NUM_VCS; ++j) begin
-                $display("Port=%0d, VC=%0d, allocated_ip_vcs=%b", i, j, rt.allocated_ip_vcs[i*NUM_VCS+j]);
+                //$display("Port=%0d, VC=%0d, allocated_ip_vcs=%b", i, j, rt.allocated_ip_vcs[i*NUM_VCS+j]);
+                $display("ipvc:%0d, requested_op_vcs:%b, allocated_op_vcs:%b, sa_allocated_ports=%b, final_allocated_op_vcs:%b", (i*NUM_VCS+j), rt.vcavail.requested_op_vcs[i*NUM_VCS+j], rt.vcavail.allocated_ip_vcs[i*NUM_VCS+j], rt.vcavail.sa_allocated_ports[i], rt.vcavail.final_allocated_ip_vcs[i*NUM_VCS+j]);
             end
         end
 
@@ -109,6 +110,10 @@ module tb_vc_allocator;
         end
 
     endtask
+
+    //initial begin
+    //    #500 $finish;
+    //end
 
     initial begin
         $dumpfile("test.vcd");
@@ -137,10 +142,11 @@ module tb_vc_allocator;
         end
         //#9 display();
         for (int i = 0; i < 3; ++i) begin
-            @(negedge clk) display();
+            @(negedge clk);
         end
+        display();
         //#11 display();
-        @(negedge clk) $finish;
+        $finish;
     end
 
     always begin

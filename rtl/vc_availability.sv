@@ -67,7 +67,7 @@ module vc_availability #(
             // Iterate over every bit, assign the result of allocated_ports & allocated_ip_vcs
             for(genvar ii=0; ii<NUM_PORTS; ii=ii+1) begin
                 for(genvar jj=0; jj<NUM_VCS; jj=jj+1) begin
-                    assign final_allocated_ip_vcs[i*NUM_VCS+j][ii*NUM_VCS+jj] = sa_allocated_ports[ii] & allocated_ip_vcs[ii*NUM_VCS+jj];
+                    assign final_allocated_ip_vcs[i*NUM_VCS+j][ii*NUM_VCS+jj] = sa_allocated_ports[i][ii] & allocated_ip_vcs[i*NUM_VCS+j][ii*NUM_VCS+jj];
                 end
             end
         end
