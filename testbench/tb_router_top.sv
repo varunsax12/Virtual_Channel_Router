@@ -76,13 +76,13 @@ module tb_vc_allocator;
         $display("\n**********ROUTE COMPUTE******************");
         for (int i = 0; i < NUM_PORTS; ++i) begin
             for (int j = 0; j < NUM_VCS; ++j) begin
-                $display("Port=%0d, VC=%0d, dst_port=%b", i, j, rt.dst_port[i*NUM_VCS+j]);
+                $display("Port=%0d, VC=%0d, dst_port=%b", i, j, rt.rc_dst_port[i*NUM_VCS+j]);
             end
         end
 
         $display("\n**********VC AVALABILITY******************");
         for(int i = 0; i < NUM_PORTS; ++i) begin
-            $display("VCAvailability, Port=%0d, curr_router_decrement:%b, old_vc_availability:%b, new_vc_availability:%b", i, rt.vcavail.curr_router_decrement[i], rt.vcavail.old_vc_availability, rt.vc_availability);
+            $display("VCAvailability, Port=%0d, curr_router_decrement:%b, old_vc_availability:%b, new_vc_availability:%b", i, rt.vcavail.curr_router_decrement[i], rt.vcavail.old_vc_availability, rt.vca_vc_availability);
             //for(int j = 0; j < NUM_VCS; ++j) begin
             //    $display("ipvc:%0d, requested_op_vcs:%b, allocated_op_vcs:%b, final_allocated_op_vcs:%b", (i*NUM_VCS+j), rt.vcavail.requested_op_vcs[i*NUM_VCS+j], rt.allocated_ip_vcs[i*NUM_VCS+j], rt.vcavail.final_allocated_ip_vcs[i*NUM_VCS+j]);
             //end
@@ -103,13 +103,16 @@ module tb_vc_allocator;
 
         $display("\n**********BUFFER READ******************");
         for (int i = 0; i < NUM_PORTS; ++i) begin
-            $display("Port=%0d, vc_index=%0d vc_valid=%b", i, rt.vc_index[i], rt.vc_read_valid[i]);
+            $display("Port=%0d, vc_index=%0d vc_valid=%b", i, rt.br_vc_index[i], rt.br_vc_read_valid[i]);
+        end
+        for (int i = 0; i < NUM_PORTS; ++i) begin
+            $display("Port=%0d, br_allocated_ports=%b", i, rt.br_allocated_ports[i]);
         end
 
 
         $display("\n**********SWITCH TRAVERSAL******************");
         for (int i = 0; i < NUM_PORTS; ++i) begin
-            $display("Port=%0d, out_buffer_data_per_port=%b, out_valid=%b", i, rt.out_buffer_data_per_port[i], rt.out_valid[i]);
+            $display("Port=%0d, out_data=%b, out_valid=%b", i, rt.out_data[i], rt.out_valid[i]);
         end
     endtask
 
