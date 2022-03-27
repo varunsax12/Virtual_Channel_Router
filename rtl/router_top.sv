@@ -125,8 +125,8 @@ module router_top #(
     *       VC Availability             *
     ************************************/
 
-    logic [NUM_VC*NUM_PORTS-1:0] vc_availability;
-    logic [NUM_VC*NUM_PORTS-1:0] allocated_ip_vcs [NUM_VC*NUM_PORTS-1:0];
+    logic [NUM_VC*NUM_PORTS-1:0] vca_vc_availability;
+    logic [NUM_VC*NUM_PORTS-1:0] vca_allocated_ip_vcs [NUM_VC*NUM_PORTS-1:0];
     logic [NUM_PORTS-1:0] sa_allocated_ports [NUM_PORTS-1:0];
     
     // Computes VC Availability based on down stream router increments and current router assignees
@@ -139,8 +139,8 @@ module router_top #(
         .vca_dst_port(vca_dst_port),
         .dwnstr_router_increment(dwnstr_router_increment), 
         .sa_allocated_ports(sa_allocated_ports),
-        .allocated_ip_vcs(allocated_ip_vcs), 
-        .vc_availability(vc_availability), 
+        .allocated_ip_vcs(vca_allocated_ip_vcs), 
+        .vc_availability(vca_vc_availability), 
         .upstr_router_increment(upstr_router_increment)
     );
 
@@ -156,8 +156,8 @@ module router_top #(
         .clk(clk),
         .reset(reset),
         .dst_port(vca_dst_port),
-        .vc_availability(vc_availability),
-        .allocated_ip_vcs(allocated_ip_vcs)
+        .vc_availability(vca_vc_availability),
+        .allocated_ip_vcs(vca_allocated_ip_vcs)
     );
 
     logic [NUM_VC*NUM_PORTS-1:0] sa_allocated_ip_vcs [NUM_VC*NUM_PORTS-1:0];
@@ -169,7 +169,7 @@ module router_top #(
         .clk(clk),
         .reset(reset),
         .enable(1'b1),
-        .in_data(allocated_ip_vcs),
+        .in_data(vca_allocated_ip_vcs),
         .out_data(sa_allocated_ip_vcs)
     );
     logic   [NUM_PORTS-1:0]        sa_dst_port [NUM_VC*NUM_PORTS-1:0];

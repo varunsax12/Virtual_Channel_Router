@@ -124,8 +124,26 @@ module vc_availability #(
     // 2. Assign current router decrement signals, indicating latest vc availability.
     //logic upstr_router_increment [NUM_PORTS-1:0];
     always_comb begin
+        // Re-initialize counter
+        for(int i=0; i<NUM_PORTS; i=i+1)
+            curr_router_decrement[i] = 0;
+
         for(int i=0; i<NUM_PORTS; i=i+1) begin
-            exupstr_router_increment[i] = 0;
+            if(|sa_allocated_ports[i]) begin
+                // Request granted
+                exupstr_router_increment[i] = 1; //0;
+                for(int ii=0; ii<NUM_PORTS; ii=ii+1) begin
+                    if(sa_allocated_ports[i][ii])
+                        curr_router_decrement[ii] = 1;
+                end
+            end else begin
+                // Request not granted
+                exupstr_router_increment[i] = 0; //1;               
+            end
+        end
+    end
+
+            /*
             for(int j=0; j<NUM_VCS; j=j+1) begin
                 if( 
                     (|requested_op_vcs[i*NUM_VCS+j]!=0) && 
@@ -138,7 +156,6 @@ module vc_availability #(
                     curr_router_decrement[i] = 1;                    
                 end
             end
-        end
-    end
+            */
 
 endmodule

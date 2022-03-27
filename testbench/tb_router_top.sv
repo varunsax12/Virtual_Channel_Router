@@ -111,6 +111,10 @@ module tb_vc_allocator;
 
     endtask
 
+    always @(negedge clk) begin
+        display();
+    end
+
     //initial begin
     //    #500 $finish;
     //end
@@ -141,9 +145,9 @@ module tb_vc_allocator;
                 dwnstr_router_increment[i] = 1;
         end
         //#9 display();
-        for (int i = 0; i < 3; ++i) begin
+        for (int i = 0; i < 5; ++i) begin
             @(negedge clk);
-            display();
+            //display();
         end
         //display();
         //#11 display();
