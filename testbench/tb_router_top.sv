@@ -103,12 +103,14 @@ module tb_vc_allocator;
 
         $display("\n**********BUFFER READ******************");
         for (int i = 0; i < NUM_PORTS; ++i) begin
-            $display("Port=%0d, vc_index=%0d", i, rt.vc_index[i]);
-        end
-        for (int i = 0; i < NUM_PORTS; ++i) begin
-            $display("Port=%0d, out_buffer_data_per_port=%b", i, rt.out_buffer_data_per_port[i]);
+            $display("Port=%0d, vc_index=%0d vc_valid=%b", i, rt.vc_index[i], rt.vc_read_valid[i]);
         end
 
+
+        $display("\n**********SWITCH TRAVERSAL******************");
+        for (int i = 0; i < NUM_PORTS; ++i) begin
+            $display("Port=%0d, out_buffer_data_per_port=%b, out_valid=%b", i, rt.out_buffer_data_per_port[i], rt.out_valid[i]);
+        end
     endtask
 
     always @(negedge clk) begin
@@ -130,19 +132,20 @@ module tb_vc_allocator;
         for (int i = 0; i < NUM_PORTS; ++i) begin
             for (int j = 0; j < NUM_VCS; ++j) begin
                 rt.vc_buffer[i][j][`FLIT_DATA_WIDTH-1-:4] = $urandom%16;
-                rt.vc_valid[i][j] = $urandom%2;
+                //rt.vc_valid[i][j] = $urandom%2;
+                rt.vc_valid[i][j] = 1;
             end
         end
     
         // Input_data and 
         foreach(input_data[i]) begin
             input_data[i][`FLIT_DATA_WIDTH-1-:4] = $urandom%16;
-            input_valid[i] = 1;
+            input_valid[i] = 0;
         end
         foreach(dwnstr_router_increment[i]) begin
             dwnstr_router_increment[i] = 0;
             if(i==0)
-                dwnstr_router_increment[i] = 1;
+                dwnstr_router_increment[i] = 0;
         end
         //#9 display();
         for (int i = 0; i < 5; ++i) begin

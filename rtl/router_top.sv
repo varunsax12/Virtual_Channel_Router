@@ -292,6 +292,30 @@ module router_top #(
         end
     end
 
+    logic [NUM_PORTS-1:0] st_allocated_ports [NUM_PORTS-1:0];
+    // TODO: Create enable signal for stalls
+    pipe_register #(
+        .DATAW(NUM_PORTS),
+        .ARRAY_DEPTH(NUM_PORTS)
+    ) br2st_ap (
+        // Standard inputs
+        .clk(clk),
+        .reset(reset),
+        .enable(1'b1),
+        .in_data(br_allocated_ports),
+        .out_data(st_allocated_ports)
+    );
+    // To denote if the data from a port is being read (based on allocation)
+    logic   [NUM_PORTS-1:0]        st_vc_read_valid;
+    always @(posedge clk) begin
+        if (reset) begin
+            st_vc_read_valid <= 0;
+        end
+        else begin
+            st_vc_read_valid <= vc_read_valid;
+        end
+    end
+
     /************************************
     *       Switch traversal            *
     ************************************/
@@ -299,8 +323,8 @@ module router_top #(
         .NUM_PORTS(NUM_PORTS)
     ) cxb (
         .in_vc_data(out_buffer_data_per_port),
-        .vc_mapping(br_allocated_ports),
-        .valid(vc_read_valid),
+        .vc_mapping(st_allocated_ports),
+        .valid(st_vc_read_valid),
         .out_data(out_data),
         .out_valid(out_valid)
     );
