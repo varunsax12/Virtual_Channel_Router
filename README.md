@@ -11,8 +11,9 @@ ECE 6115: Project of configurable virtual channel router
 7. Integration allocation stage
 8. Integration route compute
 9. Integration buffers
+10. Integration top (including pipelining)
 
 # TODO:
 1. Buffer management (optional)
-2. Integration top
+2. Testing with incoming flits and downstream credits
 3. Evaluate VC/buffer turnaround time
