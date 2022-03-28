@@ -15,5 +15,6 @@ ECE 6115: Project of configurable virtual channel router
 
 # TODO:
 1. Buffer management (optional)
-2. Testing with incoming flits and downstream credits
-3. Evaluate VC/buffer turnaround time
+2. Add NIC
+3. Testing with incoming flits and downstream credits
+4. Evaluate VC/buffer turnaround time
