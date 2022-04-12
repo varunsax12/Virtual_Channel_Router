@@ -79,31 +79,31 @@ module router_top #(
     *          Route compute            *
     ************************************/
 
-    logic   [NUM_PORTS-1:0]        dst_port [NUM_VC*NUM_PORTS-1:0];
+    logic   [NUM_PORTS-1:0]        rc_dst_port [NUM_VC*NUM_PORTS-1:0];
 
     localparam DIR_BITS = 3; // N, S, W, E, Eject
     localparam DIR_ONE_HOT = 2**DIR_BITS;
     for (genvar i = 0; i < NUM_PORTS; ++i) begin
         for (genvar j = 0; j < NUM_VC; ++j) begin
-            logic [DIR_BITS-1:0] vc_direction;
+            logic [DIR_BITS-1:0] rc_vc_direction;
             route_compute # (
                 .NUM_ROUTERS(NUM_ROUTERS),
                 .ROUTER_PER_ROW(ROUTER_PER_ROW)
             ) rc (
                 .current_router(ROUTER_ID_BITS'(ROUTER_ID)),
                 .dest_router(vc_buffer[i][j][`FLIT_DATA_WIDTH-1-:ROUTER_ID_BITS]),
-                .direction(vc_direction)
+                .direction(rc_vc_direction)
             );
 
             // One hot encode the direction
-            logic [DIR_ONE_HOT-1:0]  one_hot_direction;
+            logic [DIR_ONE_HOT-1:0]  rc_one_hot_direction;
             index_2_one_hot #(
                 .NUM_BITS(DIR_BITS)
             ) dir2port (
-                .index(vc_direction),
-                .out_one_hot(one_hot_direction)
+                .index(rc_vc_direction),
+                .out_one_hot(rc_one_hot_direction)
             );
-            assign dst_port[i*NUM_VC+j] = vc_valid[i][j] ? one_hot_direction[NUM_PORTS-1:0] : 0;
+            assign rc_dst_port[i*NUM_VC+j] = vc_valid[i][j] ? rc_one_hot_direction[NUM_PORTS-1:0] : 0;
         end
     end
 
@@ -117,7 +117,7 @@ module router_top #(
         .clk(clk),
         .reset(reset),
         .enable(1'b1),
-        .in_data(dst_port),
+        .in_data(rc_dst_port),
         .out_data(vca_dst_port)
     );
 
@@ -127,7 +127,7 @@ module router_top #(
 
     logic [NUM_VC*NUM_PORTS-1:0] vca_vc_availability;
     logic [NUM_VC*NUM_PORTS-1:0] vca_allocated_ip_vcs [NUM_VC*NUM_PORTS-1:0];
-    logic [NUM_PORTS-1:0] sa_allocated_ports [NUM_PORTS-1:0];
+    logic [NUM_PORTS-1:0] vca_allocated_ports [NUM_PORTS-1:0];
     
     // Computes VC Availability based on down stream router increments and current router assignees
     vc_availability #(
@@ -138,7 +138,7 @@ module router_top #(
         .reset(reset),
         .vca_dst_port(vca_dst_port),
         .dwnstr_router_increment(dwnstr_router_increment), 
-        .sa_allocated_ports(sa_allocated_ports),
+        .sa_allocated_ports(vca_allocated_ports),
         .allocated_ip_vcs(vca_allocated_ip_vcs), 
         .vc_availability(vca_vc_availability), 
         .upstr_router_increment(upstr_router_increment)
@@ -190,20 +190,19 @@ module router_top #(
     *       Switch Allocation           *
     ************************************/
 
-
-
-    logic [NUM_PORTS*NUM_VC-1:0][NUM_PORTS*NUM_VC-1:0] vc_grants;
-    logic [NUM_PORTS-1:0]       port_req  [NUM_PORTS-1:0];
+    logic [NUM_PORTS*NUM_VC-1:0][NUM_PORTS*NUM_VC-1:0] sa_vc_grants;
+    logic [NUM_PORTS-1:0]       sa_port_req  [NUM_PORTS-1:0];
+    logic [NUM_PORTS-1:0] sa_allocated_ports [NUM_PORTS-1:0];
     // Conver the array struct between allocated_ip_vcs and vc_grants
     for (genvar i = 0; i < NUM_PORTS*NUM_VC; ++i) begin
-        assign vc_grants[i] = allocated_ip_vcs[i];
+        assign sa_vc_grants[i] = sa_allocated_ip_vcs[i];
     end
     vc_req_2_port_req #(
         .NUM_PORTS(NUM_PORTS),
         .NUM_VC(NUM_VC)
     ) req2port (
-        .vc_grants(vc_grants),
-        .port_req(port_req)
+        .vc_grants(sa_vc_grants),
+        .port_req(sa_port_req)
     );
 
     switch_allocator #(
@@ -211,9 +210,11 @@ module router_top #(
     ) sa (
         .clk(clk),
         .reset(reset),
-        .port_requests(port_req),
+        .port_requests(sa_port_req),
         .allocated_ports(sa_allocated_ports)
     );
+
+    assign vca_allocated_ports = sa_allocated_ports;
 
     logic [NUM_PORTS-1:0] br_allocated_ports [NUM_PORTS-1:0];
     // TODO: Create enable signal for stalls
@@ -253,13 +254,13 @@ module router_top #(
     end
 
     // To denote if the data from a port is being read (based on allocation)
-    logic   [NUM_PORTS-1:0]        vc_read_valid;
+    logic   [NUM_PORTS-1:0]        br_vc_read_valid;
 
     // VC index to read per port
-    logic   [VC_BITS-1:0]          vc_index [NUM_PORTS-1:0];
+    logic   [VC_BITS-1:0]          br_vc_index [NUM_PORTS-1:0];
 
     for (genvar i = 0; i < NUM_PORTS; ++i) begin
-        assign vc_read_valid[i] = |br_allocated_ports[i];
+        assign br_vc_read_valid[i] = |br_allocated_ports[i];
         select_vc #(
             .NUM_VC(NUM_VC),
             .NUM_PORTS(NUM_PORTS)
@@ -268,7 +269,7 @@ module router_top #(
             .reset(reset),
             .vc_direction(br_vc_direction[i]),
             .sel_direction(br_allocated_ports[i]),
-            .vc_index(vc_index[i])
+            .vc_index(br_vc_index[i])
         );
     end
 
@@ -276,18 +277,20 @@ module router_top #(
     // Done at negedge of clk to avoid race condition
     for (genvar i = 0; i < NUM_PORTS; ++i) begin
         always @(negedge clk) begin
-            if (vc_read_valid[i]) begin
-                vc_valid[i][vc_index[i]] <= 0;
+            if (br_vc_read_valid[i]) begin
+                vc_valid[i][br_vc_index[i]] <= 0;
             end
         end
     end
 
+    // Pipeline begins here for this stage
+
     // Read buffers
-    reg [`FLIT_DATA_WIDTH-1:0]  out_buffer_data_per_port [NUM_PORTS-1:0];
+    reg [`FLIT_DATA_WIDTH-1:0]  st_out_buffer_data_per_port [NUM_PORTS-1:0];
     for (genvar i = 0; i < NUM_PORTS; ++i) begin
         always @(posedge clk) begin
-            if (vc_read_valid[i]) begin
-                out_buffer_data_per_port[i] <= vc_buffer[i][vc_index[i]];
+            if (br_vc_read_valid[i]) begin
+                st_out_buffer_data_per_port[i] <= vc_buffer[i][br_vc_index[i]];
             end
         end
     end
@@ -312,7 +315,7 @@ module router_top #(
             st_vc_read_valid <= 0;
         end
         else begin
-            st_vc_read_valid <= vc_read_valid;
+            st_vc_read_valid <= br_vc_read_valid;
         end
     end
 
@@ -322,7 +325,7 @@ module router_top #(
     crossbar #(
         .NUM_PORTS(NUM_PORTS)
     ) cxb (
-        .in_vc_data(out_buffer_data_per_port),
+        .in_vc_data(st_out_buffer_data_per_port),
         .vc_mapping(st_allocated_ports),
         .valid(st_vc_read_valid),
         .out_data(out_data),
