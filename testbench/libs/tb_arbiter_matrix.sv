@@ -7,12 +7,12 @@
 `timescale 10ns/1ns
 
 module tb_arbiter_matrix;
-    reg clk, rstn;
+    reg clk, reset;
     reg [2:0] requests;
     wire [2:0] grants;
     parameter NR = 3;
     
-    arbiter_matrix #(.NUM_REQS(NR)) mta(.clk(clk), .reset(rstn), .requests(requests), .grants(grants));
+    arbiter_matrix #(.NUM_REQS(NR)) mta(.clk(clk), .reset(reset), .requests(requests), .grants(grants));
     
     initial begin
         #500 $finish;
@@ -27,8 +27,8 @@ module tb_arbiter_matrix;
         $dumpfile("tb_arbiter_matrix.vcd");
         $dumpvars;
         clk = 0;
-        @(negedge clk) rstn = 0;
-        @(negedge clk) rstn = 1;
+        @(negedge clk) reset = 1;
+        @(negedge clk) reset = 0;
         requests = 7;
         #20
         requests = 3;

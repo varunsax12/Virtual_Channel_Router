@@ -9,11 +9,11 @@
 module tb_allocator_separable;
     parameter NRS = 4;
     parameter NRQ = 4;
-    reg clk, rstn;
+    reg clk, reset;
     reg [NRS-1:0] requests[NRQ-1:0];
     wire [NRS-1:0] grants[NRQ-1:0];
     
-    allocator_separable #(.NUM_REQS(NRQ), .NUM_RESS(NRS)) spa(.clk(clk), .reset(rstn), .requests(requests), .grants(grants));
+    allocator_separable #(.NUM_REQS(NRQ), .NUM_RESS(NRS)) spa(.clk(clk), .reset(reset), .requests(requests), .grants(grants));
     
     initial begin
         #500 $finish;
@@ -22,12 +22,12 @@ module tb_allocator_separable;
     initial begin
         $dumpfile("tb_allocator_separable.vcd");
         $dumpvars;
-        $monitor("\n\ngrants[0]:%b grants[1]:%b grants[2]:%b grants[3]:%b\nrequests[0]:%b,requests[1]:%b,requests[2]:%b,requests[3]:%b\n\n",
+        $monitor("grants[0]:%b grants[1]:%b grants[2]:%b grants[3]:%b\nrequests[0]:%b,requests[1]:%b,requests[2]:%b,requests[3]:%b\n",
         grants[0],grants[1],grants[2],grants[3],requests[0],requests[1],requests[2],requests[3]);
 
         clk = 0;
-        @(negedge clk) rstn = 0;
-        @(negedge clk) rstn = 1;
+        @(negedge clk) reset = 1;
+        @(negedge clk) reset = 0;
         foreach(requests[i])
             requests[i] = 0;
         //Pattern-1
