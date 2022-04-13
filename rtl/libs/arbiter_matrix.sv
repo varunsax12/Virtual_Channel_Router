@@ -42,15 +42,15 @@ module arbiter_matrix #(
     always @(posedge clk) begin
         if(reset) begin
             // Reset matrix with preference for 0 over all, 1 over 2+, 2 over 3+
-            foreach(weight_mat[m]) begin
-                foreach(weight_mat[m][n]) begin
+            for(int m=0; m<NUM_REQS; m=m+1) begin
+                for(int n=0; n<NUM_REQS; n=n+1) begin
                     weight_mat[m][n] <= (m<=n) ? 1 : 0;
                 end
             end
         end
         else begin
-            foreach(weight_mat[m]) begin
-                foreach(weight_mat[m][n]) begin
+            for(int m=0; m<NUM_REQS; m=m+1) begin
+                for(int n=0; n<NUM_REQS; n=n+1) begin
                     if(grants[m]) begin
                         // Reset row
                         weight_mat[m][n] <= 0;

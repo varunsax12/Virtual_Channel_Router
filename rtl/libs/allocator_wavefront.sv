@@ -23,9 +23,9 @@ module allocator_wavefront #(
 );
 
     // TODO: Make condition for synthesis
-    initial begin
-        assert(NUM_REQS == NUM_RESS) else $display("**ERR: NUM_REQS must be equal to NUM_RESS for wavefront. Mask the extra ress.");
-    end
+    //initial begin
+    //    assert(NUM_REQS == NUM_RESS) else $display("**ERR: NUM_REQS must be equal to NUM_RESS for wavefront. Mask the extra ress.");
+    //end
 
     localparam NUM_PORTS = NUM_REQS;
 
