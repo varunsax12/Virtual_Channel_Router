@@ -139,6 +139,7 @@ module router_top #(
         .vca_dst_port(vca_dst_port),
         .dwnstr_router_increment(dwnstr_router_increment), 
         .sa_allocated_ports(vca_allocated_ports),
+        .out_valid(out_valid),
         .allocated_ip_vcs(vca_allocated_ip_vcs), 
         .vc_availability(vca_vc_availability), 
         .upstr_router_increment(upstr_router_increment)

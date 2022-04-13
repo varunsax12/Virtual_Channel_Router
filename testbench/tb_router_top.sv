@@ -132,6 +132,7 @@ module tb_vc_allocator;
         @(negedge clk) reset = 1;
         @(negedge clk) reset = 0;
 
+        /*
         for (int i = 0; i < NUM_PORTS; ++i) begin
             for (int j = 0; j < NUM_VCS; ++j) begin
                 rt.vc_buffer[i][j][`FLIT_DATA_WIDTH-1-:4] = $urandom%16;
@@ -139,11 +140,14 @@ module tb_vc_allocator;
                 rt.vc_valid[i][j] = 1;
             end
         end
-    
+        */
+
         // Input_data and 
         foreach(input_data[i]) begin
-            input_data[i][`FLIT_DATA_WIDTH-1-:4] = $urandom%16;
-            input_valid[i] = 0;
+            for(int j = 0; j < `FLIT_DATA_WIDTH/4; ++j) begin
+                input_data[i][`FLIT_DATA_WIDTH-(j*4)-1-:4] = $urandom%16;
+            end
+            input_valid[i] = 1;
         end
         foreach(dwnstr_router_increment[i]) begin
             dwnstr_router_increment[i] = 0;
@@ -151,7 +155,7 @@ module tb_vc_allocator;
                 dwnstr_router_increment[i] = 0;
         end
         //#9 display();
-        for (int i = 0; i < 5; ++i) begin
+        for (int i = 0; i < 10; ++i) begin
             @(negedge clk);
             //display();
         end

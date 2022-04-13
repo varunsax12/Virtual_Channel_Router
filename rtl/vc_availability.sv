@@ -19,6 +19,8 @@ module vc_availability #(
     input logic  [NUM_PORTS-2:0] dwnstr_router_increment,
     // Opports allocated for each ip port
     input logic  [NUM_PORTS-1:0] sa_allocated_ports [NUM_PORTS-1:0],
+    // Opport validity, used to verify the flits has crossed the switch traversal stage, critical for vc_availability
+    input logic  [NUM_PORTS-1:0] out_valid,
     // Opvcs allocated for each ip vcs
     input logic  [NUM_VCS*NUM_PORTS-1:0] allocated_ip_vcs [NUM_VCS*NUM_PORTS-1:0],
     // Latest vc availability based on down stream credit increments, allocated ports in the current router
@@ -125,16 +127,28 @@ module vc_availability #(
     //logic upstr_router_increment [NUM_PORTS-1:0];
     always_comb begin
         // Re-initialize counter
-        for(int i=0; i<NUM_PORTS; i=i+1)
-            curr_router_decrement[i] = 0;
+        if(reset) begin
+            for(int i=0; i<NUM_PORTS; i=i+1)
+                curr_router_decrement[i] = 0;
+        end
 
         for(int i=0; i<NUM_PORTS; i=i+1) begin
             if(|sa_allocated_ports[i]) begin
                 // Request granted
-                exupstr_router_increment[i] = 1; //0;
                 for(int ii=0; ii<NUM_PORTS; ii=ii+1) begin
-                    if(sa_allocated_ports[i][ii])
-                        curr_router_decrement[ii] = 1;
+                    if(sa_allocated_ports[i][ii]) begin
+
+                        // Decrement only if its not already decremented, this is to avoid double decrementing
+                        // through curr_router_decrement and also a double count by considering the SA_allocated_ports
+                        if(!curr_router_decrement[ii])
+                            curr_router_decrement[ii] = 1;
+                        else
+                            curr_router_decrement[ii] = 0;
+
+                        // Increment upstream signal if the intended flit has reached the out VC
+                        if(out_valid[ii])
+                            exupstr_router_increment[i] = 1; //0;
+                    end
                 end
             end else begin
                 // Request not granted
