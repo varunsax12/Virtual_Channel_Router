@@ -142,7 +142,7 @@ module tb_vc_allocator;
         end
         */
 
-        // Input_data and 
+        //===============Input_data feed==================== 
         foreach(input_data[i]) begin
             for(int j = 0; j < `FLIT_DATA_WIDTH/4; ++j) begin
                 input_data[i][`FLIT_DATA_WIDTH-(j*4)-1-:4] = $urandom%16;
@@ -155,12 +155,28 @@ module tb_vc_allocator;
                 dwnstr_router_increment[i] = 0;
         end
         //#9 display();
-        for (int i = 0; i < 10; ++i) begin
+        for (int i = 0; i < 6; ++i) begin
             @(negedge clk);
             //display();
         end
-        //display();
-        //#11 display();
+        //================================================
+        $display("\nFlusing input data by invalidating all input ports");
+        //==============Input_data reset==================
+        foreach(input_data[i]) begin
+            input_valid[i] = 0;
+        end
+        foreach(dwnstr_router_increment[i]) begin
+            dwnstr_router_increment[i] = 0;
+            if(i==0)
+                dwnstr_router_increment[i] = 0;
+        end
+        //34+6=40 cycles are required to make all output ports invalid (basically flush out all input data)
+        for (int i = 0; i < 34; ++i) begin
+            @(negedge clk);
+            //display();
+        end
+        //================================================
+        
         $finish;
     end
 
