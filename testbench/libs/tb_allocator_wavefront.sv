@@ -30,14 +30,13 @@ module tb_allocator_wavefront();
     initial begin
         $dumpfile("test.vcd");
         $dumpvars(0, uut);
-        $monitor("Time=%d, Grants = %b %b %b %b", $time, grant[0], grant[1], grant[2], grant[3]);
-        $display("here.......");
+        $monitor("Time=%0d, Requests = %b %b %b %b, Grants = %b %b %b %b", $time, requests[0], requests[1], requests[2], requests[3], grant[0], grant[1], grant[2], grant[3]);
         @(negedge clk); reset = 1;
         @(negedge clk); reset = 0;
-        requests[0] = 1;
-        requests[1] = 0;
-        requests[2] = 0;
-        requests[3] = 1;
+        requests[0] = 15;
+        requests[1] = 7;
+        requests[2] = 7;
+        requests[3] = 15;
 
         #100;
         $finish;

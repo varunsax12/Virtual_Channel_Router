@@ -32,20 +32,20 @@ module select_vc #(
             // Arbitrate for a single VC
             logic [NUM_VC-1:0] one_hot_index;
             arbiter_top #(
-                .NUM_REQS(NUM_VC)
+                .NUM_REQS   (NUM_VC)
             ) mask_ab (
-                .clk(clk),
-                .reset(reset),
-                .requests(mask),
-                .grants(one_hot_index)
+                .clk        (clk),
+                .reset      (reset),
+                .requests   (mask),
+                .grants     (one_hot_index)
             );
 
             // Convert the one hot index into index
             one_hot_2_index #(
-                .NUM_BITS(NUM_VC)
+                .NUM_BITS       (NUM_VC)
             ) vc_index (
-                .one_hot_input(one_hot_index),
-                .output_index(vc_index)
+                .one_hot_input  (one_hot_index),
+                .output_index   (vc_index)
             );
         end
         else begin

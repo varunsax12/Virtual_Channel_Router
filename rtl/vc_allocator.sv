@@ -11,9 +11,8 @@ module vc_allocator #(
     parameter NUM_VCS = 4
 ) (
     // Standard
-    input wire                   clk,
-    input wire                   reset,
-    input wire   [NUM_PORTS-1:0] dst_port [NUM_VCS*NUM_PORTS-1:0],
+    input wire clk, reset,
+    input wire   [NUM_PORTS-1:0]         dst_port         [NUM_VCS*NUM_PORTS-1:0],
     input wire   [NUM_VCS*NUM_PORTS-1:0] vc_availability,
     output logic [NUM_VCS*NUM_PORTS-1:0] allocated_ip_vcs [NUM_VCS*NUM_PORTS-1:0]
 );
@@ -39,11 +38,14 @@ module vc_allocator #(
     end   
 
     // Feed the avaialble_op_vcs array of vectors to the allocator and obtain the allocated_ip_vcs array of vectors
-    allocator_top #(.NUM_REQS(NUM_PORTS*NUM_VCS), .NUM_RESS(NUM_PORTS*NUM_VCS)) atop(
-        .clk(clk),
-        .reset(reset),
-        .requests(available_op_vcs),
-        .grants(allocated_ip_vcs)
+    allocator_top #(
+        .NUM_REQS   (NUM_PORTS*NUM_VCS),
+        .NUM_RESS   (NUM_PORTS*NUM_VCS)
+    ) atop(
+        .clk        (clk),
+        .reset      (reset),
+        .requests   (available_op_vcs),
+        .grants     (allocated_ip_vcs)
     );
 
 endmodule

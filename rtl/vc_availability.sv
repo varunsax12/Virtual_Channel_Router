@@ -14,19 +14,19 @@ module vc_availability #(
     input logic clk, 
     input logic reset,
     // Flit final destination ports as computed by route compute
-    input logic  [NUM_PORTS-1:0] vca_dst_port [NUM_VCS*NUM_PORTS-1:0],
+    input logic  [NUM_PORTS-1:0]            vca_dst_port [NUM_VCS*NUM_PORTS-1:0],
     // Credits from down stream routers
-    input logic  [NUM_PORTS-2:0] dwnstr_router_increment,
+    input logic  [NUM_PORTS-2:0]            dwnstr_router_increment,
     // Opports allocated for each ip port
-    input logic  [NUM_PORTS-1:0] sa_allocated_ports [NUM_PORTS-1:0],
+    input logic  [NUM_PORTS-1:0]            sa_allocated_ports [NUM_PORTS-1:0],
     // Opport validity, used to verify the flits has crossed the switch traversal stage, critical for vc_availability
-    input logic  [NUM_PORTS-1:0] out_valid,
+    input logic  [NUM_PORTS-1:0]            out_valid,
     // Opvcs allocated for each ip vcs
-    input logic  [NUM_VCS*NUM_PORTS-1:0] allocated_ip_vcs [NUM_VCS*NUM_PORTS-1:0],
+    input logic  [NUM_VCS*NUM_PORTS-1:0]    allocated_ip_vcs [NUM_VCS*NUM_PORTS-1:0],
     // Latest vc availability based on down stream credit increments, allocated ports in the current router
-    output logic [NUM_VCS*NUM_PORTS-1:0] vc_availability,
+    output logic [NUM_VCS*NUM_PORTS-1:0]    vc_availability,
     // Upstream credit increments based on flits released in current router
-    output logic [NUM_PORTS-2:0] upstr_router_increment
+    output logic [NUM_PORTS-2:0]            upstr_router_increment
 );
     /*
     NOTE: Need to consider only NUM_PORTS-1 ports for downstream and upstream, as local port as port[NUM_PORTS-2]
@@ -105,9 +105,16 @@ module vc_availability #(
     
     // Instantiate module to update vc_availability
     logic curr_router_decrement [NUM_PORTS-1:0] ; // Updated in the end of VC Availability
-    update_vca #(.NUM_PORTS(NUM_PORTS),.NUM_VCS(NUM_VCS)) uvca (.curr_router_decrement(curr_router_decrement),
-    .dwnstr_router_increment(exdwnstr_router_increment), .old_vc_availability(old_vc_availability),
-    .new_vc_availability(vc_availability));
+    update_vca #(
+        .NUM_PORTS              (NUM_PORTS),
+        .NUM_VCS                (NUM_VCS)
+    ) uvca (
+        .curr_router_decrement  (curr_router_decrement),
+        .dwnstr_router_increment(exdwnstr_router_increment),
+        .old_vc_availability    (old_vc_availability),
+        .new_vc_availability    (vc_availability)
+    );
+
     // Increment & Decrement based on Current router decisions=>
     // Get the requested op vcs for every ip vc
     logic [NUM_VCS*NUM_PORTS-1:0] requested_op_vcs [NUM_VCS*NUM_PORTS-1:0];
@@ -124,7 +131,7 @@ module vc_availability #(
     // Based on the requests that are cleared (flit released)
     // 1. Assign upstream router increment signals, indicating that the request has been granted.
     // 2. Assign current router decrement signals, indicating latest vc availability.
-    //logic upstr_router_increment [NUM_PORTS-1:0];
+
     always_comb begin
         // Re-initialize counter
         if(reset) begin
@@ -156,20 +163,5 @@ module vc_availability #(
             end
         end
     end
-
-            /*
-            for(int j=0; j<NUM_VCS; j=j+1) begin
-                if( 
-                    (|requested_op_vcs[i*NUM_VCS+j]!=0) && 
-                    !(|(allocated_ip_vcs[i*NUM_VCS+j] & requested_op_vcs[i*NUM_VCS+j]))
-                ) begin
-                    exupstr_router_increment[i] = 1;
-                    curr_router_decrement[i] = 0;
-                end else begin
-                    exupstr_router_increment[i] = 0;
-                    curr_router_decrement[i] = 1;                    
-                end
-            end
-            */
 
 endmodule

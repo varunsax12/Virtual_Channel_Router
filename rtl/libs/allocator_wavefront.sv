@@ -15,11 +15,11 @@ module allocator_wavefront #(
     parameter NUM_RESS = NUM_REQS
 ) (
     // Standard inputs
-    input logic clk, reset,
+    input logic                 clk, reset,
     // NUM_RESS requests for each requestor (out of NUM_REQS)
-    input logic [NUM_RESS-1:0] requests[NUM_REQS-1:0],
+    input logic [NUM_RESS-1:0]  requests    [NUM_REQS-1:0],
     // NUM_REQS grants for each resource (out of NUM_RESS)
-    output reg [NUM_REQS-1:0] grants[NUM_RESS-1:0]
+    output reg [NUM_REQS-1:0]   grants      [NUM_RESS-1:0]
 );
 
     // TODO: Make condition for synthesis
@@ -29,59 +29,59 @@ module allocator_wavefront #(
 
     localparam NUM_PORTS = NUM_REQS;
 
-    wire [NUM_PORTS-1:0] local_requests[NUM_PORTS-1:0];
-    wire [NUM_PORTS-1:0] local_grants[NUM_PORTS-1:0];
+    wire [NUM_PORTS-1:0] local_requests [NUM_PORTS-1:0];
+    wire [NUM_PORTS-1:0] local_grants   [NUM_PORTS-1:0];
 
     logic [NUM_PORTS-1:0] g_priority;
 
     for (genvar i = 0; i < NUM_PORTS; ++i) begin
         one_hot_rotate #(
-            .NUM_PORTS(NUM_PORTS),
-            .SHIFT_LEFT(0)
+            .NUM_PORTS      (NUM_PORTS),
+            .SHIFT_LEFT     (0)
         ) ohr_req_wv (
-            .one_hot_amt(g_priority),
-            .data(requests[i]),
-            .out_data(local_requests[i])
+            .one_hot_amt    (g_priority),
+            .data           (requests[i]),
+            .out_data       (local_requests[i])
         );
 
         one_hot_rotate #(
-            .NUM_PORTS(NUM_PORTS),
-            .SHIFT_LEFT(1)
+            .NUM_PORTS      (NUM_PORTS),
+            .SHIFT_LEFT     (1)
         ) ohr_grt_wv (
-            .one_hot_amt(g_priority),
-            .data(local_grants[i]),
-            .out_data(grants[i])
+            .one_hot_amt    (g_priority),
+            .data           (local_grants[i]),
+            .out_data       (grants[i])
         );
     end
 
     array_wavefront #(
-        .NUM_PORTS(NUM_PORTS)
+        .NUM_PORTS          (NUM_PORTS)
     ) arr_wv (
-        .g_priority(NUM_PORTS'(1'b1)),
-        .requests(local_requests),
-        .grants(local_grants)
+        .g_priority         (NUM_PORTS'(1'b1)),
+        .requests           (local_requests),
+        .grants             (local_grants)
     );
 
     // Priority calculation and storage block
     priority_block_wv #(
-        .NUM_PORTS(NUM_PORTS)
+        .NUM_PORTS          (NUM_PORTS)
     ) pb_wv (
-        .clk(clk),
-        .reset(reset),
-        .grants(grants),
-        .g_priority(g_priority)
+        .clk                (clk),
+        .reset              (reset),
+        .grants             (grants),
+        .g_priority         (g_priority)
     );
 
 endmodule
 
 // One-hot rotate block
 module one_hot_rotate #(
-    parameter NUM_PORTS = 4,
+    parameter NUM_PORTS  = 4,
     parameter SHIFT_LEFT = 1 // set to 0 for shift right
 ) (
-    input [NUM_PORTS-1:0] one_hot_amt,
-    input [NUM_PORTS-1:0] data,
-    output logic [NUM_PORTS-1:0] out_data
+    input logic [NUM_PORTS-1:0]     one_hot_amt,
+    input logic [NUM_PORTS-1:0]     data,
+    output logic [NUM_PORTS-1:0]    out_data
 );
     generate
         logic [2*NUM_PORTS-1:0] data_rot;
@@ -116,9 +116,9 @@ endmodule
 module priority_block_wv #(
     parameter NUM_PORTS = 4
 ) (
-    input clk, reset,
-    input [NUM_PORTS-1:0]  grants[NUM_PORTS-1:0],
-    output [NUM_PORTS-1:0] g_priority
+    input logic                     clk, reset,
+    input logic [NUM_PORTS-1:0]     grants[NUM_PORTS-1:0],
+    output logic [NUM_PORTS-1:0]    g_priority
 );
 
     reg [NUM_PORTS-1:0] g_priority_state;
@@ -143,13 +143,13 @@ module priority_block_wv #(
     
     logic [NUM_PORTS-1:0] arb_priority_grants;
     arbiter_top #(
-        .NUM_REQS(NUM_PORTS)
+        .NUM_REQS   (NUM_PORTS)
     ) wv_priority (
-        .clk(clk),
-        .reset(reset),
-        .requests(diagonal_grants),
+        .clk        (clk),
+        .reset      (reset),
+        .requests   (diagonal_grants),
         // Grant/g_priority calculated
-        .grants(arb_priority_grants)
+        .grants     (arb_priority_grants)
     );
 
     always @(posedge clk) begin
@@ -169,15 +169,15 @@ endmodule
 // y_1 is y(i+1,j)
 // priority is (i+j) mod n
 module bitcell_wavefront (
-    input x, y, g_priority, request,
-    output x_1, y_1, grant
+    input logic x, y, g_priority, request,
+    output logic x_1, y_1, grant
 );
     wire or_x, or_y;
-    assign or_x = g_priority | x;
-    assign or_y = g_priority | y;
+    assign or_x  = g_priority | x;
+    assign or_y  = g_priority | y;
     assign grant = request & or_x & or_y;
-    assign x_1 = (~grant) & or_x;
-    assign y_1 = (~grant) & or_y;
+    assign x_1   = (~grant) & or_x;
+    assign y_1   = (~grant) & or_y;
  
 endmodule
 
@@ -185,9 +185,9 @@ endmodule
 module array_wavefront #(
     parameter NUM_PORTS = 4
 ) (
-    input [NUM_PORTS-1:0]   g_priority,
-    input [NUM_PORTS-1:0]   requests[NUM_PORTS-1:0],
-    output [NUM_PORTS-1:0]  grants[NUM_PORTS-1:0]
+    input logic [NUM_PORTS-1:0]   g_priority,
+    input logic [NUM_PORTS-1:0]   requests  [NUM_PORTS-1:0],
+    output logic [NUM_PORTS-1:0]  grants    [NUM_PORTS-1:0]
 );
     // considered as input ports
     logic [NUM_PORTS:0][NUM_PORTS:0] x, y;
@@ -206,13 +206,13 @@ module array_wavefront #(
                 assign y_in = 0;
             end
             bitcell_wavefront bt_wv (
-                .x(x_in),
-                .y(y_in),
-                .g_priority(g_priority[(i+j)%NUM_PORTS]),
-                .request(requests[i][j]),
-                .x_1(x[i][j+1]),
-                .y_1(y[i+1][j]),
-                .grant(grants[i][j])
+                .x          (x_in),
+                .y          (y_in),
+                .g_priority (g_priority[(i+j)%NUM_PORTS]),
+                .request    (requests[i][j]),
+                .x_1        (x[i][j+1]),
+                .y_1        (y[i+1][j]),
+                .grant      (grants[i][j])
             );
 
             // connect the edge outs back as inputs
