@@ -18,7 +18,7 @@ set DESIGN router_top
 # otherwise change clk
 set clkpin clk
 
-# Target frequency in MHz for optimization
+# Clock period in ps
 set delay 10000
 
 #**************************************************/
