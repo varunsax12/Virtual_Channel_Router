@@ -28,7 +28,7 @@ all:    simv
 
 #TESTBENCH = 	testbench/libs/tb_allocator_wavefront.sv
 TESTBENCH = 	testbench/tb_router_top.sv
-SIMFILES =	rtl/libs/*.sv	rtl/*.sv \
+SIMFILES =	rtl/libs/*.sv	rtl/*.sv rtl/router_modules/*.sv\
 	VR_define.vh
 SYNFILES = synth/pipeline.vg
 

@@ -14,25 +14,25 @@ module allocator_separable #(
     input wire                 clk,
     input wire                 reset,
     // 'NUM_RESS' requests for each requestor (out of NUM_REQS)
-    input wire  [NUM_RESS-1:0] requests[NUM_REQS-1:0],
+    input wire  [NUM_RESS-1:0] requests [NUM_REQS-1:0],
     // 'NUM_REQS' grants for each resource (out of NUM_RESS)
-    output wire [NUM_RESS-1:0] grants[NUM_REQS-1:0]
+    output wire [NUM_RESS-1:0] grants   [NUM_REQS-1:0]
 );
 
     // Input port grants
-    logic [NUM_RESS-1:0] ip_grants[NUM_REQS-1:0];
+    logic [NUM_RESS-1:0] ip_grants      [NUM_REQS-1:0];
     // Transform input port grants to the output port requestor format
     logic [NUM_REQS-1:0] bunch_ip_grants[NUM_RESS-1:0];
 
     // First stage: Choose one VC per input port
     for(genvar i=0; i<NUM_REQS; i++) begin
         arbiter_top #(
-            .NUM_REQS(NUM_RESS)
+            .NUM_REQS   (NUM_RESS)
         ) select_vc (
-            .clk(clk),
-            .reset(reset),
-            .requests(requests[i]),
-            .grants(ip_grants[i])
+            .clk        (clk),
+            .reset      (reset),
+            .requests   (requests[i]),
+            .grants     (ip_grants[i])
         );
     end
   
@@ -47,12 +47,12 @@ module allocator_separable #(
     logic [NUM_REQS-1:0] bunch_op_grants [NUM_RESS-1:0];
     for(genvar i=0; i<NUM_RESS; i++) begin
         arbiter_top #(
-            .NUM_REQS(NUM_REQS)
+            .NUM_REQS   (NUM_REQS)
         ) select_ip (
-            .clk(clk),
-            .reset(reset),
-            .requests(bunch_ip_grants[i]),
-            .grants(bunch_op_grants[i])
+            .clk        (clk),
+            .reset      (reset),
+            .requests   (bunch_ip_grants[i]),
+            .grants     (bunch_op_grants[i])
         );
     end
 

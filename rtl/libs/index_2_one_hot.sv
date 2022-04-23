@@ -4,7 +4,7 @@
 //    GT id: 903562211
 
 module index_2_one_hot #(
-    parameter NUM_BITS = 2,
+    parameter NUM_BITS     = 2,
     parameter ONE_HOT_SIZE = 2**NUM_BITS
 ) (
     input logic [NUM_BITS-1:0]  index,

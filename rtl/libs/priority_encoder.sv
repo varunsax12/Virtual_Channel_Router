@@ -6,8 +6,8 @@ module priority_encoder #(
     parameter NUM_INPUTS = 4,
     parameter NUM_BITS   = $clog2(NUM_INPUTS)
 ) (
-    input [NUM_INPUTS-1:0]   in_signals,
-    output reg [NUM_BITS-1:0]    out_index
+    input [NUM_INPUTS-1:0]      in_signals,
+    output reg [NUM_BITS-1:0]   out_index
 );
 
     always_comb begin

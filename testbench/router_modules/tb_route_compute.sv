@@ -24,10 +24,13 @@ module tb_route_compute();
     );
 
     initial begin
-        current_router = 5;
-        dest_router = 8;
-        #10;
-        $display("%b", direction);
+        for (int i = 0; i < 5; ++i) begin
+            current_router = $urandom%16;
+            dest_router = $urandom%16;
+            #10;
+            $display("Time = %0d, current_router=%0d, dest_router=%0d, direction=%b", $time, current_router, dest_router, direction);
+        end
+        $finish;
     end
 
 endmodule

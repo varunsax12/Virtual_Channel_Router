@@ -18,10 +18,10 @@ module arbiter_matrix #(
     output wire [NUM_REQS-1:0] grants
 );
 
-    logic weight_mat[NUM_REQS-1:0][NUM_REQS-1:0];
-    logic dable[NUM_REQS-1:0];
-    logic tmp_dable[NUM_REQS-1:0][NUM_REQS-1:0];
-    logic tmp_or[NUM_REQS-1:0][NUM_REQS-1:0];
+    logic weight_mat    [NUM_REQS-1:0][NUM_REQS-1:0];
+    logic dable         [NUM_REQS-1:0];
+    logic tmp_dable     [NUM_REQS-1:0][NUM_REQS-1:0];
+    logic tmp_or        [NUM_REQS-1:0][NUM_REQS-1:0];
 
     // Disable signals
     always_comb begin

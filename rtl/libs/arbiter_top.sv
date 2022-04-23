@@ -16,22 +16,22 @@ module arbiter_top #(
 
     if (`ARBITER_TYPE == `ROUND_ROBIN_ARBITER) begin
         arbiter_round_robin #(
-            .NUM_REQS(NUM_REQS)
+            .NUM_REQS   (NUM_REQS)
         ) arbiter (
-            .clk(clk),
-            .reset(reset),
-            .requests(requests),
-            .grants(grants)
+            .clk        (clk),
+            .reset      (reset),
+            .requests   (requests),
+            .grants     (grants)
         );
     end
     else begin
         arbiter_matrix #(
-            .NUM_REQS(NUM_REQS)
+            .NUM_REQS   (NUM_REQS)
         ) arbiter (
-            .clk(clk),
-            .reset(reset),
-            .requests(requests),
-            .grants(grants)
+            .clk        (clk),
+            .reset      (reset),
+            .requests   (requests),
+            .grants     (grants)
         );
     end
 

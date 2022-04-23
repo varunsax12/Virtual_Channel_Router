@@ -14,9 +14,9 @@ module update_vca #(
     parameter NUM_VCS = 4
 ) (
     // Decrement available op vcs based on current router assignments
-    input logic curr_router_decrement[NUM_PORTS-1:0],
+    input logic curr_router_decrement   [NUM_PORTS-1:0],
     // Increment available op vcs based on down stream router completing few ip vcs
-    input logic dwnstr_router_increment[NUM_PORTS-1:0],
+    input logic dwnstr_router_increment [NUM_PORTS-1:0],
     // Updated at posedge clk, after SA Allocation
     input logic [NUM_VCS*NUM_PORTS-1:0] old_vc_availability,
     // Computed at posedge clk, increment decrement w.r.t old vc availability
@@ -36,11 +36,9 @@ module update_vca #(
                 if(curr_router_decrement[i]) begin
                     cont_search[i*NUM_VCS+j] = 1;
                     for(int ii=(i+1)*NUM_VCS-1; ii>i*NUM_VCS-1; ii=ii-1) begin
-                        //tmp_vc_availability[ii] = old_vc_availability[ii];
-                        //each(tmp_vc_availability[(i+1)*NUM_VCS-1-:NUM_VCS][ii]) begin
                         if(cont_search[i*NUM_VCS+j] && (tmp_vc_availability[ii]==1)) begin
                             cont_search[i*NUM_VCS+j] = 0;
-                            tmp_vc_availability[ii] = 0;
+                            tmp_vc_availability[ii]  = 0;
                         end
                     end
                 end
@@ -48,13 +46,11 @@ module update_vca #(
                 if(dwnstr_router_increment[i]) begin
                     cont_search[i*NUM_VCS+j] = 1;
                     for(int ii=(i+1)*NUM_VCS-1; ii>i*NUM_VCS-1; ii=ii-1) begin
-                        //tmp_vc_availability[ii] = old_vc_availability[ii];
-                        //each(tmp_vc_availability[(i+1)*NUM_VCS-1-:NUM_VCS][ii]) begin
                         if(cont_search[i*NUM_VCS+j] && (tmp_vc_availability[ii]==0)) begin
                             cont_search[i*NUM_VCS+j] = 0;
-                            tmp_vc_availability[ii] = 1;
+                            tmp_vc_availability[ii]  = 1;
                         end else begin
-                            tmp_vc_availability[ii] = old_vc_availability[ii];
+                            tmp_vc_availability[ii]  = old_vc_availability[ii];
                         end
                     end
                 end

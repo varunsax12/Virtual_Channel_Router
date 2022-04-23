@@ -13,12 +13,12 @@ module switch_allocator #(
 );
 
     allocator_top #(
-        .NUM_REQS(NUM_PORTS)
+        .NUM_REQS   (NUM_PORTS)
     ) sw_alloc (
-        .clk(clk),
-        .reset(reset),
-        .requests(port_requests),
-        .grants(allocated_ports)
+        .clk        (clk),
+        .reset      (reset),
+        .requests   (port_requests),
+        .grants     (allocated_ports)
     );
 
 endmodule

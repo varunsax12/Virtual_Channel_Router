@@ -29,11 +29,10 @@ module tb_arbiter_round_robin();
     initial begin
         $dumpfile("test.vcd");
         $dumpvars(0, uut);
-        $monitor("Request = %b, Grants = %b", requests, grant);
-        $display("here.......");
+        $monitor("Time = %0d, Request = %b, Grants = %b", $time, requests, grant);
         @(negedge clk); reset = 1;
         @(negedge clk); reset = 0;
-        requests = 1;
+        requests = {NUM_REQS{1'b1}};
 
         #200;
         $finish;
