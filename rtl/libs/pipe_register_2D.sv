@@ -3,7 +3,7 @@
 //    Author: Varun Saxena
 //    GT id: 903562211
 
-module pipe_register #(
+module pipe_register_2D #(
     parameter DATAW = 4,
     parameter ARRAY_DEPTH = 4
 ) (

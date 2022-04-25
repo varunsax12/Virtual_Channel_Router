@@ -7,7 +7,7 @@
 
 `include "VR_define.vh"
 
-module tb_vc_allocator;
+module tb_router_top();
     parameter NUM_PORTS = 5;
     parameter NUM_VCS = 4;
     parameter PORT_BITS = $clog2(NUM_PORTS);
@@ -64,7 +64,7 @@ module tb_vc_allocator;
         $display("\n**********VC BUFFER STATUS******************");
         for (int i = 0; i < NUM_PORTS; ++i) begin
             for (int j = 0; j < NUM_VCS; ++j) begin
-                $display("Port=%0d, VC=%0d, vc_valid=%b, vc_empty=%b, vc_buffer=%b", i, j, rt.vc_valid[i][j], rt.vc_empty[i][j], rt.vc_buffer[i][j]);
+                $display("Port=%0d, VC=%0d, vc_valid=%b, vc_empty=%b, vc_buffer=%b", i, j, rt.vc_valid[i][j], rt.vc_empty[i][j], rt.vc_outdata[i][j]);
             end
         end
 
@@ -154,11 +154,12 @@ module tb_vc_allocator;
             if(i==0)
                 dwnstr_router_increment[i] = 0;
         end
+        @(negedge clk)
         //#9 display();
-        for (int i = 0; i < 6; ++i) begin
-            @(negedge clk);
+        // for (int i = 0; i < 6; ++i) begin
+            // @(negedge clk);
             //display();
-        end
+        // end
         //================================================
         $display("\nFlusing input data by invalidating all input ports");
         //==============Input_data reset==================
