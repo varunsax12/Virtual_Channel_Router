@@ -24,7 +24,7 @@ module tb_router_top();
 
     // Waveform compatible
     wire [NUM_VCS*NUM_PORTS-1:0] [NUM_PORTS-1:0] wv_dst_ports;
-    wire [NUM_VCS*NUM_PORTS-1:0] [NUM_VCS*NUM_PORTS-1:0] wv_allocated_ip_vcs;
+    wire [NUM_VCS*NUM_PORTS-1:0] [NUM_VCS*NUM_PORTS-1:0] wv_allocated_op_vcs;
     
     logic [`FLIT_DATA_WIDTH-1:0] out_data [NUM_PORTS-1:0];
     logic [NUM_PORTS-1:0]        out_valid;
@@ -84,7 +84,7 @@ module tb_router_top();
         for(int i = 0; i < NUM_PORTS; ++i) begin
             $display("VCAvailability, Port=%0d, curr_router_decrement:%b, old_vc_availability:%b, new_vc_availability:%b", i, rt.vcavail.curr_router_decrement[i], rt.vcavail.old_vc_availability, rt.vca_vc_availability);
             //for(int j = 0; j < NUM_VCS; ++j) begin
-            //    $display("ipvc:%0d, requested_op_vcs:%b, allocated_op_vcs:%b, final_allocated_op_vcs:%b", (i*NUM_VCS+j), rt.vcavail.requested_op_vcs[i*NUM_VCS+j], rt.allocated_ip_vcs[i*NUM_VCS+j], rt.vcavail.final_allocated_ip_vcs[i*NUM_VCS+j]);
+            //    $display("ipvc:%0d, requested_op_vcs:%b, allocated_op_vcs:%b, final_allocated_op_vcs:%b", (i*NUM_VCS+j), rt.vcavail.requested_op_vcs[i*NUM_VCS+j], rt.allocated_op_vcs[i*NUM_VCS+j], rt.vcavail.final_allocated_op_vcs[i*NUM_VCS+j]);
             //end
         end
         $display("\nMask Generation:");
@@ -97,8 +97,8 @@ module tb_router_top();
         $display("\n**********VC ALLOCATION******************");
         for (int i = 0; i < NUM_PORTS; ++i) begin
             for (int j = 0; j < NUM_VCS; ++j) begin
-                //$display("Port=%0d, VC=%0d, allocated_ip_vcs=%b", i, j, rt.allocated_ip_vcs[i*NUM_VCS+j]);
-                $display("ipvc:%0d, requested_op_vcs:%b, allocated_op_vcs:%b, sa_allocated_ports=%b, final_allocated_op_vcs:%b", (i*NUM_VCS+j), rt.vcavail.requested_op_vcs[i*NUM_VCS+j], rt.vcavail.allocated_ip_vcs[i*NUM_VCS+j], rt.vcavail.sa_allocated_ports[i], rt.vcavail.final_allocated_ip_vcs[i*NUM_VCS+j]);
+                //$display("Port=%0d, VC=%0d, allocated_op_vcs=%b", i, j, rt.allocated_op_vcs[i*NUM_VCS+j]);
+                $display("ipvc:%0d, requested_op_vcs:%b, allocated_op_vcs:%b, sa_allocated_ports=%b, final_allocated_op_vcs:%b", (i*NUM_VCS+j), rt.vcavail.requested_op_vcs[i*NUM_VCS+j], rt.vcavail.allocated_op_vcs[i*NUM_VCS+j], rt.vcavail.sa_allocated_ports[i], rt.vcavail.final_allocated_op_vcs[i*NUM_VCS+j]);
             end
         end
 

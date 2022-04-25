@@ -155,7 +155,7 @@ module router_top #(
     end
 
     logic [NUM_VC*NUM_PORTS-1:0] vca_vc_availability;
-    logic [NUM_VC*NUM_PORTS-1:0] vca_allocated_ip_vcs [NUM_VC*NUM_PORTS-1:0];
+    logic [NUM_VC*NUM_PORTS-1:0] vca_allocated_op_vcs [NUM_VC*NUM_PORTS-1:0];
     logic [NUM_PORTS-1:0]        vca_allocated_ports  [NUM_PORTS-1:0];
 
     // Computes VC Availability based on down stream router increments and current router assignees
@@ -170,7 +170,7 @@ module router_top #(
         .dwnstr_router_increment(dwnstr_router_increment), 
         .sa_allocated_ports     (vca_allocated_ports),
         .out_valid              (out_valid),
-        .allocated_ip_vcs       (vca_allocated_ip_vcs), 
+        .allocated_op_vcs       (vca_allocated_op_vcs), 
         .vc_availability        (vca_vc_availability), 
         .upstr_router_increment (upstr_router_increment)
     );
@@ -186,12 +186,13 @@ module router_top #(
     ) vca (
         .clk                (clk),
         .reset              (reset),
+        .dst_valid          (vca_dst_valid),
         .dst_port           (vca_dst_port),
         .vc_availability    (vca_vc_availability),
-        .allocated_ip_vcs   (vca_allocated_ip_vcs)
+        .allocated_op_vcs   (vca_allocated_op_vcs)
     );
 
-    logic [NUM_VC*NUM_PORTS-1:0] sa_allocated_ip_vcs [NUM_VC*NUM_PORTS-1:0];
+    logic [NUM_VC*NUM_PORTS-1:0] sa_allocated_op_vcs [NUM_VC*NUM_PORTS-1:0];
     logic [NUM_PORTS-1:0]        sa_dst_port [NUM_VC*NUM_PORTS-1:0];
     
     for (genvar i = 0; i < NUM_VC*NUM_PORTS; ++i) begin : pipe_vca
@@ -201,8 +202,8 @@ module router_top #(
             .clk        (clk),
             .reset      (reset),
             .enable     (1'b1),
-            .in_data    (vca_allocated_ip_vcs[i]),
-            .out_data   (sa_allocated_ip_vcs[i])
+            .in_data    (vca_allocated_op_vcs[i]),
+            .out_data   (sa_allocated_op_vcs[i])
         );
 
         pipe_register_1D #(
@@ -223,9 +224,9 @@ module router_top #(
     logic [NUM_PORTS*NUM_VC-1:0][NUM_PORTS*NUM_VC-1:0]  sa_vc_grants;
     logic [NUM_PORTS-1:0]                               sa_port_req         [NUM_PORTS-1:0];
 
-    // Conver the array struct between allocated_ip_vcs and vc_grants
+    // Conver the array struct between allocated_op_vcs and vc_grants
     for (genvar i = 0; i < NUM_PORTS*NUM_VC; ++i) begin : sw_map
-        assign sa_vc_grants[i] = sa_allocated_ip_vcs[i];
+        assign sa_vc_grants[i] = sa_allocated_op_vcs[i];
     end
     vc_req_2_port_req #(
         .NUM_PORTS      (NUM_PORTS),
