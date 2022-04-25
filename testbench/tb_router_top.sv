@@ -87,6 +87,12 @@ module tb_router_top();
             //    $display("ipvc:%0d, requested_op_vcs:%b, allocated_op_vcs:%b, final_allocated_op_vcs:%b", (i*NUM_VCS+j), rt.vcavail.requested_op_vcs[i*NUM_VCS+j], rt.allocated_ip_vcs[i*NUM_VCS+j], rt.vcavail.final_allocated_ip_vcs[i*NUM_VCS+j]);
             //end
         end
+        $display("\nMask Generation:");
+        for (int i = 0; i < NUM_PORTS; ++i) begin
+            for (int j = 0; j < NUM_VCS; ++j) begin
+                $display("Port=%0d, VC=%0d, VC dst port=%b, SA dst port=%b, BR dst port=%b, valid=%b", i, j, rt.vca_dst_port[i*NUM_VCS + j], rt.sa_allocated_ports[i], rt.br_allocated_ports[i], rt.vca_dst_valid[i*NUM_VCS+j]);
+            end
+        end
 
         $display("\n**********VC ALLOCATION******************");
         for (int i = 0; i < NUM_PORTS; ++i) begin
@@ -132,16 +138,6 @@ module tb_router_top();
         @(negedge clk) reset = 1;
         @(negedge clk) reset = 0;
 
-        /*
-        for (int i = 0; i < NUM_PORTS; ++i) begin
-            for (int j = 0; j < NUM_VCS; ++j) begin
-                rt.vc_buffer[i][j][`FLIT_DATA_WIDTH-1-:4] = $urandom%16;
-                //rt.vc_valid[i][j] = $urandom%2;
-                rt.vc_valid[i][j] = 1;
-            end
-        end
-        */
-
         //===============Input_data feed==================== 
         foreach(input_data[i]) begin
             for(int j = 0; j < `FLIT_DATA_WIDTH/4; ++j) begin
@@ -154,12 +150,9 @@ module tb_router_top();
             if(i==0)
                 dwnstr_router_increment[i] = 0;
         end
+
         @(negedge clk)
-        //#9 display();
-        // for (int i = 0; i < 6; ++i) begin
-            // @(negedge clk);
-            //display();
-        // end
+
         //================================================
         $display("\nFlusing input data by invalidating all input ports");
         //==============Input_data reset==================

@@ -14,12 +14,12 @@ module vc_availability #(
     input logic clk, 
     input logic reset,
     // Valid dst port signals
-    input logic                             vca_dst_valid[NUM_VCS*NUM_PORTS-1:0],
+    input logic [NUM_VCS*NUM_PORTS-1:0]     vca_dst_valid,
     // Flit final destination ports as computed by route compute
     input logic  [NUM_PORTS-1:0]            vca_dst_port [NUM_VCS*NUM_PORTS-1:0],
     // Credits from down stream routers
     input logic  [NUM_PORTS-2:0]            dwnstr_router_increment,
-    // Opports allocated for each ip port
+    // Outports allocated for each ip port
     input logic  [NUM_PORTS-1:0]            sa_allocated_ports [NUM_PORTS-1:0],
     // Opport validity, used to verify the flits has crossed the switch traversal stage, critical for vc_availability
     input logic  [NUM_PORTS-1:0]            out_valid,

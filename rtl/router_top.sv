@@ -9,6 +9,7 @@ module router_top #(
     parameter NUM_ROUTERS    = 16,
     parameter ROUTER_PER_ROW = 4,
     parameter ROUTER_ID      = 0,
+    parameter BUFFER_DEPTH   = 8, // keep in the power of 2
     parameter ROUTER_ID_BITS = $clog2(NUM_ROUTERS),
     parameter PORT_BITS      = $clog2(NUM_PORTS),
     parameter VC_BITS        = $clog2(NUM_VC)
@@ -21,10 +22,10 @@ module router_top #(
     input logic     [NUM_PORTS-1:0]         input_valid,
 
     // Signals from downstream routers for each non-local port
-    input logic     [NUM_PORTS-2:0]         dwnstr_router_increment,
+    input logic     [NUM_PORTS-2:0]         dwnstr_router_increment, // Excluding the local NIC
 
     // Router output
-    output logic    [NUM_PORTS-2:0]         upstr_router_increment,
+    output logic    [NUM_PORTS-2:0]         upstr_router_increment, // Excluding the local NIC
     output logic    [`FLIT_DATA_WIDTH-1:0]  out_data [NUM_PORTS-1:0],
     output logic    [NUM_PORTS-1:0]         out_valid
 );
@@ -45,7 +46,8 @@ module router_top #(
     for (genvar i = 0; i < NUM_PORTS; ++i) begin : vc_fifo_i
         for (genvar j = 0; j < NUM_VC; ++j) begin : vc_fifo_j
             fifo #(
-                .DATA_WIDTH(`FLIT_DATA_WIDTH)
+                .DATA_WIDTH(`FLIT_DATA_WIDTH),
+                .FIFO_DEPTH(BUFFER_DEPTH)
             ) vc_buffer_fifo (
                 .clk(clk),
                 .reset(reset),
@@ -115,11 +117,6 @@ module router_top #(
 
     logic   [NUM_PORTS-1:0]        vca_dst_port [NUM_VC*NUM_PORTS-1:0];
 
-    logic vca_dst_valid [NUM_VC*NUM_PORTS-1:0];
-    for (genvar i = 0; i < NUM_VC*NUM_PORTS; ++i) begin
-        assign vca_dst_valid[i] = 1;
-    end
-
     for (genvar i = 0; i < NUM_VC*NUM_PORTS; ++i) begin : pipe_rc
         pipe_register_1D #(
             .DATAW      (NUM_PORTS)
@@ -136,6 +133,26 @@ module router_top #(
     /************************************
     *       VC Availability             *
     ************************************/
+
+    // Use the SA and BR allocated ports per input port to create valid masks
+    // LOGIC: to avoid re-inserting the same values into the pipeline
+
+
+    logic [NUM_PORTS-1:0] sa_allocated_ports [NUM_PORTS-1:0];
+    logic [NUM_PORTS-1:0] br_allocated_ports [NUM_PORTS-1:0];
+
+    logic [NUM_VC*NUM_PORTS-1:0] vca_dst_valid;
+    for (genvar i = 0; i < NUM_PORTS; ++i) begin
+        for (genvar j = 0; j < NUM_VC; ++j) begin
+            always_comb begin
+                vca_dst_valid[i*NUM_VC + j] = 0;
+                if ((vca_dst_port[i*NUM_VC + j] != sa_allocated_ports[i]) &&
+                    (vca_dst_port[i*NUM_VC + j] != br_allocated_ports[i])) begin
+                    vca_dst_valid[i*NUM_VC + j] = 1;
+                end
+            end
+        end
+    end
 
     logic [NUM_VC*NUM_PORTS-1:0] vca_vc_availability;
     logic [NUM_VC*NUM_PORTS-1:0] vca_allocated_ip_vcs [NUM_VC*NUM_PORTS-1:0];
@@ -175,7 +192,7 @@ module router_top #(
     );
 
     logic [NUM_VC*NUM_PORTS-1:0] sa_allocated_ip_vcs [NUM_VC*NUM_PORTS-1:0];
-    logic   [NUM_PORTS-1:0]       sa_dst_port [NUM_VC*NUM_PORTS-1:0];
+    logic [NUM_PORTS-1:0]        sa_dst_port [NUM_VC*NUM_PORTS-1:0];
     
     for (genvar i = 0; i < NUM_VC*NUM_PORTS; ++i) begin : pipe_vca
         pipe_register_1D #(
@@ -205,7 +222,7 @@ module router_top #(
 
     logic [NUM_PORTS*NUM_VC-1:0][NUM_PORTS*NUM_VC-1:0]  sa_vc_grants;
     logic [NUM_PORTS-1:0]                               sa_port_req         [NUM_PORTS-1:0];
-    logic [NUM_PORTS-1:0]                               sa_allocated_ports  [NUM_PORTS-1:0];
+
     // Conver the array struct between allocated_ip_vcs and vc_grants
     for (genvar i = 0; i < NUM_PORTS*NUM_VC; ++i) begin : sw_map
         assign sa_vc_grants[i] = sa_allocated_ip_vcs[i];
@@ -229,8 +246,7 @@ module router_top #(
 
     assign vca_allocated_ports = sa_allocated_ports;
 
-    logic [NUM_PORTS-1:0] br_allocated_ports [NUM_PORTS-1:0];
-    logic   [NUM_PORTS-1:0] br_dst_port [NUM_VC*NUM_PORTS-1:0];
+    logic [NUM_PORTS-1:0] br_dst_port        [NUM_VC*NUM_PORTS-1:0];
 
     for (genvar i = 0; i < NUM_PORTS; ++i) begin : pipe_swa_1
         pipe_register_1D #(
