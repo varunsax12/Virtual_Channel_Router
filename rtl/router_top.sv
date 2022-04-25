@@ -33,19 +33,35 @@ module router_top #(
     *          VC                       *
     ************************************/
     // VC buffers
-    reg [`FLIT_DATA_WIDTH-1:0]        vc_buffer [NUM_PORTS-1:0][NUM_VC-1:0];
+    wire [NUM_PORTS-1:0][NUM_VC-1:0][`FLIT_DATA_WIDTH-1:0]        vc_indata, vc_outdata;
     // Valid signal (also used as empty signal using bitwise not)
-    reg  [NUM_VC-1:0]                 vc_valid  [NUM_PORTS-1:0];
-    wire [NUM_VC-1:0]                 vc_empty  [NUM_PORTS-1:0];
+    wire [NUM_PORTS-1:0][NUM_VC-1:0]    vc_valid, vc_empty, vc_full, vc_pop, vc_push;
 
-    // Generate empty signals
-    for (genvar i = 0; i < NUM_PORTS; ++i) begin
-        assign vc_empty[i] = ~vc_valid[i];
+    // Generate valid signals
+    for (genvar i = 0; i < NUM_PORTS; ++i) begin : vc_valid_signal
+        assign vc_valid[i] = ~vc_empty[i];
+    end
+
+    for (genvar i = 0; i < NUM_PORTS; ++i) begin : vc_fifo_i
+        for (genvar j = 0; j < NUM_VC; ++j) begin : vc_fifo_j
+            fifo #(
+                .DATA_WIDTH(`FLIT_DATA_WIDTH)
+            ) vc_buffer_fifo (
+                .clk(clk),
+                .reset(reset),
+                .push(vc_push[i][j]),
+                .pop(vc_pop[i][j]),
+                .indata(vc_indata[i][j]),
+                .outdata(vc_outdata[i][j]),
+                .empty(vc_empty[i][j]),
+                .full(vc_full[i][j])
+            );
+        end
     end
 
     // Keep a track of the first empty VC per PORT
     logic [VC_BITS-1:0]   empty_vc_index [NUM_PORTS-1:0];
-    for (genvar i = 0; i < NUM_PORTS; ++i) begin
+    for (genvar i = 0; i < NUM_PORTS; ++i) begin : vc_empty_index
         priority_encoder #(
             .NUM_INPUTS (NUM_VC)
         ) empty_vc_encoder (
@@ -58,20 +74,10 @@ module router_top #(
     /************************************
     *          Buffer write             *
     ************************************/
-    for (genvar i = 0; i < NUM_PORTS; ++i) begin
-        always @(posedge clk) begin
-            if (reset) begin
-                // Clear the VCs
-                vc_valid[i] <= 0;
-            end
-            // assign the incoming flits to the correct buffers
-            else begin
-                if (input_valid[i]) begin
-                    // Write the input flit data
-                    vc_buffer[i][empty_vc_index[i]] <= input_data[i];
-                    vc_valid[i][empty_vc_index[i]]  <= 1;
-                end
-            end
+    for (genvar i = 0; i < NUM_PORTS; ++i) begin : bw_i
+        for (genvar j = 0; j < NUM_VC; ++j) begin : bw_j
+            assign vc_push[i][j] = (j==empty_vc_index[i]) ? input_valid[i] : 0;
+            assign vc_indata[i][j] = (j==empty_vc_index[i]) ? input_data[i] : 0;
         end
     end
 
@@ -83,15 +89,15 @@ module router_top #(
 
     localparam DIR_BITS    = 3; // N, S, W, E, Eject
     localparam DIR_ONE_HOT = 2**DIR_BITS;
-    for (genvar i = 0; i < NUM_PORTS; ++i) begin
-        for (genvar j = 0; j < NUM_VC; ++j) begin
+    for (genvar i = 0; i < NUM_PORTS; ++i) begin : rc_i
+        for (genvar j = 0; j < NUM_VC; ++j) begin : rc_j
             logic [DIR_BITS-1:0] rc_vc_direction;
             route_compute # (
                 .NUM_ROUTERS    (NUM_ROUTERS),
                 .ROUTER_PER_ROW (ROUTER_PER_ROW)
             ) rc (
                 .current_router (ROUTER_ID_BITS'(ROUTER_ID)),
-                .dest_router    (vc_buffer[i][j][`FLIT_DATA_WIDTH-1-:ROUTER_ID_BITS]),
+                .dest_router    (vc_outdata[i][j][`FLIT_DATA_WIDTH-1-:ROUTER_ID_BITS]),
                 .direction      (rc_vc_direction)
             );
 
@@ -108,17 +114,19 @@ module router_top #(
     end
 
     logic   [NUM_PORTS-1:0]        vca_dst_port [NUM_VC*NUM_PORTS-1:0];
-    // TODO: Create enable signal for stalls
-    pipe_register #(
-        .DATAW      (NUM_PORTS),
-        .ARRAY_DEPTH(NUM_VC*NUM_PORTS)
-    ) rc2va (
-        .clk        (clk),
-        .reset      (reset),
-        .enable     (1'b1),
-        .in_data    (rc_dst_port),
-        .out_data   (vca_dst_port)
-    );
+
+    for (genvar i = 0; i < NUM_VC*NUM_PORTS; ++i) begin : pipe_rc
+        pipe_register_1D #(
+            .DATAW      (NUM_PORTS)
+        ) rc2va (
+            .clk        (clk),
+            .reset      (reset),
+            .enable     (1'b1),
+            .in_data    (rc_dst_port[i]),
+            .out_data   (vca_dst_port[i])
+        );
+    end
+
 
     /************************************
     *       VC Availability             *
@@ -161,29 +169,29 @@ module router_top #(
     );
 
     logic [NUM_VC*NUM_PORTS-1:0] sa_allocated_ip_vcs [NUM_VC*NUM_PORTS-1:0];
-    // TODO: Create enable signal for stalls
-    pipe_register #(
-        .DATAW      (NUM_VC*NUM_PORTS),
-        .ARRAY_DEPTH(NUM_VC*NUM_PORTS)
-    ) va2sa_aiv (
-        .clk        (clk),
-        .reset      (reset),
-        .enable     (1'b1),
-        .in_data    (vca_allocated_ip_vcs),
-        .out_data   (sa_allocated_ip_vcs)
-    );
     logic   [NUM_PORTS-1:0]       sa_dst_port [NUM_VC*NUM_PORTS-1:0];
-    // TODO: Create enable signal for stalls
-    pipe_register #(
-        .DATAW          (NUM_PORTS),
-        .ARRAY_DEPTH    (NUM_VC*NUM_PORTS)
-    ) va2sa_dst_port (
-        .clk            (clk),
-        .reset          (reset),
-        .enable         (1'b1),
-        .in_data        (vca_dst_port),
-        .out_data       (sa_dst_port)
-    );
+    
+    for (genvar i = 0; i < NUM_VC*NUM_PORTS; ++i) begin : pipe_vca
+        pipe_register_1D #(
+            .DATAW      (NUM_VC*NUM_PORTS)
+        ) va2sa_aiv (
+            .clk        (clk),
+            .reset      (reset),
+            .enable     (1'b1),
+            .in_data    (vca_allocated_ip_vcs[i]),
+            .out_data   (sa_allocated_ip_vcs[i])
+        );
+
+        pipe_register_1D #(
+            .DATAW          (NUM_PORTS)
+        ) va2sa_dst_port (
+            .clk            (clk),
+            .reset          (reset),
+            .enable         (1'b1),
+            .in_data        (vca_dst_port[i]),
+            .out_data       (sa_dst_port[i])
+        );
+    end
 
     /************************************
     *       Switch Allocation           *
@@ -193,7 +201,7 @@ module router_top #(
     logic [NUM_PORTS-1:0]                               sa_port_req         [NUM_PORTS-1:0];
     logic [NUM_PORTS-1:0]                               sa_allocated_ports  [NUM_PORTS-1:0];
     // Conver the array struct between allocated_ip_vcs and vc_grants
-    for (genvar i = 0; i < NUM_PORTS*NUM_VC; ++i) begin
+    for (genvar i = 0; i < NUM_PORTS*NUM_VC; ++i) begin : sw_map
         assign sa_vc_grants[i] = sa_allocated_ip_vcs[i];
     end
     vc_req_2_port_req #(
@@ -216,30 +224,31 @@ module router_top #(
     assign vca_allocated_ports = sa_allocated_ports;
 
     logic [NUM_PORTS-1:0] br_allocated_ports [NUM_PORTS-1:0];
-    // TODO: Create enable signal for stalls
-    pipe_register #(
-        .DATAW      (NUM_PORTS),
-        .ARRAY_DEPTH(NUM_PORTS)
-    ) sa2br_ap (
-        .clk        (clk),
-        .reset      (reset),
-        .enable     (1'b1),
-        .in_data    (sa_allocated_ports),
-        .out_data   (br_allocated_ports)
-    );
-
     logic   [NUM_PORTS-1:0] br_dst_port [NUM_VC*NUM_PORTS-1:0];
-    // TODO: Create enable signal for stalls
-    pipe_register #(
-        .DATAW      (NUM_PORTS),
-        .ARRAY_DEPTH(NUM_VC*NUM_PORTS)
-    ) sa2br_dst_port (
-        .clk        (clk),
-        .reset      (reset),
-        .enable     (1'b1),
-        .in_data    (sa_dst_port),
-        .out_data   (br_dst_port)
-    );
+
+    for (genvar i = 0; i < NUM_PORTS; ++i) begin : pipe_swa_1
+        pipe_register_1D #(
+            .DATAW      (NUM_PORTS)
+        ) sa2br_ap (
+            .clk        (clk),
+            .reset      (reset),
+            .enable     (1'b1),
+            .in_data    (sa_allocated_ports[i]),
+            .out_data   (br_allocated_ports[i])
+        );
+    end
+
+    for (genvar i = 0; i < NUM_VC*NUM_PORTS; ++i) begin : pipe_swa_2
+        pipe_register_1D #(
+            .DATAW      (NUM_PORTS)
+        ) sa2br_dst_port (
+            .clk        (clk),
+            .reset      (reset),
+            .enable     (1'b1),
+            .in_data    (sa_dst_port[i]),
+            .out_data   (br_dst_port[i])
+        );
+    end
 
     /************************************
     *       Buffer read                 *
@@ -247,7 +256,7 @@ module router_top #(
 
     logic   [NUM_PORTS-1:0] br_vc_direction [NUM_PORTS-1:0][NUM_VC-1:0];
     // Convert the 2D array of dst port into 3D array splitting across i/p VC and port
-    for (genvar i = 0; i < NUM_PORTS; ++i) begin
+    for (genvar i = 0; i < NUM_PORTS; ++i) begin : br_dir
         assign br_vc_direction[i] = br_dst_port[(i+1)*NUM_VC-1-:NUM_VC];
     end
 
@@ -257,7 +266,7 @@ module router_top #(
     // VC index to read per port
     logic   [VC_BITS-1:0]   br_vc_index [NUM_PORTS-1:0];
 
-    for (genvar i = 0; i < NUM_PORTS; ++i) begin
+    for (genvar i = 0; i < NUM_PORTS; ++i) begin : br_select_vc
         assign br_vc_read_valid[i] = |br_allocated_ports[i];
         select_vc #(
             .NUM_VC         (NUM_VC),
@@ -271,51 +280,54 @@ module router_top #(
         );
     end
 
+    // Read buffers
+    logic [`FLIT_DATA_WIDTH-1:0]  st_out_buffer_data_per_port [NUM_PORTS-1:0];
+
     // Invalidate or clear the VC being sent out
     // Done at negedge of clk to avoid race condition
-    for (genvar i = 0; i < NUM_PORTS; ++i) begin
-        always @(negedge clk) begin
-            if (br_vc_read_valid[i]) begin
-                vc_valid[i][br_vc_index[i]] <= 0;
-            end
+    for (genvar i = 0; i < NUM_PORTS; ++i) begin : br_pop_i
+        for (genvar j = 0; j < NUM_VC; ++j) begin : br_pop_j
+            assign vc_pop[i][j] = (j == br_vc_index[i]) ? br_vc_read_valid[i] : 0;
         end
-    end
-
-    // Pipeline begins here for this stage
-
-    // Read buffers
-    reg [`FLIT_DATA_WIDTH-1:0]  st_out_buffer_data_per_port [NUM_PORTS-1:0];
-    for (genvar i = 0; i < NUM_PORTS; ++i) begin
-        always @(posedge clk) begin
-            if (br_vc_read_valid[i]) begin
-                st_out_buffer_data_per_port[i] <= vc_buffer[i][br_vc_index[i]];
-            end
-        end
+        // assign st_out_buffer_data_per_port[i] = vc_outdata[i][br_vc_index[i]];
     end
 
     logic [NUM_PORTS-1:0] st_allocated_ports [NUM_PORTS-1:0];
-    // TODO: Create enable signal for stalls
-    pipe_register #(
-        .DATAW      (NUM_PORTS),
-        .ARRAY_DEPTH(NUM_PORTS)
-    ) br2st_ap (
-        // Standard inputs
+
+    for (genvar i = 0; i < NUM_PORTS; ++i) begin: br_pipe_1
+        pipe_register_1D #(
+            .DATAW      (NUM_PORTS)
+        ) br2st_ap (
+            .clk        (clk),
+            .reset      (reset),
+            .enable     (1'b1),
+            .in_data    (br_allocated_ports[i]),
+            .out_data   (st_allocated_ports[i])
+        );
+    end
+
+    for (genvar i = 0; i < NUM_PORTS; ++i) begin : br_pipe_2
+        pipe_register_1D #(
+            .DATAW      (`FLIT_DATA_WIDTH)
+        ) br2st_data (
+            .clk        (clk),
+            .reset      (reset),
+            .enable     (1'b1),
+            .in_data    (vc_outdata[i][br_vc_index[i]]),
+            .out_data   (st_out_buffer_data_per_port[i])
+        );
+    end
+    // To denote if the data from a port is being read (based on allocation)
+    logic   [NUM_PORTS-1:0] st_vc_read_valid;
+    pipe_register_1D #(
+        .DATAW      (NUM_PORTS)
+    ) br2st_data (
         .clk        (clk),
         .reset      (reset),
         .enable     (1'b1),
-        .in_data    (br_allocated_ports),
-        .out_data   (st_allocated_ports)
+        .in_data    (br_vc_read_valid),
+        .out_data   (st_vc_read_valid)
     );
-    // To denote if the data from a port is being read (based on allocation)
-    logic   [NUM_PORTS-1:0] st_vc_read_valid;
-    always @(posedge clk) begin
-        if (reset) begin
-            st_vc_read_valid <= 0;
-        end
-        else begin
-            st_vc_read_valid <= br_vc_read_valid;
-        end
-    end
 
     /************************************
     *       Switch traversal            *
