@@ -13,6 +13,8 @@ module vc_availability #(
     // Standard clock and reset signals
     input logic clk, 
     input logic reset,
+    // Valid dst port signals
+    input logic                             vca_dst_valid[NUM_VCS*NUM_PORTS-1:0],
     // Flit final destination ports as computed by route compute
     input logic  [NUM_PORTS-1:0]            vca_dst_port [NUM_VCS*NUM_PORTS-1:0],
     // Credits from down stream routers
@@ -122,7 +124,7 @@ module vc_availability #(
         for(genvar j=0; j<NUM_VCS; j=j+1) begin
             for(genvar ii=0; ii<NUM_PORTS; ii=ii+1) begin
                 for(genvar jj=0; jj<NUM_VCS; jj=jj+1) begin
-                    assign requested_op_vcs[i*NUM_VCS+j][ii*NUM_VCS+jj] = vca_dst_port[i*NUM_VCS+j][ii];
+                    assign requested_op_vcs[i*NUM_VCS+j][ii*NUM_VCS+jj] = vca_dst_valid[i*NUM_VCS+j] && vca_dst_port[i*NUM_VCS+j][ii];
                 end
             end
         end

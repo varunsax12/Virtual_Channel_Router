@@ -115,6 +115,11 @@ module router_top #(
 
     logic   [NUM_PORTS-1:0]        vca_dst_port [NUM_VC*NUM_PORTS-1:0];
 
+    logic vca_dst_valid [NUM_VC*NUM_PORTS-1:0];
+    for (genvar i = 0; i < NUM_VC*NUM_PORTS; ++i) begin
+        assign vca_dst_valid[i] = 1;
+    end
+
     for (genvar i = 0; i < NUM_VC*NUM_PORTS; ++i) begin : pipe_rc
         pipe_register_1D #(
             .DATAW      (NUM_PORTS)
@@ -135,7 +140,7 @@ module router_top #(
     logic [NUM_VC*NUM_PORTS-1:0] vca_vc_availability;
     logic [NUM_VC*NUM_PORTS-1:0] vca_allocated_ip_vcs [NUM_VC*NUM_PORTS-1:0];
     logic [NUM_PORTS-1:0]        vca_allocated_ports  [NUM_PORTS-1:0];
-    
+
     // Computes VC Availability based on down stream router increments and current router assignees
     vc_availability #(
         .NUM_PORTS              (NUM_PORTS),
@@ -143,6 +148,7 @@ module router_top #(
     ) vcavail (
         .clk                    (clk),
         .reset                  (reset),
+        .vca_dst_valid          (vca_dst_valid),
         .vca_dst_port           (vca_dst_port),
         .dwnstr_router_increment(dwnstr_router_increment), 
         .sa_allocated_ports     (vca_allocated_ports),
