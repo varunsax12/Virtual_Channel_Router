@@ -26,7 +26,7 @@ set delay 10000
 
 set osucells ${PDK_DIR}/osu_soc
 
-set_attribute hdl_search_path {/nethome/vbalemarthy3/ECE6115/project/rtl/ /nethome/vbalemarthy3/ECE6115/project/rtl/libs /nethome/vbalemarthy3/ECE6115/project/} /
+set_attribute hdl_search_path {/nethome/vbalemarthy3/ECE6115/project/rtl/ /nethome/vbalemarthy3/ECE6115/project/rtl/router_modules /nethome/vbalemarthy3/ECE6115/project/rtl/libs /nethome/vbalemarthy3/ECE6115/project/} /
 set_attribute lib_search_path {/tools/designkits/NCSU/FreePDK45/osu_soc/lib/source/signalstorm/files} /
 
 set_attribute information_level 6 /
