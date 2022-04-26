@@ -168,7 +168,8 @@ module router_top #(
             always_comb begin
                 vca_dst_valid[i*NUM_VC + j] = 0;
                 if ((vca_dst_port[i*NUM_VC + j] != sa_allocated_ports[i]) &&
-                    (vca_dst_port[i*NUM_VC + j] != br_allocated_ports[i])) begin
+                    (vca_dst_port[i*NUM_VC + j] != br_allocated_ports[i]) &&
+                    vc_empty[i][j] == 0) begin
                     vca_dst_valid[i*NUM_VC + j] = 1;
                 end
             end
