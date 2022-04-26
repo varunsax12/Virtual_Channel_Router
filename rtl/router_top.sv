@@ -22,13 +22,36 @@ module router_top #(
     input logic     [NUM_PORTS-1:0]         input_valid,
 
     // Signals from downstream routers for each non-local port
-    input logic     [NUM_PORTS-2:0]         dwnstr_router_increment, // Excluding the local NIC
+    input logic     [NUM_PORTS-2:0]         dwnstr_credit_increment, // Excluding the local NIC
 
     // Router output
-    output logic    [NUM_PORTS-2:0]         upstr_router_increment, // Excluding the local NIC
+    output logic    [NUM_PORTS-2:0]         upstr_credit_increment, // Excluding the local NIC
     output logic    [`FLIT_DATA_WIDTH-1:0]  out_data [NUM_PORTS-1:0],
     output logic    [NUM_PORTS-1:0]         out_valid
 );
+
+    /************************************
+    *          Credit Computaton        *
+    ************************************/
+    /*
+    dwnstr_credit_increment deal with op ports, upstr_credit_increment deal with ip ports (bi-directional:upstr,dwnstr)
+    In SA stage:
+        1. For the ip port allocated a dst port, we send credit corresponding to the ip port 
+           via the upstr_credit_increment signals.
+        2. Also decrement the credits by 1 corresponding to the dst port that is allocated.
+           This signifies that the credits at that dst port are decreased as they're in use
+    In router_top:
+        Increment credits based on the dwnstr_credit_increment signals as they correspond to those op VCs that 
+        have processed the flit.
+    */    
+    logic [VC_BITS-1:0] credits [NUM_PORTS-1:0];
+    //credits[0] - Local port corresponding to this router
+    //credits[1] - North op - based on upstr_credit_increment
+    //credits[2] - South op - based on upstr_credit_increment
+    //credits[3] - East op - based on upstr_credit_increment
+    //credits[4] - West op - based on upstr_credit_increment
+
+
 
     /************************************
     *          VC                       *
@@ -136,8 +159,6 @@ module router_top #(
 
     // Use the SA and BR allocated ports per input port to create valid masks
     // LOGIC: to avoid re-inserting the same values into the pipeline
-
-
     logic [NUM_PORTS-1:0] sa_allocated_ports [NUM_PORTS-1:0];
     logic [NUM_PORTS-1:0] br_allocated_ports [NUM_PORTS-1:0];
 
@@ -156,9 +177,10 @@ module router_top #(
 
     logic [NUM_VC*NUM_PORTS-1:0] vca_vc_availability;
     logic [NUM_VC*NUM_PORTS-1:0] vca_allocated_op_vcs [NUM_VC*NUM_PORTS-1:0];
-    logic [NUM_PORTS-1:0]        vca_allocated_ports  [NUM_PORTS-1:0];
 
-    // Computes VC Availability based on down stream router increments and current router assignees
+    // Computes VC Availability, upstream credit increments
+    // based on down stream router increments and current router assignees
+    // logic [VC_BITS-1:0] credits [NUM_PORTS-1:0];
     vc_availability #(
         .NUM_PORTS              (NUM_PORTS),
         .NUM_VCS                (NUM_VC)
@@ -167,12 +189,12 @@ module router_top #(
         .reset                  (reset),
         .vca_dst_valid          (vca_dst_valid),
         .vca_dst_port           (vca_dst_port),
-        .dwnstr_router_increment(dwnstr_router_increment), 
-        .sa_allocated_ports     (vca_allocated_ports),
+        .dwnstr_credit_increment(dwnstr_credit_increment), 
+        .sa_allocated_ports     (sa_allocated_ports),
         .out_valid              (out_valid),
         .allocated_op_vcs       (vca_allocated_op_vcs), 
         .vc_availability        (vca_vc_availability), 
-        .upstr_router_increment (upstr_router_increment)
+        .upstr_credit_increment (upstr_credit_increment)
     );
 
     /************************************
@@ -241,11 +263,10 @@ module router_top #(
     ) sa (
         .clk            (clk),
         .reset          (reset),
+        
         .port_requests  (sa_port_req),
         .allocated_ports(sa_allocated_ports)
     );
-
-    assign vca_allocated_ports = sa_allocated_ports;
 
     logic [NUM_PORTS-1:0] br_dst_port        [NUM_VC*NUM_PORTS-1:0];
 

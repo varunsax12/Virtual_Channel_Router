@@ -18,9 +18,9 @@ module tb_router_top();
     logic [NUM_PORTS-1:0] input_valid;
 
     // Signals from downstream routers for each non-local port
-    logic [NUM_PORTS-2:0] dwnstr_router_increment;
+    logic [NUM_PORTS-2:0] dwnstr_credit_increment;
     // Signals to upstream routers for each current router port
-    logic  [NUM_PORTS-2:0] upstr_router_increment;
+    logic  [NUM_PORTS-2:0] upstr_credit_increment;
 
     // Waveform compatible
     wire [NUM_VCS*NUM_PORTS-1:0] [NUM_PORTS-1:0] wv_dst_ports;
@@ -37,8 +37,8 @@ module tb_router_top();
         .reset(reset),
         .input_data(input_data),
         .input_valid(input_valid),
-        .dwnstr_router_increment(dwnstr_router_increment),
-        .upstr_router_increment(upstr_router_increment),
+        .dwnstr_credit_increment(dwnstr_credit_increment),
+        .upstr_credit_increment(upstr_credit_increment),
         .out_data(out_data),
         .out_valid(out_valid)
     );
@@ -53,9 +53,9 @@ module tb_router_top();
             $display("\tinput_data[%0d]=%b", i, input_data[i]);
         end
         $display("\tinput_valid=%b", input_valid);
-        $display("\tdownstream_router_increment=%b", dwnstr_router_increment);
+        $display("\tdownstream_router_increment=%b", dwnstr_credit_increment);
         $display("Outputs:");
-        $display("\tupstream_router_increment=%b", upstr_router_increment);
+        $display("\tupstream_router_increment=%b", upstr_credit_increment);
         for (int i = 0; i < NUM_PORTS; ++i) begin
             $display("\tout_data[%0d]=%b", i , out_data[i]);
         end
@@ -82,7 +82,7 @@ module tb_router_top();
 
         $display("\n**********VC AVALABILITY******************");
         for(int i = 0; i < NUM_PORTS; ++i) begin
-            $display("VCAvailability, Port=%0d, curr_router_decrement:%b, old_vc_availability:%b, new_vc_availability:%b", i, rt.vcavail.curr_router_decrement[i], rt.vcavail.old_vc_availability, rt.vca_vc_availability);
+            $display("VCAvailability, OpPort=%0d, vcs_per_op_port:%b credits_one_hot:%b, credits:%b, new_vc_availability:%b", i, rt.vcavail.vcs_per_port[i], rt.vcavail.credits_one_hot[i], rt.vcavail.credits[i], rt.vca_vc_availability);
             //for(int j = 0; j < NUM_VCS; ++j) begin
             //    $display("ipvc:%0d, requested_op_vcs:%b, allocated_op_vcs:%b, final_allocated_op_vcs:%b", (i*NUM_VCS+j), rt.vcavail.requested_op_vcs[i*NUM_VCS+j], rt.allocated_op_vcs[i*NUM_VCS+j], rt.vcavail.final_allocated_op_vcs[i*NUM_VCS+j]);
             //end
@@ -98,7 +98,7 @@ module tb_router_top();
         for (int i = 0; i < NUM_PORTS; ++i) begin
             for (int j = 0; j < NUM_VCS; ++j) begin
                 //$display("Port=%0d, VC=%0d, allocated_op_vcs=%b", i, j, rt.allocated_op_vcs[i*NUM_VCS+j]);
-                $display("ipvc:%0d, requested_op_vcs:%b, allocated_op_vcs:%b, sa_allocated_ports=%b, final_allocated_op_vcs:%b", (i*NUM_VCS+j), rt.vcavail.requested_op_vcs[i*NUM_VCS+j], rt.vcavail.allocated_op_vcs[i*NUM_VCS+j], rt.vcavail.sa_allocated_ports[i], rt.vcavail.final_allocated_op_vcs[i*NUM_VCS+j]);
+                $display("ipvc:%0d, allocated_op_vcs:%b, sa_allocated_ports=%b", (i*NUM_VCS+j), rt.vcavail.allocated_op_vcs[i*NUM_VCS+j], rt.vcavail.sa_allocated_ports[i]);
             end
         end
 
@@ -145,10 +145,10 @@ module tb_router_top();
             end
             input_valid[i] = 1;
         end
-        foreach(dwnstr_router_increment[i]) begin
-            dwnstr_router_increment[i] = 0;
+        foreach(dwnstr_credit_increment[i]) begin
+            dwnstr_credit_increment[i] = 0;
             if(i==0)
-                dwnstr_router_increment[i] = 0;
+                dwnstr_credit_increment[i] = 0;
         end
 
         @(negedge clk)
@@ -159,10 +159,10 @@ module tb_router_top();
         foreach(input_data[i]) begin
             input_valid[i] = 0;
         end
-        foreach(dwnstr_router_increment[i]) begin
-            dwnstr_router_increment[i] = 0;
+        foreach(dwnstr_credit_increment[i]) begin
+            dwnstr_credit_increment[i] = 0;
             if(i==0)
-                dwnstr_router_increment[i] = 0;
+                dwnstr_credit_increment[i] = 0;
         end
         //34+6=40 cycles are required to make all output ports invalid (basically flush out all input data)
         for (int i = 0; i < 34; ++i) begin
