@@ -23,6 +23,7 @@ module crossbar #(
         always_comb begin
             // Input port
             out_valid[i] = 0;
+            out_data[i] = 0;
             for (int j = 0; j < NUM_PORTS; ++j) begin
                 if (vc_mapping[j][i] == 1 && valid[j] == 1) begin
                     out_data[i]  = in_vc_data[j];
