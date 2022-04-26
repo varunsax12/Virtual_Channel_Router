@@ -77,7 +77,7 @@ module vc_availability #(
         end
     end
 
-    logic [NUM_VCS:0] credits_one_hot [NUM_PORTS-1:0];    
+    logic [2**VC_BITS-1:0] credits_one_hot [NUM_PORTS-1:0];    
     // Compute new vc_availability
     for(genvar ii=0; ii<NUM_PORTS; ii=ii+1) begin
         index_2_one_hot #(

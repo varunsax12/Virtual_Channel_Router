@@ -263,7 +263,6 @@ module router_top #(
     ) sa (
         .clk            (clk),
         .reset          (reset),
-        
         .port_requests  (sa_port_req),
         .allocated_ports(sa_allocated_ports)
     );
@@ -309,7 +308,6 @@ module router_top #(
 
     // VC index to read per port
     logic   [VC_BITS-1:0]   br_vc_index [NUM_PORTS-1:0];
-
     for (genvar i = 0; i < NUM_PORTS; ++i) begin : br_select_vc
         assign br_vc_read_valid[i] = |br_allocated_ports[i];
         select_vc #(

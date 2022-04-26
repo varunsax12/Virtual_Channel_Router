@@ -82,7 +82,7 @@ module tb_router_top();
 
         $display("\n**********VC AVALABILITY******************");
         for(int i = 0; i < NUM_PORTS; ++i) begin
-            $display("VCAvailability, OpPort=%0d, vcs_per_op_port:%b credits_one_hot:%b, credits:%b, new_vc_availability:%b", i, rt.vcavail.vcs_per_port[i], rt.vcavail.credits_one_hot[i], rt.vcavail.credits[i], rt.vca_vc_availability);
+            $display("VCAvailability, out port=%0d, vcs_per_op_port:%b credits_one_hot:%b, credits:%b, new_vc_availability:%b", i, rt.vcavail.vcs_per_port[i], rt.vcavail.credits_one_hot[i], rt.vcavail.credits[i], rt.vca_vc_availability);
             //for(int j = 0; j < NUM_VCS; ++j) begin
             //    $display("ipvc:%0d, requested_op_vcs:%b, allocated_op_vcs:%b, final_allocated_op_vcs:%b", (i*NUM_VCS+j), rt.vcavail.requested_op_vcs[i*NUM_VCS+j], rt.allocated_op_vcs[i*NUM_VCS+j], rt.vcavail.final_allocated_op_vcs[i*NUM_VCS+j]);
             //end
@@ -118,7 +118,7 @@ module tb_router_top();
 
         $display("\n**********SWITCH TRAVERSAL******************");
         for (int i = 0; i < NUM_PORTS; ++i) begin
-            $display("Port=%0d, out_data=%b, out_valid=%b", i, rt.out_data[i], rt.out_valid[i]);
+            $display("Port=%0d, out_data=%b, out_valid=%b, valid=%b", i, rt.out_data[i], rt.out_valid[i], rt.st_vc_read_valid);
         end
     endtask
 
@@ -168,6 +168,12 @@ module tb_router_top();
         for (int i = 0; i < 34; ++i) begin
             @(negedge clk);
             //display();
+            if(i==5) begin
+                $display("\nDownstream router sends a credit");
+                dwnstr_credit_increment[2] = 1;
+            end else begin
+                dwnstr_credit_increment[2] = 0;            
+            end
         end
         //================================================
         
