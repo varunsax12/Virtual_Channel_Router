@@ -29,4 +29,7 @@
 `define WEST    3'b011
 `define EJECT   3'b100
 
+`define ROUND_TRIP 1
+//4
+
 `endif

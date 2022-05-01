@@ -5,10 +5,27 @@
 //    GT id: 903482005
 
 `timescale 10ns/1ns
+`include "VR_define.vh"
+
+/*
+NOTES:
+->ip buffers for each ip VC.
+->ip buffer depth 
+->min buffer depth: buffer turnaround time
+    min need one buffer per VC.
+
+->credits denote number of downstream flit buffers in output VC.
+
+->Need to stop allowing vc_availability once the op VC has a fifo size of lesser than BUFFER_TURNAROUND_TIME
+//Have buffer round trip parameter and use to set counter to 0.
+//(if all VCs within port i have fifo size < round trip latency)
+*/
 
 module vc_availability #(
     parameter NUM_PORTS = 5,
-    parameter NUM_VCS = 4
+    parameter NUM_VCS = 4,
+    parameter BUFFER_DEPTH = 2,
+    parameter CR_BITS = $clog2(BUFFER_DEPTH)+1
 ) (
     // Standard clock and reset signals
     input logic clk, 
@@ -18,7 +35,7 @@ module vc_availability #(
     // Flit final destination ports as computed by route compute
     input logic  [NUM_PORTS-1:0]            vca_dst_port [NUM_VCS*NUM_PORTS-1:0],
     // Credits from down stream routers
-    input logic  [NUM_PORTS-2:0]            dwnstr_credit_increment,
+    input logic                             dwnstr_credit_increment [NUM_PORTS-2:0][NUM_VCS-1:0],
     // Outports allocated for each ip port
     input logic  [NUM_PORTS-1:0]            sa_allocated_ports [NUM_PORTS-1:0],
     // Opport validity, used to verify the flits has crossed the switch traversal stage, critical for vc_availability
@@ -28,88 +45,85 @@ module vc_availability #(
     // Latest vc availability based on down stream credit increments, allocated ports in the current router
     output logic [NUM_VCS*NUM_PORTS-1:0]    vc_availability,
     // Upstream credit increments based on flits released in current router
-    output logic [NUM_PORTS-2:0]            upstr_credit_increment
+    output logic                            upstr_credit_increment [NUM_PORTS-2:0][NUM_VCS-1:0]
 );
+    // [clogs(fifo_depth)+1:0] credits [NUM_VCS-1:0];
+    logic [CR_BITS-1:0] credits [NUM_PORTS-1:0] [NUM_VCS-1:0];
 
-    parameter VC_BITS = $clog2(NUM_VCS)+1;
-    logic [VC_BITS-1:0] credits [NUM_PORTS-1:0];
- 
     // Credit system - (i - ip port requesting, ii - op port allocated)
     always_comb begin
         if(reset) begin
             // Re-initialize credits, signifies all VCs are available at the time of reset
-            for(int ii=0; ii<NUM_PORTS; ii=ii+1)
-                credits[ii] = NUM_VCS;
-        end else begin
-            //Initialize upstr credit increment:
-            for(int i=0; i<NUM_PORTS; i=i+1) begin
-                if(i!=0)
-                    upstr_credit_increment[i-1] = 0;
+            for(int ii=0; ii<NUM_PORTS; ii=ii+1) begin
+                for(int jj=0; jj<NUM_VCS; jj=jj+1)
+                    credits[ii][jj] = BUFFER_DEPTH;
             end
+        end else begin
             
-            // Credit decrement
+            // Upstream credit signal for each ip VC that has been allocated an op VC (this is indicated by sa_allocated_ports)
+            for(int i=0; i<NUM_PORTS; i=i+1) begin
+                if(i!=0) begin //For non-local ports
+                    for(int j=0; j<NUM_VCS; j=j+1) begin
+                        if(|sa_allocated_ports[i]) begin
+                            if(|allocated_op_vcs[i*NUM_VCS+j])
+                                upstr_credit_increment[i-1][j] = 1;
+                        end else begin
+                            upstr_credit_increment[i-1][j] = 0;
+                        end
+                    end
+                end
+            end
+
+            // Credits and downstream credit decrement
             for(int i=0; i<NUM_PORTS; i=i+1) begin
                 if(|sa_allocated_ports[i]) begin
                     for(int ii=0; ii<NUM_PORTS; ii=ii+1) begin
                         if(sa_allocated_ports[i][ii]) begin
-                            // Upstream credits for ip ports that have been allocated an op port
-                            //For non-local ports, send an increment on allocation
-                            if(i!=0)
-                                upstr_credit_increment[i-1] = 1;
-                            
-                            // Downstream credit decrement when an allocation is made
-                            //&& |(vca_dst_valid[i*NUM_VCS+:NUM_VCS])
+                            // Decrement credits corresponding to op VC that was allocated, for local op VCs credits are always set to BUFFER DEPTH size.
                             if(ii!=0) begin
-                                credits[ii] = credits[ii] - 1;
+                                //Iterate over ip VC j of ip port i
+                                for(int j=0; j<NUM_VCS; j=j+1) begin
+                                    //Check for op VC jj allocated to ip VC j
+                                    for(int jj=0; jj<NUM_VCS; jj=jj+1) begin
+                                        if(allocated_op_vcs[i*NUM_VCS+j][ii*NUM_VCS+jj])
+                                            credits[ii][jj] = credits[ii][jj] - 1; 
+                                    end
+                                end
                             end else begin
-                                credits[ii] = NUM_VCS; //Always full for local credits, infinite drain
+                                // For all local op VCs the credits are assumed to be empty.
+                                for(int jj=0; jj<NUM_VCS; jj=jj+1)
+                                    credits[ii][jj] = BUFFER_DEPTH;
                             end
                         end
                     end
-                end                    
+                end
             end
 
-            // Credit increment
+            // Credits increment for each op VC
             for(int ii=0; ii<NUM_PORTS; ii=ii+1) begin
-                if(dwnstr_credit_increment[ii])
-                    credits[ii] = credits[ii] + 1;
+                if(ii!=0) begin
+                    for(int jj=0; jj<NUM_VCS; jj=jj+1) begin
+                        if(dwnstr_credit_increment[ii-1][jj] && (credits[ii][jj]<BUFFER_DEPTH))
+                            credits[ii][jj] = credits[ii][jj] + 1;
+                    end
+                end
             end
         end
     end
 
-    logic [2**VC_BITS-1:0] credits_one_hot [NUM_PORTS-1:0];    
     // Compute new vc_availability
-    for(genvar ii=0; ii<NUM_PORTS; ii=ii+1) begin
-        index_2_one_hot #(
-            .NUM_BITS              (VC_BITS)
-        ) idx2oh (
-            .index(credits[ii]),
-            .out_one_hot(credits_one_hot[ii])
-        );
-    end
-
-    logic [NUM_VCS-1:0] vcs_per_port [NUM_PORTS-1:0];
-    logic counter;
     always_comb begin
-        for(int i=0; i<NUM_PORTS; i=i+1) begin
-            counter = 0;
-            for(int j=0; j<NUM_VCS; j=j+1) begin
-                if(credits_one_hot[i][j] && (counter==0)) begin
-                    counter = 1;
-                end
-
-                if(counter==0) begin
-                    vcs_per_port[i][j] = 1;
+        // Iterate over op port
+        for(int ii=0; ii<NUM_PORTS; ii=ii+1) begin
+            // Iterate over op VC
+            for(int jj=0; jj<NUM_VCS; jj=jj+1) begin
+                if(credits[ii][jj] == `ROUND_TRIP) begin
+                    vc_availability[ii*NUM_VCS+jj] = 0;
                 end else begin
-                    vcs_per_port[i][j] = 0;
+                    vc_availability[ii*NUM_VCS+jj] = 1;
                 end
             end
         end
-    end
-
-    // Compute new vc_availability
-    for(genvar ii=0; ii<NUM_PORTS; ii=ii+1) begin   
-        assign vc_availability[ii*NUM_VCS+:NUM_VCS] = vcs_per_port[ii];
     end
 
 endmodule

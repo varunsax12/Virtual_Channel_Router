@@ -9,10 +9,11 @@ module router_top #(
     parameter NUM_ROUTERS    = 16,
     parameter ROUTER_PER_ROW = 4,
     parameter ROUTER_ID      = 0,
-    parameter BUFFER_DEPTH   = 8, // keep in the power of 2
+    parameter BUFFER_DEPTH   = 2, //8, // keep in the power of 2
     parameter ROUTER_ID_BITS = $clog2(NUM_ROUTERS),
     parameter PORT_BITS      = $clog2(NUM_PORTS),
-    parameter VC_BITS        = $clog2(NUM_VC)
+    parameter VC_BITS        = $clog2(NUM_VC),
+    parameter CR_BITS        = $clog2(BUFFER_DEPTH)+1
 ) (
     // Standard signals
     input  logic   clk, reset,
@@ -22,35 +23,13 @@ module router_top #(
     input logic     [NUM_PORTS-1:0]         input_valid,
 
     // Signals from downstream routers for each non-local port
-    input logic     [NUM_PORTS-2:0]         dwnstr_credit_increment, // Excluding the local NIC
+    input logic                             dwnstr_credit_increment [NUM_PORTS-2:0][NUM_VC-1:0], // Excluding the local NIC
 
     // Router output
-    output logic    [NUM_PORTS-2:0]         upstr_credit_increment, // Excluding the local NIC
+    output logic                            upstr_credit_increment [NUM_PORTS-2:0][NUM_VC-1:0], // Excluding the local NIC
     output logic    [`FLIT_DATA_WIDTH-1:0]  out_data [NUM_PORTS-1:0],
     output logic    [NUM_PORTS-1:0]         out_valid
 );
-
-    /************************************
-    *          Credit Computaton        *
-    ************************************/
-    /*
-    dwnstr_credit_increment deal with op ports, upstr_credit_increment deal with ip ports (bi-directional:upstr,dwnstr)
-    In SA stage:
-        1. For the ip port allocated a dst port, we send credit corresponding to the ip port 
-           via the upstr_credit_increment signals.
-        2. Also decrement the credits by 1 corresponding to the dst port that is allocated.
-           This signifies that the credits at that dst port are decreased as they're in use
-    In router_top:
-        Increment credits based on the dwnstr_credit_increment signals as they correspond to those op VCs that 
-        have processed the flit.
-    */    
-    logic [VC_BITS-1:0] credits [NUM_PORTS-1:0];
-    //credits[0] - Local port corresponding to this router
-    //credits[1] - North op - based on upstr_credit_increment
-    //credits[2] - South op - based on upstr_credit_increment
-    //credits[3] - East op - based on upstr_credit_increment
-    //credits[4] - West op - based on upstr_credit_increment
-
 
 
     /************************************
@@ -181,10 +160,28 @@ module router_top #(
 
     // Computes VC Availability, upstream credit increments
     // based on down stream router increments and current router assignees
-    // logic [VC_BITS-1:0] credits [NUM_PORTS-1:0];
+    /*
+    dwnstr_credit_increment deal with op ports, upstr_credit_increment deal with ip ports (bi-directional:upstr,dwnstr)
+    In SA stage:
+        1. For the ip port allocated a dst port, we send credit corresponding to the ip port 
+           via the upstr_credit_increment signals.
+        2. Also decrement the credits by 1 corresponding to the dst port that is allocated.
+           This signifies that the credits at that dst port are decreased as they're in use
+    In router_top:
+        Increment credits based on the dwnstr_credit_increment signals as they correspond to those op VCs that 
+        have processed the flit.
+    */    
+    logic [CR_BITS-1:0] credits [NUM_PORTS-1:0] [NUM_VC-1:0];
+    //credits[0] - Local port corresponding to this router
+    //credits[1] - North op - based on upstr_credit_increment
+    //credits[2] - South op - based on upstr_credit_increment
+    //credits[3] - East op - based on upstr_credit_increment
+    //credits[4] - West op - based on upstr_credit_increment
     vc_availability #(
         .NUM_PORTS              (NUM_PORTS),
-        .NUM_VCS                (NUM_VC)
+        .NUM_VCS                (NUM_VC),
+        .BUFFER_DEPTH           (BUFFER_DEPTH),
+        .CR_BITS                (CR_BITS)
     ) vcavail (
         .clk                    (clk),
         .reset                  (reset),

@@ -4,7 +4,6 @@
 //    GT id: 903562211
 
 `timescale 10ns/1ns
-
 `include "VR_define.vh"
 
 module tb_router_top();
@@ -18,9 +17,9 @@ module tb_router_top();
     logic [NUM_PORTS-1:0] input_valid;
 
     // Signals from downstream routers for each non-local port
-    logic [NUM_PORTS-2:0] dwnstr_credit_increment;
+    logic dwnstr_credit_increment [NUM_PORTS-2:0][NUM_VCS-1:0];
     // Signals to upstream routers for each current router port
-    logic  [NUM_PORTS-2:0] upstr_credit_increment;
+    logic upstr_credit_increment [NUM_PORTS-2:0][NUM_VCS-1:0];
 
     // Waveform compatible
     wire [NUM_VCS*NUM_PORTS-1:0] [NUM_PORTS-1:0] wv_dst_ports;
@@ -53,9 +52,15 @@ module tb_router_top();
             $display("\tinput_data[%0d]=%b", i, input_data[i]);
         end
         $display("\tinput_valid=%b", input_valid);
-        $display("\tdownstream_router_increment=%b", dwnstr_credit_increment);
+        for(int i = 0; i < NUM_PORTS-1; i++) begin
+            for(int j = 0; j < NUM_VCS; j++)
+                $display("\top port:%d, op vc:%d, downstream_router_increment=%b", i+1, j, dwnstr_credit_increment[i][j]);
+        end
         $display("Outputs:");
-        $display("\tupstream_router_increment=%b", upstr_credit_increment);
+        for(int i = 0; i < NUM_PORTS-1; i++) begin
+            for(int j = 0; j < NUM_VCS; j++)
+                $display("\tip port:%d, ip vc:%d, upstream_router_increment=%b", i+1, j, upstr_credit_increment[i][j]);
+        end
         for (int i = 0; i < NUM_PORTS; ++i) begin
             $display("\tout_data[%0d]=%b", i , out_data[i]);
         end
@@ -82,10 +87,9 @@ module tb_router_top();
 
         $display("\n**********VC AVALABILITY******************");
         for(int i = 0; i < NUM_PORTS; ++i) begin
-            $display("VCAvailability, out port=%0d, vcs_per_op_port:%b credits_one_hot:%b, credits:%b, new_vc_availability:%b", i, rt.vcavail.vcs_per_port[i], rt.vcavail.credits_one_hot[i], rt.vcavail.credits[i], rt.vca_vc_availability);
-            //for(int j = 0; j < NUM_VCS; ++j) begin
-            //    $display("ipvc:%0d, requested_op_vcs:%b, allocated_op_vcs:%b, final_allocated_op_vcs:%b", (i*NUM_VCS+j), rt.vcavail.requested_op_vcs[i*NUM_VCS+j], rt.allocated_op_vcs[i*NUM_VCS+j], rt.vcavail.final_allocated_op_vcs[i*NUM_VCS+j]);
-            //end
+            for(int j = 0; j < NUM_VCS; ++j) begin
+                $display("VCAvailability, out port=%0d, out vc=%0d, credits:%b, new_vc_availability:%b", i, j, rt.vcavail.credits[i][j], rt.vca_vc_availability);
+            end
         end
         $display("\nMask Generation:");
         for (int i = 0; i < NUM_PORTS; ++i) begin
@@ -126,9 +130,22 @@ module tb_router_top();
         display();
     end
 
-    //initial begin
-    //    #500 $finish;
-    //end
+    task set_new_inputs();
+        $display("\nSetting new inputs at Time = %0d", $time);
+        foreach(dwnstr_credit_increment[i]) begin
+            for(int j = 0; j < NUM_VCS; j++) begin
+                dwnstr_credit_increment[i][j] = 0;
+                if(i==0)
+                    dwnstr_credit_increment[i][j] = 0;
+            end
+        end
+        foreach(input_data[i]) begin
+            for(int j = 0; j < `FLIT_DATA_WIDTH/4; ++j) begin
+                input_data[i][`FLIT_DATA_WIDTH-(j*4)-1-:4] = $urandom%16;
+            end
+            input_valid[i] = 1;
+        end
+    endtask
 
     initial begin
         $dumpfile("test.vcd");
@@ -138,41 +155,27 @@ module tb_router_top();
         @(negedge clk) reset = 1;
         @(negedge clk) reset = 0;
 
-        //===============Input_data feed==================== 
-        foreach(input_data[i]) begin
-            for(int j = 0; j < `FLIT_DATA_WIDTH/4; ++j) begin
-                input_data[i][`FLIT_DATA_WIDTH-(j*4)-1-:4] = $urandom%16;
-            end
-            input_valid[i] = 1;
-        end
-        foreach(dwnstr_credit_increment[i]) begin
-            dwnstr_credit_increment[i] = 0;
-            if(i==0)
-                dwnstr_credit_increment[i] = 0;
-        end
-
+        //===============Input_data feed==================
+        set_new_inputs();
         @(negedge clk)
-
+        set_new_inputs();
+        @(negedge clk)
         //================================================
+
         $display("\nFlusing input data by invalidating all input ports");
         //==============Input_data reset==================
         foreach(input_data[i]) begin
             input_valid[i] = 0;
         end
-        foreach(dwnstr_credit_increment[i]) begin
-            dwnstr_credit_increment[i] = 0;
-            if(i==0)
-                dwnstr_credit_increment[i] = 0;
-        end
         //34+6=40 cycles are required to make all output ports invalid (basically flush out all input data)
-        for (int i = 0; i < 34; ++i) begin
+        for (int i = 0; i < 7; ++i) begin
             @(negedge clk);
             //display();
             if(i==5) begin
-                $display("\nDownstream router sends a credit");
-                dwnstr_credit_increment[2] = 1;
+                $display("\nDownstream router op port 2, op vc 2, sends a credit, i=%0d",i);
+                dwnstr_credit_increment[1][2] = 1;
             end else begin
-                dwnstr_credit_increment[2] = 0;            
+                dwnstr_credit_increment[1][2] = 0;
             end
         end
         //================================================

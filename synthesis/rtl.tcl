@@ -8,7 +8,7 @@
 set PDK_DIR /tools/designkits/NCSU/FreePDK45/
 
 # All HDL files, separated by spaces
-set hdl_files {vc_req_2_port_req.sv select_vc.sv vc_allocator.sv route_compute.sv crossbar.sv update_vca.sv switch_allocator.sv router_top.sv vc_availability.sv arbiter_round_robin.sv arbiter_top.sv one_hot_2_index.sv allocator_top.sv allocator_separable.sv allocator_wavefront.sv arbiter_matrix.sv index_2_one_hot.sv priority_encoder.sv pipe_register.sv}
+set hdl_files {vc_req_2_port_req.sv vc_availability.sv vc_allocator.sv update_vca_sv switch_allocator.sv select_vc.sv route_compute.sv crossbar.sv priority_encoder.sv pipe_register_2D.sv pipe_register_1D.sv one_hot_2_index.sv index_2_one_hot.sv fifo.sv arbiter_top.sv arbiter_round_robin.sv arbiter_matrix.sv allocator_wavefront.sv allocator_top.sv allocator_separable.sv router_top.sv}
 
 # The Top-level Module, change example multiplyadd
 set DESIGN router_top
@@ -26,7 +26,7 @@ set delay 10000
 
 set osucells ${PDK_DIR}/osu_soc
 
-set_attribute hdl_search_path {/nethome/vbalemarthy3/ECE6115/project/rtl/ /nethome/vbalemarthy3/ECE6115/project/rtl/router_modules /nethome/vbalemarthy3/ECE6115/project/rtl/libs /nethome/vbalemarthy3/ECE6115/project/} /
+set_attribute hdl_search_path {/nethome/vbalemarthy3/ECE6115/project/ /nethome/vbalemarthy3/ECE6115/project/rtl/ /nethome/vbalemarthy3/ECE6115/project/rtl/router_modules /nethome/vbalemarthy3/ECE6115/project/rtl/libs} /
 set_attribute lib_search_path {/tools/designkits/NCSU/FreePDK45/osu_soc/lib/source/signalstorm/files} /
 
 set_attribute information_level 6 /

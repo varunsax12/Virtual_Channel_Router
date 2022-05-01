@@ -4,12 +4,10 @@
 //    Author: Sandilya Balemarthy
 //    GT id: 903482005
 
-`timescale 10ns/1ns
+//`timescale 10ns/1ns
 
-module allocator_separable #(
-    parameter NUM_REQS = 4,
-    parameter NUM_RESS = 3
-) (
+module allocator_separable #( parameter NUM_REQS = 4, parameter NUM_RESS = 3 ) 
+(
     // Standard
     input wire                 clk,
     input wire                 reset,

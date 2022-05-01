@@ -18,7 +18,7 @@ module fifo #(
     // Registers for the fifo
     reg [DATA_WIDTH-1:0]    buffer [FIFO_DEPTH-1:0];
     // Pointers
-    logic [POINTER_WIDTH-1:0] wr_ptr, rd_ptr, size;
+    logic [POINTER_WIDTH-1:0] wr_ptr, rd_ptr;
     // Tracker for last action
     logic last_write;
 
