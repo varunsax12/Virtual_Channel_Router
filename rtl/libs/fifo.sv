@@ -11,10 +11,11 @@ module fifo #(
     input logic clk, reset, push, pop,
     input logic [DATA_WIDTH-1:0]    indata,
     output logic empty, full,
-    output logic [DATA_WIDTH-1:0]   outdata,
-    output logic [POINTER_WIDTH-1:0] size
+    output logic [DATA_WIDTH-1:0]   outdata
+    // output logic [POINTER_WIDTH-1:0] size
 );
 
+    logic [POINTER_WIDTH-1:0] size;
     // Registers for the fifo
     reg [DATA_WIDTH-1:0]    buffer [FIFO_DEPTH-1:0];
     // Pointers

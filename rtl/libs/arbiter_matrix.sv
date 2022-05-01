@@ -38,19 +38,16 @@ module arbiter_matrix #(
         assign grants[i] = requests[i] && !dable[i];
     end
 
-    // Update Policy
-    always @(posedge clk) begin
-        if(reset) begin
-            // Reset matrix with preference for 0 over all, 1 over 2+, 2 over 3+
-            for(int m=0; m<NUM_REQS; m=m+1) begin
-                for(int n=0; n<NUM_REQS; n=n+1) begin
+
+    for(genvar m=0; m < NUM_REQS; m=m+1) begin
+        for(genvar n=0; n < NUM_REQS; n=n+1) begin
+            // Update Policy
+            always @(posedge clk) begin
+                if(reset) begin
+                    // Reset matrix with preference for 0 over all, 1 over 2+, 2 over 3+
                     weight_mat[m][n] <= (m<=n) ? 1 : 0;
                 end
-            end
-        end
-        else begin
-            for(int m=0; m<NUM_REQS; m=m+1) begin
-                for(int n=0; n<NUM_REQS; n=n+1) begin
+                else begin
                     if(grants[m]) begin
                         // Reset row
                         weight_mat[m][n] <= 0;

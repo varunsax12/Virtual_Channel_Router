@@ -54,25 +54,11 @@ module vc_availability #(
     always_comb begin
         if(reset) begin
             // Re-initialize credits, signifies all VCs are available at the time of reset
-            for(int ii=0; ii<NUM_PORTS; ii=ii+1) begin
-                for(int jj=0; jj<NUM_VCS; jj=jj+1)
-                    credits[ii][jj] = BUFFER_DEPTH;
+            for(int i=0; i<NUM_PORTS; i=i+1) begin
+                for(int j=0; j<NUM_VCS; j=j+1)
+                    credits[i][j] = BUFFER_DEPTH;
             end
         end else begin
-            
-            // Upstream credit signal for each ip VC that has been allocated an op VC (this is indicated by sa_allocated_ports)
-            for(int i=0; i<NUM_PORTS; i=i+1) begin
-                if(i!=0) begin //For non-local ports
-                    for(int j=0; j<NUM_VCS; j=j+1) begin
-                        if(|sa_allocated_ports[i]) begin
-                            if(|allocated_op_vcs[i*NUM_VCS+j])
-                                upstr_credit_increment[i-1][j] = 1;
-                        end else begin
-                            upstr_credit_increment[i-1][j] = 0;
-                        end
-                    end
-                end
-            end
 
             // Credits and downstream credit decrement
             for(int i=0; i<NUM_PORTS; i=i+1) begin
@@ -100,23 +86,39 @@ module vc_availability #(
             end
 
             // Credits increment for each op VC
-            for(int ii=0; ii<NUM_PORTS; ii=ii+1) begin
-                if(ii!=0) begin
-                    for(int jj=0; jj<NUM_VCS; jj=jj+1) begin
-                        if(dwnstr_credit_increment[ii-1][jj])
-                            credits[ii][jj] = credits[ii][jj] + 1;
+            for(int i=0; i<NUM_PORTS; i=i+1) begin
+                if(i!=0) begin
+                    for(int j=0; j<NUM_VCS; j=j+1) begin
+                        if(dwnstr_credit_increment[i-1][j])
+                            credits[i][j] = credits[i][j] + 1;
                     end
                 end
             end
         end
     end
 
-    // Compute new vc_availability
-    always_comb begin
-        // Iterate over op port
-        for(int ii=0; ii<NUM_PORTS; ii=ii+1) begin
-            // Iterate over op VC
-            for(int jj=0; jj<NUM_VCS; jj=jj+1) begin
+    // Upstream credit signal for each ip VC that has been allocated an op VC (this is indicated by sa_allocated_ports)
+    for(genvar i=0; i<NUM_PORTS; i=i+1) begin
+        if(i!=0) begin //For non-local ports
+            for(genvar j=0; j<NUM_VCS; j=j+1) begin
+                always_comb begin
+                    if(|sa_allocated_ports[i]) begin
+                        if(|allocated_op_vcs[i*NUM_VCS+j])
+                            upstr_credit_increment[i-1][j] = 1;
+                    end else begin
+                        upstr_credit_increment[i-1][j] = 0;
+                    end
+                end
+            end
+        end
+    end
+
+    // Iterate over op port
+    for(genvar ii=0; ii<NUM_PORTS; ii=ii+1) begin
+        // Iterate over op VC
+        for(genvar jj=0; jj<NUM_VCS; jj=jj+1) begin
+            // Compute new vc_availability
+            always_comb begin
                 if(credits[ii][jj] == `ROUND_TRIP) begin
                     vc_availability[ii*NUM_VCS+jj] = 0;
                 end else begin

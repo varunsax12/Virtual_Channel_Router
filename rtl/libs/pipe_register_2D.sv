@@ -13,18 +13,16 @@ module pipe_register_2D #(
     output reg [DATAW-1:0] out_data [ARRAY_DEPTH-1:0]
 );
 
-    always @(posedge clk) begin
-        if (reset) begin
-            for (int i = 0; i < ARRAY_DEPTH; ++i) begin
+    for (genvar i = 0; i < ARRAY_DEPTH; ++i) begin
+        always @(posedge clk) begin
+            if (reset) begin
                 out_data[i] <= 0;
             end
-        end
-        else if (enable) begin
-            for (int i = 0; i < ARRAY_DEPTH; ++i) begin
+            else if (enable) begin
                 out_data[i] <= in_data[i];
             end
+            // else latch the same data
         end
-        // else latch the same data
     end
 
 endmodule
