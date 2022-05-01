@@ -289,6 +289,15 @@ module router_top #(
             .in_data    (sa_dst_port[i]),
             .out_data   (br_dst_port[i])
         );
+        pipe_register_1D #(
+            .DATAW      (NUM_PORTS*NUM_VC)
+        ) sa2br_vca (
+            .clk        (clk),
+            .reset      (reset),
+            .enable     (1'b1),
+            .in_data    (sa_allocated_op_vcs[i]),
+            .out_data   (br_allocated_op_vcs[i])
+        );
     end
 
     /************************************
@@ -318,27 +327,6 @@ module router_top #(
             .sel_direction  (br_allocated_ports[i]),
             .vc_index       (br_vc_index[i])
         );
-    end
-
-    // Buffer read, combining br_vc_index and br_allocated_ports
-    logic  [NUM_VC-1:0]   br_vc_one_hot [NUM_PORTS-1:0];
-    for (genvar i = 0; i < NUM_PORTS; ++i) begin
-        index_2_one_hot #(
-            .NUM_BITS     (VC_BITS)
-        ) bridx2bronehot (
-            .index(br_vc_index[i]),
-            .out_one_hot(br_vc_one_hot[i])
-        );
-    end
-    for (genvar i = 0; i < NUM_PORTS; i++) begin
-        for (genvar j = 0; j < NUM_VC; j++) begin
-            for(genvar ii = 0; ii < NUM_PORTS; ii++) begin
-                //Op port ii selected for ip port i and ip vc j
-                for(genvar jj = 0; jj < NUM_VC; jj++) begin
-                    assign br_allocated_op_vcs[i*NUM_VC+j][ii*NUM_VC+jj] = (br_dst_port[i*NUM_VC+j][ii])? br_vc_one_hot[ii][jj] : 0;
-                end
-            end
-        end
     end
 
     // Read buffers
