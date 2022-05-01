@@ -24,7 +24,7 @@ NOTES:
 module vc_availability #(
     parameter NUM_PORTS = 5,
     parameter NUM_VCS = 4,
-    parameter BUFFER_DEPTH = 2,
+    parameter BUFFER_DEPTH = 8,
     parameter CR_BITS = $clog2(BUFFER_DEPTH)+1
 ) (
     // Standard clock and reset signals
@@ -103,7 +103,7 @@ module vc_availability #(
             for(int ii=0; ii<NUM_PORTS; ii=ii+1) begin
                 if(ii!=0) begin
                     for(int jj=0; jj<NUM_VCS; jj=jj+1) begin
-                        if(dwnstr_credit_increment[ii-1][jj] && (credits[ii][jj]<BUFFER_DEPTH))
+                        if(dwnstr_credit_increment[ii-1][jj])
                             credits[ii][jj] = credits[ii][jj] + 1;
                     end
                 end

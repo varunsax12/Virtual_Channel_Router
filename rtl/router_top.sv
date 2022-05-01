@@ -9,7 +9,7 @@ module router_top #(
     parameter NUM_ROUTERS    = 16,
     parameter ROUTER_PER_ROW = 4,
     parameter ROUTER_ID      = 0,
-    parameter BUFFER_DEPTH   = 2, //8, // keep in the power of 2
+    parameter BUFFER_DEPTH   = 8, //8, // keep in the power of 2
     parameter ROUTER_ID_BITS = $clog2(NUM_ROUTERS),
     parameter PORT_BITS      = $clog2(NUM_PORTS),
     parameter VC_BITS        = $clog2(NUM_VC),
@@ -140,6 +140,7 @@ module router_top #(
     // LOGIC: to avoid re-inserting the same values into the pipeline
     logic [NUM_PORTS-1:0] sa_allocated_ports [NUM_PORTS-1:0];
     logic [NUM_PORTS-1:0] br_allocated_ports [NUM_PORTS-1:0];
+    logic [NUM_VC*NUM_PORTS-1:0] br_allocated_op_vcs [NUM_VC*NUM_PORTS-1:0];
 
     logic [NUM_VC*NUM_PORTS-1:0] vca_dst_valid;
     for (genvar i = 0; i < NUM_PORTS; ++i) begin
@@ -157,7 +158,7 @@ module router_top #(
 
     logic [NUM_VC*NUM_PORTS-1:0] vca_vc_availability;
     logic [NUM_VC*NUM_PORTS-1:0] vca_allocated_op_vcs [NUM_VC*NUM_PORTS-1:0];
-
+    logic [NUM_VC*NUM_PORTS-1:0] sa_allocated_op_vcs [NUM_VC*NUM_PORTS-1:0];
     // Computes VC Availability, upstream credit increments
     // based on down stream router increments and current router assignees
     /*
@@ -188,9 +189,9 @@ module router_top #(
         .vca_dst_valid          (vca_dst_valid),
         .vca_dst_port           (vca_dst_port),
         .dwnstr_credit_increment(dwnstr_credit_increment), 
-        .sa_allocated_ports     (sa_allocated_ports),
+        .sa_allocated_ports     (br_allocated_ports),
         .out_valid              (out_valid),
-        .allocated_op_vcs       (vca_allocated_op_vcs), 
+        .allocated_op_vcs       (br_allocated_op_vcs),
         .vc_availability        (vca_vc_availability), 
         .upstr_credit_increment (upstr_credit_increment)
     );
@@ -212,9 +213,8 @@ module router_top #(
         .allocated_op_vcs   (vca_allocated_op_vcs)
     );
 
-    logic [NUM_VC*NUM_PORTS-1:0] sa_allocated_op_vcs [NUM_VC*NUM_PORTS-1:0];
     logic [NUM_PORTS-1:0]        sa_dst_port [NUM_VC*NUM_PORTS-1:0];
-    
+
     for (genvar i = 0; i < NUM_VC*NUM_PORTS; ++i) begin : pipe_vca
         pipe_register_1D #(
             .DATAW      (NUM_VC*NUM_PORTS)
@@ -318,6 +318,27 @@ module router_top #(
             .sel_direction  (br_allocated_ports[i]),
             .vc_index       (br_vc_index[i])
         );
+    end
+
+    // Buffer read, combining br_vc_index and br_allocated_ports
+    logic  [NUM_VC-1:0]   br_vc_one_hot [NUM_PORTS-1:0];
+    for (genvar i = 0; i < NUM_PORTS; ++i) begin
+        index_2_one_hot #(
+            .NUM_BITS     (VC_BITS)
+        ) bridx2bronehot (
+            .index(br_vc_index[i]),
+            .out_one_hot(br_vc_one_hot[i])
+        );
+    end
+    for (genvar i = 0; i < NUM_PORTS; i++) begin
+        for (genvar j = 0; j < NUM_VC; j++) begin
+            for(genvar ii = 0; ii < NUM_PORTS; ii++) begin
+                //Op port ii selected for ip port i and ip vc j
+                for(genvar jj = 0; jj < NUM_VC; jj++) begin
+                    assign br_allocated_op_vcs[i*NUM_VC+j][ii*NUM_VC+jj] = (br_dst_port[i*NUM_VC+j][ii])? br_vc_one_hot[ii][jj] : 0;
+                end
+            end
+        end
     end
 
     // Read buffers

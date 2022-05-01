@@ -167,13 +167,17 @@ module tb_router_top();
         foreach(input_data[i]) begin
             input_valid[i] = 0;
         end
-        //34+6=40 cycles are required to make all output ports invalid (basically flush out all input data)
+        //================================================
+
+        //==============Downstream signal=================
         for (int i = 0; i < 7; ++i) begin
             @(negedge clk);
             //display();
             if(i==5) begin
                 $display("\nDownstream router op port 2, op vc 2, sends a credit, i=%0d",i);
                 dwnstr_credit_increment[1][2] = 1;
+                #1
+                dwnstr_credit_increment[1][2] = 0;
             end else begin
                 dwnstr_credit_increment[1][2] = 0;
             end

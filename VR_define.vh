@@ -11,7 +11,7 @@
 `define WAVEFRONT_ALLOCATOR   2
 
 // Arbiter selection switch
-`define ARBITER_TYPE          2
+`define ARBITER_TYPE          1
 
 // Allocator select switch
 `define ALLOCATOR_TYPE        1
@@ -29,7 +29,6 @@
 `define WEST    3'b011
 `define EJECT   3'b100
 
-`define ROUND_TRIP 1
-//4
+`define ROUND_TRIP 4
 
 `endif
