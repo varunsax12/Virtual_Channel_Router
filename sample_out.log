@@ -1,0 +1,2626 @@
+/tools/software/synopsys/vcs/latest/bin/vcs -sverilog +vc -Mupdate -line -full64 testbench/tb_router_top.sv rtl/libs/*.sv	rtl/*.sv rtl/router_modules/*.sv VR_define.vh	-o simv
+                         Chronologic VCS (TM)
+       Version R-2020.12-SP2_Full64 -- Mon May  2 13:47:40 2022
+
+                    Copyright (c) 1991 - 2021 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+            or distribution of this software is strictly prohibited.
+
+Parsing design file 'testbench/tb_router_top.sv'
+Parsing included file 'VR_define.vh'.
+Back to file 'testbench/tb_router_top.sv'.
+Parsing design file 'rtl/libs/allocator_separable.sv'
+Parsing design file 'rtl/libs/allocator_top.sv'
+Parsing included file 'VR_define.vh'.
+Back to file 'rtl/libs/allocator_top.sv'.
+Parsing design file 'rtl/libs/allocator_wavefront.sv'
+Parsing design file 'rtl/libs/arbiter_matrix.sv'
+Parsing design file 'rtl/libs/arbiter_round_robin.sv'
+Parsing design file 'rtl/libs/arbiter_top.sv'
+Parsing included file 'VR_define.vh'.
+Back to file 'rtl/libs/arbiter_top.sv'.
+Parsing design file 'rtl/libs/fifo.sv'
+Parsing design file 'rtl/libs/index_2_one_hot.sv'
+Parsing design file 'rtl/libs/one_hot_2_index.sv'
+Parsing design file 'rtl/libs/pipe_register_1D.sv'
+Parsing design file 'rtl/libs/pipe_register_2D.sv'
+Parsing design file 'rtl/libs/priority_encoder.sv'
+Parsing design file 'rtl/router_top.sv'
+Parsing design file 'rtl/router_modules/crossbar.sv'
+Parsing included file 'VR_define.vh'.
+Back to file 'rtl/router_modules/crossbar.sv'.
+Parsing design file 'rtl/router_modules/route_compute.sv'
+Parsing included file 'VR_define.vh'.
+Back to file 'rtl/router_modules/route_compute.sv'.
+Parsing design file 'rtl/router_modules/select_vc.sv'
+Parsing included file 'VR_define.vh'.
+Back to file 'rtl/router_modules/select_vc.sv'.
+Parsing design file 'rtl/router_modules/switch_allocator.sv'
+Parsing design file 'rtl/router_modules/update_vca.sv'
+Parsing design file 'rtl/router_modules/vc_allocator.sv'
+Parsing design file 'rtl/router_modules/vc_availability.sv'
+Parsing included file 'VR_define.vh'.
+Back to file 'rtl/router_modules/vc_availability.sv'.
+Parsing design file 'rtl/router_modules/vc_req_2_port_req.sv'
+Parsing design file 'VR_define.vh'
+Top Level Modules:
+       tb_router_top
+       pipe_register_2D
+       update_vca
+TimeScale is 10 ns / 1 ps
+Starting vcs inline pass...
+
+21 modules and 0 UDP read.
+recompiling module tb_router_top
+recompiling module allocator_wavefront
+recompiling module one_hot_rotate
+recompiling module priority_block_wv
+recompiling module bitcell_wavefront
+recompiling module array_wavefront
+recompiling module request_block
+recompiling module fixed_priorty_block
+recompiling module fifo
+recompiling module pipe_register_1D
+recompiling module pipe_register_2D
+recompiling module priority_encoder
+recompiling module router_top
+recompiling module crossbar
+recompiling module route_compute
+recompiling module select_vc
+recompiling module switch_allocator
+recompiling module update_vca
+recompiling module vc_allocator
+recompiling module vc_availability
+recompiling module vc_req_2_port_req
+All of 21 modules done
+make[1]: Entering directory `/nethome/vsaxena36/ECE6115/Virtual_Channel_Router/csrc'
+make[1]: Leaving directory `/nethome/vsaxena36/ECE6115/Virtual_Channel_Router/csrc'
+make[1]: Entering directory `/nethome/vsaxena36/ECE6115/Virtual_Channel_Router/csrc'
+rm -f _cuarc*.so _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
+if [ -x ../simv ]; then chmod a-x ../simv; fi
+g++  -o ../simv      -rdynamic  -Wl,-rpath='$ORIGIN'/simv.daidir -Wl,-rpath=./simv.daidir -Wl,-rpath=/tools/software/synopsys/vcs/R-2020.12-SP2/linux64/lib -L/tools/software/synopsys/vcs/R-2020.12-SP2/linux64/lib  -Wl,-rpath-link=./   objs/amcQw_d.o   _158504_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o           -lnuma -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /tools/software/synopsys/vcs/R-2020.12-SP2/linux64/lib/vcs_tls.o   -Wl,-whole-archive  -lvcsucli    -Wl,-no-whole-archive          /tools/software/synopsys/vcs/R-2020.12-SP2/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl 
+../simv up to date
+make[1]: Leaving directory `/nethome/vsaxena36/ECE6115/Virtual_Channel_Router/csrc'
+CPU time: 2.388 seconds to compile + .583 seconds to elab + .217 seconds to link
+./simv | tee program.out
+Chronologic VCS simulator copyright 1991-2020
+Contains Synopsys proprietary information.
+Compiler version R-2020.12-SP2_Full64; Runtime version R-2020.12-SP2_Full64;  May  2 13:47 2022
+
+
+********************Time = 0***********
+**********INPUT SIGNALS******************
+Reset = x
+Input:
+	input_data[0]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	input_data[1]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	input_data[2]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	input_data[3]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	input_data[4]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	input_valid=xxxxx
+	op port:          1, op vc:          0, downstream_router_increment=x
+	op port:          1, op vc:          1, downstream_router_increment=x
+	op port:          1, op vc:          2, downstream_router_increment=x
+	op port:          1, op vc:          3, downstream_router_increment=x
+	op port:          2, op vc:          0, downstream_router_increment=x
+	op port:          2, op vc:          1, downstream_router_increment=x
+	op port:          2, op vc:          2, downstream_router_increment=x
+	op port:          2, op vc:          3, downstream_router_increment=x
+	op port:          3, op vc:          0, downstream_router_increment=x
+	op port:          3, op vc:          1, downstream_router_increment=x
+	op port:          3, op vc:          2, downstream_router_increment=x
+	op port:          3, op vc:          3, downstream_router_increment=x
+	op port:          4, op vc:          0, downstream_router_increment=x
+	op port:          4, op vc:          1, downstream_router_increment=x
+	op port:          4, op vc:          2, downstream_router_increment=x
+	op port:          4, op vc:          3, downstream_router_increment=x
+Outputs:
+	ip port:          1, ip vc:          0, upstream_router_increment=x
+	ip port:          1, ip vc:          1, upstream_router_increment=x
+	ip port:          1, ip vc:          2, upstream_router_increment=x
+	ip port:          1, ip vc:          3, upstream_router_increment=x
+	ip port:          2, ip vc:          0, upstream_router_increment=x
+	ip port:          2, ip vc:          1, upstream_router_increment=x
+	ip port:          2, ip vc:          2, upstream_router_increment=x
+	ip port:          2, ip vc:          3, upstream_router_increment=x
+	ip port:          3, ip vc:          0, upstream_router_increment=x
+	ip port:          3, ip vc:          1, upstream_router_increment=x
+	ip port:          3, ip vc:          2, upstream_router_increment=x
+	ip port:          3, ip vc:          3, upstream_router_increment=x
+	ip port:          4, ip vc:          0, upstream_router_increment=x
+	ip port:          4, ip vc:          1, upstream_router_increment=x
+	ip port:          4, ip vc:          2, upstream_router_increment=x
+	ip port:          4, ip vc:          3, upstream_router_increment=x
+	out_data[0]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	out_data[1]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	out_data[2]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	out_data[3]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	out_data[4]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	out_valid=xxxxx
+
+**********VC BUFFER STATUS******************
+Port=0, VC=0, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=0, VC=1, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=0, VC=2, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=0, VC=3, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=0, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=1, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=2, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=3, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=0, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=1, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=2, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=3, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=0, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=1, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=2, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=3, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=0, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=1, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=2, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=3, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+**********BUFFER WRITE******************
+Port=0, empty_vc_index=x
+Port=1, empty_vc_index=x
+Port=2, empty_vc_index=x
+Port=3, empty_vc_index=x
+Port=4, empty_vc_index=x
+
+**********ROUTE COMPUTE******************
+Port=0, VC=0, dst_port=xxxxx
+Port=0, VC=1, dst_port=xxxxx
+Port=0, VC=2, dst_port=xxxxx
+Port=0, VC=3, dst_port=xxxxx
+Port=1, VC=0, dst_port=xxxxx
+Port=1, VC=1, dst_port=xxxxx
+Port=1, VC=2, dst_port=xxxxx
+Port=1, VC=3, dst_port=xxxxx
+Port=2, VC=0, dst_port=xxxxx
+Port=2, VC=1, dst_port=xxxxx
+Port=2, VC=2, dst_port=xxxxx
+Port=2, VC=3, dst_port=xxxxx
+Port=3, VC=0, dst_port=xxxxx
+Port=3, VC=1, dst_port=xxxxx
+Port=3, VC=2, dst_port=xxxxx
+Port=3, VC=3, dst_port=xxxxx
+Port=4, VC=0, dst_port=xxxxx
+Port=4, VC=1, dst_port=xxxxx
+Port=4, VC=2, dst_port=xxxxx
+Port=4, VC=3, dst_port=xxxxx
+
+**********VC AVALABILITY******************
+VCAvailability, out port=0, out vc=0, credits:xxxx, new_vc_availability:xxxxxxxxxxxxxxxxxxxx
+VCAvailability, out port=0, out vc=1, credits:xxxx, new_vc_availability:xxxxxxxxxxxxxxxxxxxx
+VCAvailability, out port=0, out vc=2, credits:xxxx, new_vc_availability:xxxxxxxxxxxxxxxxxxxx
+VCAvailability, out port=0, out vc=3, credits:xxxx, new_vc_availability:xxxxxxxxxxxxxxxxxxxx
+VCAvailability, out port=1, out vc=0, credits:xxxx, new_vc_availability:xxxxxxxxxxxxxxxxxxxx
+VCAvailability, out port=1, out vc=1, credits:xxxx, new_vc_availability:xxxxxxxxxxxxxxxxxxxx
+VCAvailability, out port=1, out vc=2, credits:xxxx, new_vc_availability:xxxxxxxxxxxxxxxxxxxx
+VCAvailability, out port=1, out vc=3, credits:xxxx, new_vc_availability:xxxxxxxxxxxxxxxxxxxx
+VCAvailability, out port=2, out vc=0, credits:xxxx, new_vc_availability:xxxxxxxxxxxxxxxxxxxx
+VCAvailability, out port=2, out vc=1, credits:xxxx, new_vc_availability:xxxxxxxxxxxxxxxxxxxx
+VCAvailability, out port=2, out vc=2, credits:xxxx, new_vc_availability:xxxxxxxxxxxxxxxxxxxx
+VCAvailability, out port=2, out vc=3, credits:xxxx, new_vc_availability:xxxxxxxxxxxxxxxxxxxx
+VCAvailability, out port=3, out vc=0, credits:xxxx, new_vc_availability:xxxxxxxxxxxxxxxxxxxx
+VCAvailability, out port=3, out vc=1, credits:xxxx, new_vc_availability:xxxxxxxxxxxxxxxxxxxx
+VCAvailability, out port=3, out vc=2, credits:xxxx, new_vc_availability:xxxxxxxxxxxxxxxxxxxx
+VCAvailability, out port=3, out vc=3, credits:xxxx, new_vc_availability:xxxxxxxxxxxxxxxxxxxx
+VCAvailability, out port=4, out vc=0, credits:xxxx, new_vc_availability:xxxxxxxxxxxxxxxxxxxx
+VCAvailability, out port=4, out vc=1, credits:xxxx, new_vc_availability:xxxxxxxxxxxxxxxxxxxx
+VCAvailability, out port=4, out vc=2, credits:xxxx, new_vc_availability:xxxxxxxxxxxxxxxxxxxx
+VCAvailability, out port=4, out vc=3, credits:xxxx, new_vc_availability:xxxxxxxxxxxxxxxxxxxx
+
+Mask Generation:
+Port=0, VC=0, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=x
+Port=0, VC=1, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=x
+Port=0, VC=2, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=x
+Port=0, VC=3, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=x
+Port=1, VC=0, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=x
+Port=1, VC=1, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=x
+Port=1, VC=2, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=x
+Port=1, VC=3, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=x
+Port=2, VC=0, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=x
+Port=2, VC=1, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=x
+Port=2, VC=2, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=x
+Port=2, VC=3, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=x
+Port=3, VC=0, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=x
+Port=3, VC=1, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=x
+Port=3, VC=2, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=x
+Port=3, VC=3, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=x
+Port=4, VC=0, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=x
+Port=4, VC=1, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=x
+Port=4, VC=2, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=x
+Port=4, VC=3, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=x
+
+**********VC ALLOCATION******************
+ipvc:0, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:1, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:2, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:3, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:4, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:5, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:6, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:7, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:8, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:9, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:10, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:11, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:12, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:13, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:14, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:15, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:16, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:17, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:18, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:19, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+
+**********SA ALLOCATION******************
+Port=0, sa_allocated_ports=xxxxx
+Port=1, sa_allocated_ports=xxxxx
+Port=2, sa_allocated_ports=xxxxx
+Port=3, sa_allocated_ports=xxxxx
+Port=4, sa_allocated_ports=xxxxx
+
+**********BUFFER READ******************
+Port=0, vc_index=x vc_valid=x
+Port=1, vc_index=x vc_valid=x
+Port=2, vc_index=x vc_valid=x
+Port=3, vc_index=x vc_valid=x
+Port=4, vc_index=x vc_valid=x
+Port=0, br_allocated_ports=xxxxx
+Port=1, br_allocated_ports=xxxxx
+Port=2, br_allocated_ports=xxxxx
+Port=3, br_allocated_ports=xxxxx
+Port=4, br_allocated_ports=xxxxx
+
+**********SWITCH TRAVERSAL******************
+Port=0, out_data=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx, out_valid=x, valid=xxxxx
+Port=1, out_data=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx, out_valid=x, valid=xxxxx
+Port=2, out_data=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx, out_valid=x, valid=xxxxx
+Port=3, out_data=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx, out_valid=x, valid=xxxxx
+Port=4, out_data=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx, out_valid=x, valid=xxxxx
+
+
+********************Time = 20***********
+**********INPUT SIGNALS******************
+Reset = x
+Input:
+	input_data[0]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	input_data[1]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	input_data[2]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	input_data[3]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	input_data[4]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	input_valid=xxxxx
+	op port:          1, op vc:          0, downstream_router_increment=x
+	op port:          1, op vc:          1, downstream_router_increment=x
+	op port:          1, op vc:          2, downstream_router_increment=x
+	op port:          1, op vc:          3, downstream_router_increment=x
+	op port:          2, op vc:          0, downstream_router_increment=x
+	op port:          2, op vc:          1, downstream_router_increment=x
+	op port:          2, op vc:          2, downstream_router_increment=x
+	op port:          2, op vc:          3, downstream_router_increment=x
+	op port:          3, op vc:          0, downstream_router_increment=x
+	op port:          3, op vc:          1, downstream_router_increment=x
+	op port:          3, op vc:          2, downstream_router_increment=x
+	op port:          3, op vc:          3, downstream_router_increment=x
+	op port:          4, op vc:          0, downstream_router_increment=x
+	op port:          4, op vc:          1, downstream_router_increment=x
+	op port:          4, op vc:          2, downstream_router_increment=x
+	op port:          4, op vc:          3, downstream_router_increment=x
+Outputs:
+	ip port:          1, ip vc:          0, upstream_router_increment=0
+	ip port:          1, ip vc:          1, upstream_router_increment=0
+	ip port:          1, ip vc:          2, upstream_router_increment=0
+	ip port:          1, ip vc:          3, upstream_router_increment=0
+	ip port:          2, ip vc:          0, upstream_router_increment=0
+	ip port:          2, ip vc:          1, upstream_router_increment=0
+	ip port:          2, ip vc:          2, upstream_router_increment=0
+	ip port:          2, ip vc:          3, upstream_router_increment=0
+	ip port:          3, ip vc:          0, upstream_router_increment=0
+	ip port:          3, ip vc:          1, upstream_router_increment=0
+	ip port:          3, ip vc:          2, upstream_router_increment=0
+	ip port:          3, ip vc:          3, upstream_router_increment=0
+	ip port:          4, ip vc:          0, upstream_router_increment=0
+	ip port:          4, ip vc:          1, upstream_router_increment=0
+	ip port:          4, ip vc:          2, upstream_router_increment=0
+	ip port:          4, ip vc:          3, upstream_router_increment=0
+	out_data[0]=00000000000000000000000000000000
+	out_data[1]=00000000000000000000000000000000
+	out_data[2]=00000000000000000000000000000000
+	out_data[3]=00000000000000000000000000000000
+	out_data[4]=00000000000000000000000000000000
+	out_valid=00000
+
+**********VC BUFFER STATUS******************
+Port=0, VC=0, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=0, VC=1, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=0, VC=2, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=0, VC=3, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=0, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=1, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=2, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=3, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=0, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=1, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=2, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=3, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=0, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=1, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=2, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=3, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=0, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=1, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=2, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=3, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+**********BUFFER WRITE******************
+Port=0, empty_vc_index=x
+Port=1, empty_vc_index=x
+Port=2, empty_vc_index=x
+Port=3, empty_vc_index=x
+Port=4, empty_vc_index=x
+
+**********ROUTE COMPUTE******************
+Port=0, VC=0, dst_port=xxxxx
+Port=0, VC=1, dst_port=xxxxx
+Port=0, VC=2, dst_port=xxxxx
+Port=0, VC=3, dst_port=xxxxx
+Port=1, VC=0, dst_port=xxxxx
+Port=1, VC=1, dst_port=xxxxx
+Port=1, VC=2, dst_port=xxxxx
+Port=1, VC=3, dst_port=xxxxx
+Port=2, VC=0, dst_port=xxxxx
+Port=2, VC=1, dst_port=xxxxx
+Port=2, VC=2, dst_port=xxxxx
+Port=2, VC=3, dst_port=xxxxx
+Port=3, VC=0, dst_port=xxxxx
+Port=3, VC=1, dst_port=xxxxx
+Port=3, VC=2, dst_port=xxxxx
+Port=3, VC=3, dst_port=xxxxx
+Port=4, VC=0, dst_port=xxxxx
+Port=4, VC=1, dst_port=xxxxx
+Port=4, VC=2, dst_port=xxxxx
+Port=4, VC=3, dst_port=xxxxx
+
+**********VC AVALABILITY******************
+VCAvailability, out port=0, out vc=0, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=1, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=2, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=3, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=0, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=1, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=2, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=3, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=0, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=1, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=2, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=3, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=0, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=1, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=2, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=3, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=0, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=1, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=2, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=3, credits:xxxx, new_vc_availability:11111111111111111111
+
+Mask Generation:
+Port=0, VC=0, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=0, VC=1, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=0, VC=2, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=0, VC=3, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=1, VC=0, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=1, VC=1, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=1, VC=2, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=1, VC=3, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=2, VC=0, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=2, VC=1, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=2, VC=2, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=2, VC=3, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=3, VC=0, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=3, VC=1, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=3, VC=2, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=3, VC=3, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=4, VC=0, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=4, VC=1, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=4, VC=2, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=4, VC=3, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+
+**********VC ALLOCATION******************
+ipvc:0, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:1, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:2, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:3, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:4, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:5, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:6, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:7, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:8, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:9, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:10, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:11, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:12, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:13, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:14, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:15, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:16, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:17, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:18, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:19, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+
+**********SA ALLOCATION******************
+Port=0, sa_allocated_ports=xxxxx
+Port=1, sa_allocated_ports=xxxxx
+Port=2, sa_allocated_ports=xxxxx
+Port=3, sa_allocated_ports=xxxxx
+Port=4, sa_allocated_ports=xxxxx
+
+**********BUFFER READ******************
+Port=0, vc_index=x vc_valid=x
+Port=1, vc_index=x vc_valid=x
+Port=2, vc_index=x vc_valid=x
+Port=3, vc_index=x vc_valid=x
+Port=4, vc_index=x vc_valid=x
+Port=0, br_allocated_ports=xxxxx
+Port=1, br_allocated_ports=xxxxx
+Port=2, br_allocated_ports=xxxxx
+Port=3, br_allocated_ports=xxxxx
+Port=4, br_allocated_ports=xxxxx
+
+**********SWITCH TRAVERSAL******************
+Port=0, out_data=00000000000000000000000000000000, out_valid=0, valid=xxxxx
+Port=1, out_data=00000000000000000000000000000000, out_valid=0, valid=xxxxx
+Port=2, out_data=00000000000000000000000000000000, out_valid=0, valid=xxxxx
+Port=3, out_data=00000000000000000000000000000000, out_valid=0, valid=xxxxx
+Port=4, out_data=00000000000000000000000000000000, out_valid=0, valid=xxxxx
+
+
+********************Time = 40***********
+**********INPUT SIGNALS******************
+Reset = 0
+Input:
+	input_data[0]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	input_data[1]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	input_data[2]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	input_data[3]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	input_data[4]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	input_valid=xxxxx
+	op port:          1, op vc:          0, downstream_router_increment=x
+	op port:          1, op vc:          1, downstream_router_increment=x
+	op port:          1, op vc:          2, downstream_router_increment=x
+	op port:          1, op vc:          3, downstream_router_increment=x
+	op port:          2, op vc:          0, downstream_router_increment=x
+	op port:          2, op vc:          1, downstream_router_increment=x
+	op port:          2, op vc:          2, downstream_router_increment=x
+	op port:          2, op vc:          3, downstream_router_increment=x
+	op port:          3, op vc:          0, downstream_router_increment=x
+	op port:          3, op vc:          1, downstream_router_increment=x
+	op port:          3, op vc:          2, downstream_router_increment=x
+	op port:          3, op vc:          3, downstream_router_increment=x
+	op port:          4, op vc:          0, downstream_router_increment=x
+	op port:          4, op vc:          1, downstream_router_increment=x
+	op port:          4, op vc:          2, downstream_router_increment=x
+	op port:          4, op vc:          3, downstream_router_increment=x
+Outputs:
+	ip port:          1, ip vc:          0, upstream_router_increment=0
+	ip port:          1, ip vc:          1, upstream_router_increment=0
+	ip port:          1, ip vc:          2, upstream_router_increment=0
+	ip port:          1, ip vc:          3, upstream_router_increment=0
+	ip port:          2, ip vc:          0, upstream_router_increment=0
+	ip port:          2, ip vc:          1, upstream_router_increment=0
+	ip port:          2, ip vc:          2, upstream_router_increment=0
+	ip port:          2, ip vc:          3, upstream_router_increment=0
+	ip port:          3, ip vc:          0, upstream_router_increment=0
+	ip port:          3, ip vc:          1, upstream_router_increment=0
+	ip port:          3, ip vc:          2, upstream_router_increment=0
+	ip port:          3, ip vc:          3, upstream_router_increment=0
+	ip port:          4, ip vc:          0, upstream_router_increment=0
+	ip port:          4, ip vc:          1, upstream_router_increment=0
+	ip port:          4, ip vc:          2, upstream_router_increment=0
+	ip port:          4, ip vc:          3, upstream_router_increment=0
+	out_data[0]=00000000000000000000000000000000
+	out_data[1]=00000000000000000000000000000000
+	out_data[2]=00000000000000000000000000000000
+	out_data[3]=00000000000000000000000000000000
+	out_data[4]=00000000000000000000000000000000
+	out_valid=00000
+
+**********VC BUFFER STATUS******************
+Port=0, VC=0, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=0, VC=1, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=0, VC=2, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=0, VC=3, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=0, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=1, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=2, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=3, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=0, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=1, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=2, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=3, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=0, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=1, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=2, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=3, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=0, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=1, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=2, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=3, vc_valid=x, vc_empty=x, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+**********BUFFER WRITE******************
+Port=0, empty_vc_index=x
+Port=1, empty_vc_index=x
+Port=2, empty_vc_index=x
+Port=3, empty_vc_index=x
+Port=4, empty_vc_index=x
+
+**********ROUTE COMPUTE******************
+Port=0, VC=0, dst_port=xxxxx
+Port=0, VC=1, dst_port=xxxxx
+Port=0, VC=2, dst_port=xxxxx
+Port=0, VC=3, dst_port=xxxxx
+Port=1, VC=0, dst_port=xxxxx
+Port=1, VC=1, dst_port=xxxxx
+Port=1, VC=2, dst_port=xxxxx
+Port=1, VC=3, dst_port=xxxxx
+Port=2, VC=0, dst_port=xxxxx
+Port=2, VC=1, dst_port=xxxxx
+Port=2, VC=2, dst_port=xxxxx
+Port=2, VC=3, dst_port=xxxxx
+Port=3, VC=0, dst_port=xxxxx
+Port=3, VC=1, dst_port=xxxxx
+Port=3, VC=2, dst_port=xxxxx
+Port=3, VC=3, dst_port=xxxxx
+Port=4, VC=0, dst_port=xxxxx
+Port=4, VC=1, dst_port=xxxxx
+Port=4, VC=2, dst_port=xxxxx
+Port=4, VC=3, dst_port=xxxxx
+
+**********VC AVALABILITY******************
+VCAvailability, out port=0, out vc=0, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=1, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=2, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=3, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=0, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=1, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=2, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=3, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=0, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=1, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=2, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=3, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=0, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=1, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=2, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=3, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=0, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=1, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=2, credits:xxxx, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=3, credits:xxxx, new_vc_availability:11111111111111111111
+
+Mask Generation:
+Port=0, VC=0, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=0, VC=1, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=0, VC=2, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=0, VC=3, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=1, VC=0, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=1, VC=1, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=1, VC=2, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=1, VC=3, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=2, VC=0, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=2, VC=1, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=2, VC=2, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=2, VC=3, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=3, VC=0, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=3, VC=1, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=3, VC=2, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=3, VC=3, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=4, VC=0, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=4, VC=1, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=4, VC=2, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+Port=4, VC=3, VC dst port=xxxxx, SA dst port=xxxxx, BR dst port=xxxxx, valid=0
+
+**********VC ALLOCATION******************
+ipvc:0, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:1, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:2, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:3, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:4, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:5, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:6, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:7, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:8, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:9, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:10, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:11, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:12, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:13, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:14, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:15, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:16, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:17, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:18, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+ipvc:19, allocated_op_vcs:xxxxxxxxxxxxxxxxxxxx, sa_allocated_ports=xxxxx
+
+**********SA ALLOCATION******************
+Port=0, sa_allocated_ports=xxxxx
+Port=1, sa_allocated_ports=xxxxx
+Port=2, sa_allocated_ports=xxxxx
+Port=3, sa_allocated_ports=xxxxx
+Port=4, sa_allocated_ports=xxxxx
+
+**********BUFFER READ******************
+Port=0, vc_index=x vc_valid=x
+Port=1, vc_index=x vc_valid=x
+Port=2, vc_index=x vc_valid=x
+Port=3, vc_index=x vc_valid=x
+Port=4, vc_index=x vc_valid=x
+Port=0, br_allocated_ports=xxxxx
+Port=1, br_allocated_ports=xxxxx
+Port=2, br_allocated_ports=xxxxx
+Port=3, br_allocated_ports=xxxxx
+Port=4, br_allocated_ports=xxxxx
+
+**********SWITCH TRAVERSAL******************
+Port=0, out_data=00000000000000000000000000000000, out_valid=0, valid=xxxxx
+Port=1, out_data=00000000000000000000000000000000, out_valid=0, valid=xxxxx
+Port=2, out_data=00000000000000000000000000000000, out_valid=0, valid=xxxxx
+Port=3, out_data=00000000000000000000000000000000, out_valid=0, valid=xxxxx
+Port=4, out_data=00000000000000000000000000000000, out_valid=0, valid=xxxxx
+
+
+********************Time = 60***********
+**********INPUT SIGNALS******************
+Reset = 1
+Input:
+	input_data[0]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	input_data[1]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	input_data[2]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	input_data[3]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	input_data[4]=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	input_valid=xxxxx
+	op port:          1, op vc:          0, downstream_router_increment=x
+	op port:          1, op vc:          1, downstream_router_increment=x
+	op port:          1, op vc:          2, downstream_router_increment=x
+	op port:          1, op vc:          3, downstream_router_increment=x
+	op port:          2, op vc:          0, downstream_router_increment=x
+	op port:          2, op vc:          1, downstream_router_increment=x
+	op port:          2, op vc:          2, downstream_router_increment=x
+	op port:          2, op vc:          3, downstream_router_increment=x
+	op port:          3, op vc:          0, downstream_router_increment=x
+	op port:          3, op vc:          1, downstream_router_increment=x
+	op port:          3, op vc:          2, downstream_router_increment=x
+	op port:          3, op vc:          3, downstream_router_increment=x
+	op port:          4, op vc:          0, downstream_router_increment=x
+	op port:          4, op vc:          1, downstream_router_increment=x
+	op port:          4, op vc:          2, downstream_router_increment=x
+	op port:          4, op vc:          3, downstream_router_increment=x
+Outputs:
+	ip port:          1, ip vc:          0, upstream_router_increment=0
+	ip port:          1, ip vc:          1, upstream_router_increment=0
+	ip port:          1, ip vc:          2, upstream_router_increment=0
+	ip port:          1, ip vc:          3, upstream_router_increment=0
+	ip port:          2, ip vc:          0, upstream_router_increment=0
+	ip port:          2, ip vc:          1, upstream_router_increment=0
+	ip port:          2, ip vc:          2, upstream_router_increment=0
+	ip port:          2, ip vc:          3, upstream_router_increment=0
+	ip port:          3, ip vc:          0, upstream_router_increment=0
+	ip port:          3, ip vc:          1, upstream_router_increment=0
+	ip port:          3, ip vc:          2, upstream_router_increment=0
+	ip port:          3, ip vc:          3, upstream_router_increment=0
+	ip port:          4, ip vc:          0, upstream_router_increment=0
+	ip port:          4, ip vc:          1, upstream_router_increment=0
+	ip port:          4, ip vc:          2, upstream_router_increment=0
+	ip port:          4, ip vc:          3, upstream_router_increment=0
+	out_data[0]=00000000000000000000000000000000
+	out_data[1]=00000000000000000000000000000000
+	out_data[2]=00000000000000000000000000000000
+	out_data[3]=00000000000000000000000000000000
+	out_data[4]=00000000000000000000000000000000
+	out_valid=00000
+
+**********VC BUFFER STATUS******************
+Port=0, VC=0, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=0, VC=1, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=0, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=0, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=0, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=1, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=0, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=1, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=0, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=1, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=0, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=1, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+**********BUFFER WRITE******************
+Port=0, empty_vc_index=0
+Port=1, empty_vc_index=0
+Port=2, empty_vc_index=0
+Port=3, empty_vc_index=0
+Port=4, empty_vc_index=0
+
+**********ROUTE COMPUTE******************
+Port=0, VC=0, dst_port=00000
+Port=0, VC=1, dst_port=00000
+Port=0, VC=2, dst_port=00000
+Port=0, VC=3, dst_port=00000
+Port=1, VC=0, dst_port=00000
+Port=1, VC=1, dst_port=00000
+Port=1, VC=2, dst_port=00000
+Port=1, VC=3, dst_port=00000
+Port=2, VC=0, dst_port=00000
+Port=2, VC=1, dst_port=00000
+Port=2, VC=2, dst_port=00000
+Port=2, VC=3, dst_port=00000
+Port=3, VC=0, dst_port=00000
+Port=3, VC=1, dst_port=00000
+Port=3, VC=2, dst_port=00000
+Port=3, VC=3, dst_port=00000
+Port=4, VC=0, dst_port=00000
+Port=4, VC=1, dst_port=00000
+Port=4, VC=2, dst_port=00000
+Port=4, VC=3, dst_port=00000
+
+**********VC AVALABILITY******************
+VCAvailability, out port=0, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+
+Mask Generation:
+Port=0, VC=0, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=0, VC=1, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=0, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=0, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=0, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=1, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=0, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=1, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=0, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=1, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=0, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=1, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+
+**********VC ALLOCATION******************
+ipvc:0, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:1, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:2, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:3, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:4, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:5, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:6, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:7, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:8, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:9, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:10, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:11, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:12, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:13, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:14, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:15, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:16, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:17, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:18, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:19, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+
+**********SA ALLOCATION******************
+Port=0, sa_allocated_ports=00000
+Port=1, sa_allocated_ports=00000
+Port=2, sa_allocated_ports=00000
+Port=3, sa_allocated_ports=00000
+Port=4, sa_allocated_ports=00000
+
+**********BUFFER READ******************
+Port=0, vc_index=3 vc_valid=0
+Port=1, vc_index=3 vc_valid=0
+Port=2, vc_index=3 vc_valid=0
+Port=3, vc_index=3 vc_valid=0
+Port=4, vc_index=3 vc_valid=0
+Port=0, br_allocated_ports=00000
+Port=1, br_allocated_ports=00000
+Port=2, br_allocated_ports=00000
+Port=3, br_allocated_ports=00000
+Port=4, br_allocated_ports=00000
+
+**********SWITCH TRAVERSAL******************
+Port=0, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=1, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=2, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=3, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=4, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+
+Setting new inputs at Time = 60
+
+
+********************Time = 80***********
+**********INPUT SIGNALS******************
+Reset = 0
+Input:
+	input_data[0]=10101110100011010110011000001011
+	input_data[1]=10111011001111011100011010011001
+	input_data[2]=01111100101001100011110111001000
+	input_data[3]=10001100110010111011010101001100
+	input_data[4]=00110000110100100111000101011100
+	input_valid=11111
+	op port:          1, op vc:          0, downstream_router_increment=0
+	op port:          1, op vc:          1, downstream_router_increment=0
+	op port:          1, op vc:          2, downstream_router_increment=0
+	op port:          1, op vc:          3, downstream_router_increment=0
+	op port:          2, op vc:          0, downstream_router_increment=0
+	op port:          2, op vc:          1, downstream_router_increment=0
+	op port:          2, op vc:          2, downstream_router_increment=0
+	op port:          2, op vc:          3, downstream_router_increment=0
+	op port:          3, op vc:          0, downstream_router_increment=0
+	op port:          3, op vc:          1, downstream_router_increment=0
+	op port:          3, op vc:          2, downstream_router_increment=0
+	op port:          3, op vc:          3, downstream_router_increment=0
+	op port:          4, op vc:          0, downstream_router_increment=0
+	op port:          4, op vc:          1, downstream_router_increment=0
+	op port:          4, op vc:          2, downstream_router_increment=0
+	op port:          4, op vc:          3, downstream_router_increment=0
+Outputs:
+	ip port:          1, ip vc:          0, upstream_router_increment=0
+	ip port:          1, ip vc:          1, upstream_router_increment=0
+	ip port:          1, ip vc:          2, upstream_router_increment=0
+	ip port:          1, ip vc:          3, upstream_router_increment=0
+	ip port:          2, ip vc:          0, upstream_router_increment=0
+	ip port:          2, ip vc:          1, upstream_router_increment=0
+	ip port:          2, ip vc:          2, upstream_router_increment=0
+	ip port:          2, ip vc:          3, upstream_router_increment=0
+	ip port:          3, ip vc:          0, upstream_router_increment=0
+	ip port:          3, ip vc:          1, upstream_router_increment=0
+	ip port:          3, ip vc:          2, upstream_router_increment=0
+	ip port:          3, ip vc:          3, upstream_router_increment=0
+	ip port:          4, ip vc:          0, upstream_router_increment=0
+	ip port:          4, ip vc:          1, upstream_router_increment=0
+	ip port:          4, ip vc:          2, upstream_router_increment=0
+	ip port:          4, ip vc:          3, upstream_router_increment=0
+	out_data[0]=00000000000000000000000000000000
+	out_data[1]=00000000000000000000000000000000
+	out_data[2]=00000000000000000000000000000000
+	out_data[3]=00000000000000000000000000000000
+	out_data[4]=00000000000000000000000000000000
+	out_valid=00000
+
+**********VC BUFFER STATUS******************
+Port=0, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10101110100011010110011000001011
+Port=0, VC=1, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=0, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=0, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10111011001111011100011010011001
+Port=1, VC=1, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=0, vc_valid=1, vc_empty=0, vc_buffer=01111100101001100011110111001000
+Port=2, VC=1, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10001100110010111011010101001100
+Port=3, VC=1, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=0, vc_valid=1, vc_empty=0, vc_buffer=00110000110100100111000101011100
+Port=4, VC=1, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+**********BUFFER WRITE******************
+Port=0, empty_vc_index=1
+Port=1, empty_vc_index=1
+Port=2, empty_vc_index=1
+Port=3, empty_vc_index=1
+Port=4, empty_vc_index=1
+
+**********ROUTE COMPUTE******************
+Port=0, VC=0, dst_port=00100
+Port=0, VC=1, dst_port=00000
+Port=0, VC=2, dst_port=00000
+Port=0, VC=3, dst_port=00000
+Port=1, VC=0, dst_port=00100
+Port=1, VC=1, dst_port=00000
+Port=1, VC=2, dst_port=00000
+Port=1, VC=3, dst_port=00000
+Port=2, VC=0, dst_port=00100
+Port=2, VC=1, dst_port=00000
+Port=2, VC=2, dst_port=00000
+Port=2, VC=3, dst_port=00000
+Port=3, VC=0, dst_port=00001
+Port=3, VC=1, dst_port=00000
+Port=3, VC=2, dst_port=00000
+Port=3, VC=3, dst_port=00000
+Port=4, VC=0, dst_port=00100
+Port=4, VC=1, dst_port=00000
+Port=4, VC=2, dst_port=00000
+Port=4, VC=3, dst_port=00000
+
+**********VC AVALABILITY******************
+VCAvailability, out port=0, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+
+Mask Generation:
+Port=0, VC=0, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=0, VC=1, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=0, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=0, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=0, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=1, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=0, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=1, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=0, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=1, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=0, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=1, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+
+**********VC ALLOCATION******************
+ipvc:0, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:1, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:2, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:3, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:4, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:5, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:6, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:7, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:8, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:9, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:10, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:11, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:12, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:13, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:14, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:15, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:16, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:17, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:18, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:19, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+
+**********SA ALLOCATION******************
+Port=0, sa_allocated_ports=00000
+Port=1, sa_allocated_ports=00000
+Port=2, sa_allocated_ports=00000
+Port=3, sa_allocated_ports=00000
+Port=4, sa_allocated_ports=00000
+
+**********BUFFER READ******************
+Port=0, vc_index=3 vc_valid=0
+Port=1, vc_index=3 vc_valid=0
+Port=2, vc_index=3 vc_valid=0
+Port=3, vc_index=3 vc_valid=0
+Port=4, vc_index=3 vc_valid=0
+Port=0, br_allocated_ports=00000
+Port=1, br_allocated_ports=00000
+Port=2, br_allocated_ports=00000
+Port=3, br_allocated_ports=00000
+Port=4, br_allocated_ports=00000
+
+**********SWITCH TRAVERSAL******************
+Port=0, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=1, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=2, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=3, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=4, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+
+Setting new inputs at Time = 80
+
+
+********************Time = 100***********
+**********INPUT SIGNALS******************
+Reset = 0
+Input:
+	input_data[0]=11001100110110001111110100111001
+	input_data[1]=00000001111100011001110001100010
+	input_data[2]=10101100101010000111011111110011
+	input_data[3]=11001110001111010011110010100011
+	input_data[4]=00100001000110001111110100101001
+	input_valid=11111
+	op port:          1, op vc:          0, downstream_router_increment=0
+	op port:          1, op vc:          1, downstream_router_increment=0
+	op port:          1, op vc:          2, downstream_router_increment=0
+	op port:          1, op vc:          3, downstream_router_increment=0
+	op port:          2, op vc:          0, downstream_router_increment=0
+	op port:          2, op vc:          1, downstream_router_increment=0
+	op port:          2, op vc:          2, downstream_router_increment=0
+	op port:          2, op vc:          3, downstream_router_increment=0
+	op port:          3, op vc:          0, downstream_router_increment=0
+	op port:          3, op vc:          1, downstream_router_increment=0
+	op port:          3, op vc:          2, downstream_router_increment=0
+	op port:          3, op vc:          3, downstream_router_increment=0
+	op port:          4, op vc:          0, downstream_router_increment=0
+	op port:          4, op vc:          1, downstream_router_increment=0
+	op port:          4, op vc:          2, downstream_router_increment=0
+	op port:          4, op vc:          3, downstream_router_increment=0
+Outputs:
+	ip port:          1, ip vc:          0, upstream_router_increment=0
+	ip port:          1, ip vc:          1, upstream_router_increment=0
+	ip port:          1, ip vc:          2, upstream_router_increment=0
+	ip port:          1, ip vc:          3, upstream_router_increment=0
+	ip port:          2, ip vc:          0, upstream_router_increment=0
+	ip port:          2, ip vc:          1, upstream_router_increment=0
+	ip port:          2, ip vc:          2, upstream_router_increment=0
+	ip port:          2, ip vc:          3, upstream_router_increment=0
+	ip port:          3, ip vc:          0, upstream_router_increment=0
+	ip port:          3, ip vc:          1, upstream_router_increment=0
+	ip port:          3, ip vc:          2, upstream_router_increment=0
+	ip port:          3, ip vc:          3, upstream_router_increment=0
+	ip port:          4, ip vc:          0, upstream_router_increment=0
+	ip port:          4, ip vc:          1, upstream_router_increment=0
+	ip port:          4, ip vc:          2, upstream_router_increment=0
+	ip port:          4, ip vc:          3, upstream_router_increment=0
+	out_data[0]=00000000000000000000000000000000
+	out_data[1]=00000000000000000000000000000000
+	out_data[2]=00000000000000000000000000000000
+	out_data[3]=00000000000000000000000000000000
+	out_data[4]=00000000000000000000000000000000
+	out_valid=00000
+
+**********VC BUFFER STATUS******************
+Port=0, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10101110100011010110011000001011
+Port=0, VC=1, vc_valid=1, vc_empty=0, vc_buffer=11001100110110001111110100111001
+Port=0, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=0, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10111011001111011100011010011001
+Port=1, VC=1, vc_valid=1, vc_empty=0, vc_buffer=00000001111100011001110001100010
+Port=1, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=0, vc_valid=1, vc_empty=0, vc_buffer=01111100101001100011110111001000
+Port=2, VC=1, vc_valid=1, vc_empty=0, vc_buffer=10101100101010000111011111110011
+Port=2, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10001100110010111011010101001100
+Port=3, VC=1, vc_valid=1, vc_empty=0, vc_buffer=11001110001111010011110010100011
+Port=3, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=0, vc_valid=1, vc_empty=0, vc_buffer=00110000110100100111000101011100
+Port=4, VC=1, vc_valid=1, vc_empty=0, vc_buffer=00100001000110001111110100101001
+Port=4, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+**********BUFFER WRITE******************
+Port=0, empty_vc_index=2
+Port=1, empty_vc_index=2
+Port=2, empty_vc_index=2
+Port=3, empty_vc_index=2
+Port=4, empty_vc_index=2
+
+**********ROUTE COMPUTE******************
+Port=0, VC=0, dst_port=00100
+Port=0, VC=1, dst_port=00001
+Port=0, VC=2, dst_port=00000
+Port=0, VC=3, dst_port=00000
+Port=1, VC=0, dst_port=00100
+Port=1, VC=1, dst_port=10000
+Port=1, VC=2, dst_port=00000
+Port=1, VC=3, dst_port=00000
+Port=2, VC=0, dst_port=00100
+Port=2, VC=1, dst_port=00100
+Port=2, VC=2, dst_port=00000
+Port=2, VC=3, dst_port=00000
+Port=3, VC=0, dst_port=00001
+Port=3, VC=1, dst_port=00001
+Port=3, VC=2, dst_port=00000
+Port=3, VC=3, dst_port=00000
+Port=4, VC=0, dst_port=00100
+Port=4, VC=1, dst_port=00100
+Port=4, VC=2, dst_port=00000
+Port=4, VC=3, dst_port=00000
+
+**********VC AVALABILITY******************
+VCAvailability, out port=0, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+
+Mask Generation:
+Port=0, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=0, VC=1, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=0, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=0, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=1, VC=1, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=2, VC=1, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=0, VC dst port=00001, SA dst port=00000, BR dst port=00000, valid=1
+Port=3, VC=1, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=4, VC=1, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+
+**********VC ALLOCATION******************
+ipvc:0, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:1, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:2, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:3, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:4, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:5, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:6, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:7, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:8, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:9, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:10, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:11, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:12, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:13, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:14, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:15, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:16, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:17, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:18, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:19, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+
+**********SA ALLOCATION******************
+Port=0, sa_allocated_ports=00000
+Port=1, sa_allocated_ports=00000
+Port=2, sa_allocated_ports=00000
+Port=3, sa_allocated_ports=00000
+Port=4, sa_allocated_ports=00000
+
+**********BUFFER READ******************
+Port=0, vc_index=3 vc_valid=0
+Port=1, vc_index=3 vc_valid=0
+Port=2, vc_index=3 vc_valid=0
+Port=3, vc_index=3 vc_valid=0
+Port=4, vc_index=3 vc_valid=0
+Port=0, br_allocated_ports=00000
+Port=1, br_allocated_ports=00000
+Port=2, br_allocated_ports=00000
+Port=3, br_allocated_ports=00000
+Port=4, br_allocated_ports=00000
+
+**********SWITCH TRAVERSAL******************
+Port=0, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=1, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=2, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=3, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=4, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+
+Flusing input data by invalidating all input ports
+
+
+********************Time = 120***********
+**********INPUT SIGNALS******************
+Reset = 0
+Input:
+	input_data[0]=11001100110110001111110100111001
+	input_data[1]=00000001111100011001110001100010
+	input_data[2]=10101100101010000111011111110011
+	input_data[3]=11001110001111010011110010100011
+	input_data[4]=00100001000110001111110100101001
+	input_valid=00000
+	op port:          1, op vc:          0, downstream_router_increment=0
+	op port:          1, op vc:          1, downstream_router_increment=0
+	op port:          1, op vc:          2, downstream_router_increment=0
+	op port:          1, op vc:          3, downstream_router_increment=0
+	op port:          2, op vc:          0, downstream_router_increment=0
+	op port:          2, op vc:          1, downstream_router_increment=0
+	op port:          2, op vc:          2, downstream_router_increment=0
+	op port:          2, op vc:          3, downstream_router_increment=0
+	op port:          3, op vc:          0, downstream_router_increment=0
+	op port:          3, op vc:          1, downstream_router_increment=0
+	op port:          3, op vc:          2, downstream_router_increment=0
+	op port:          3, op vc:          3, downstream_router_increment=0
+	op port:          4, op vc:          0, downstream_router_increment=0
+	op port:          4, op vc:          1, downstream_router_increment=0
+	op port:          4, op vc:          2, downstream_router_increment=0
+	op port:          4, op vc:          3, downstream_router_increment=0
+Outputs:
+	ip port:          1, ip vc:          0, upstream_router_increment=0
+	ip port:          1, ip vc:          1, upstream_router_increment=0
+	ip port:          1, ip vc:          2, upstream_router_increment=0
+	ip port:          1, ip vc:          3, upstream_router_increment=0
+	ip port:          2, ip vc:          0, upstream_router_increment=0
+	ip port:          2, ip vc:          1, upstream_router_increment=0
+	ip port:          2, ip vc:          2, upstream_router_increment=0
+	ip port:          2, ip vc:          3, upstream_router_increment=0
+	ip port:          3, ip vc:          0, upstream_router_increment=0
+	ip port:          3, ip vc:          1, upstream_router_increment=0
+	ip port:          3, ip vc:          2, upstream_router_increment=0
+	ip port:          3, ip vc:          3, upstream_router_increment=0
+	ip port:          4, ip vc:          0, upstream_router_increment=0
+	ip port:          4, ip vc:          1, upstream_router_increment=0
+	ip port:          4, ip vc:          2, upstream_router_increment=0
+	ip port:          4, ip vc:          3, upstream_router_increment=0
+	out_data[0]=00000000000000000000000000000000
+	out_data[1]=00000000000000000000000000000000
+	out_data[2]=00000000000000000000000000000000
+	out_data[3]=00000000000000000000000000000000
+	out_data[4]=00000000000000000000000000000000
+	out_valid=00000
+
+**********VC BUFFER STATUS******************
+Port=0, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10101110100011010110011000001011
+Port=0, VC=1, vc_valid=1, vc_empty=0, vc_buffer=11001100110110001111110100111001
+Port=0, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=0, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10111011001111011100011010011001
+Port=1, VC=1, vc_valid=1, vc_empty=0, vc_buffer=00000001111100011001110001100010
+Port=1, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=0, vc_valid=1, vc_empty=0, vc_buffer=01111100101001100011110111001000
+Port=2, VC=1, vc_valid=1, vc_empty=0, vc_buffer=10101100101010000111011111110011
+Port=2, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10001100110010111011010101001100
+Port=3, VC=1, vc_valid=1, vc_empty=0, vc_buffer=11001110001111010011110010100011
+Port=3, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=0, vc_valid=1, vc_empty=0, vc_buffer=00110000110100100111000101011100
+Port=4, VC=1, vc_valid=1, vc_empty=0, vc_buffer=00100001000110001111110100101001
+Port=4, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+**********BUFFER WRITE******************
+Port=0, empty_vc_index=2
+Port=1, empty_vc_index=2
+Port=2, empty_vc_index=2
+Port=3, empty_vc_index=2
+Port=4, empty_vc_index=2
+
+**********ROUTE COMPUTE******************
+Port=0, VC=0, dst_port=00100
+Port=0, VC=1, dst_port=00001
+Port=0, VC=2, dst_port=00000
+Port=0, VC=3, dst_port=00000
+Port=1, VC=0, dst_port=00100
+Port=1, VC=1, dst_port=10000
+Port=1, VC=2, dst_port=00000
+Port=1, VC=3, dst_port=00000
+Port=2, VC=0, dst_port=00100
+Port=2, VC=1, dst_port=00100
+Port=2, VC=2, dst_port=00000
+Port=2, VC=3, dst_port=00000
+Port=3, VC=0, dst_port=00001
+Port=3, VC=1, dst_port=00001
+Port=3, VC=2, dst_port=00000
+Port=3, VC=3, dst_port=00000
+Port=4, VC=0, dst_port=00100
+Port=4, VC=1, dst_port=00100
+Port=4, VC=2, dst_port=00000
+Port=4, VC=3, dst_port=00000
+
+**********VC AVALABILITY******************
+VCAvailability, out port=0, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+
+Mask Generation:
+Port=0, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=0, VC=1, VC dst port=00001, SA dst port=00000, BR dst port=00000, valid=1
+Port=0, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=0, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=1, VC=1, VC dst port=10000, SA dst port=00000, BR dst port=00000, valid=1
+Port=1, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=2, VC=1, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=2, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=0, VC dst port=00001, SA dst port=00000, BR dst port=00000, valid=1
+Port=3, VC=1, VC dst port=00001, SA dst port=00000, BR dst port=00000, valid=1
+Port=3, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=4, VC=1, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=4, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+
+**********VC ALLOCATION******************
+ipvc:0, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:1, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:2, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:3, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:4, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:5, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:6, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:7, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:8, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:9, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:10, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:11, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:12, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:13, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:14, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:15, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:16, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:17, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:18, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:19, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+
+**********SA ALLOCATION******************
+Port=0, sa_allocated_ports=00000
+Port=1, sa_allocated_ports=00000
+Port=2, sa_allocated_ports=00000
+Port=3, sa_allocated_ports=00000
+Port=4, sa_allocated_ports=00000
+
+**********BUFFER READ******************
+Port=0, vc_index=3 vc_valid=0
+Port=1, vc_index=3 vc_valid=0
+Port=2, vc_index=3 vc_valid=0
+Port=3, vc_index=3 vc_valid=0
+Port=4, vc_index=3 vc_valid=0
+Port=0, br_allocated_ports=00000
+Port=1, br_allocated_ports=00000
+Port=2, br_allocated_ports=00000
+Port=3, br_allocated_ports=00000
+Port=4, br_allocated_ports=00000
+
+**********SWITCH TRAVERSAL******************
+Port=0, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=1, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=2, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=3, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=4, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+
+
+********************Time = 140***********
+**********INPUT SIGNALS******************
+Reset = 0
+Input:
+	input_data[0]=11001100110110001111110100111001
+	input_data[1]=00000001111100011001110001100010
+	input_data[2]=10101100101010000111011111110011
+	input_data[3]=11001110001111010011110010100011
+	input_data[4]=00100001000110001111110100101001
+	input_valid=00000
+	op port:          1, op vc:          0, downstream_router_increment=0
+	op port:          1, op vc:          1, downstream_router_increment=0
+	op port:          1, op vc:          2, downstream_router_increment=0
+	op port:          1, op vc:          3, downstream_router_increment=0
+	op port:          2, op vc:          0, downstream_router_increment=0
+	op port:          2, op vc:          1, downstream_router_increment=0
+	op port:          2, op vc:          2, downstream_router_increment=0
+	op port:          2, op vc:          3, downstream_router_increment=0
+	op port:          3, op vc:          0, downstream_router_increment=0
+	op port:          3, op vc:          1, downstream_router_increment=0
+	op port:          3, op vc:          2, downstream_router_increment=0
+	op port:          3, op vc:          3, downstream_router_increment=0
+	op port:          4, op vc:          0, downstream_router_increment=0
+	op port:          4, op vc:          1, downstream_router_increment=0
+	op port:          4, op vc:          2, downstream_router_increment=0
+	op port:          4, op vc:          3, downstream_router_increment=0
+Outputs:
+	ip port:          1, ip vc:          0, upstream_router_increment=0
+	ip port:          1, ip vc:          1, upstream_router_increment=0
+	ip port:          1, ip vc:          2, upstream_router_increment=0
+	ip port:          1, ip vc:          3, upstream_router_increment=0
+	ip port:          2, ip vc:          0, upstream_router_increment=0
+	ip port:          2, ip vc:          1, upstream_router_increment=0
+	ip port:          2, ip vc:          2, upstream_router_increment=0
+	ip port:          2, ip vc:          3, upstream_router_increment=0
+	ip port:          3, ip vc:          0, upstream_router_increment=0
+	ip port:          3, ip vc:          1, upstream_router_increment=0
+	ip port:          3, ip vc:          2, upstream_router_increment=0
+	ip port:          3, ip vc:          3, upstream_router_increment=0
+	ip port:          4, ip vc:          0, upstream_router_increment=0
+	ip port:          4, ip vc:          1, upstream_router_increment=0
+	ip port:          4, ip vc:          2, upstream_router_increment=0
+	ip port:          4, ip vc:          3, upstream_router_increment=0
+	out_data[0]=00000000000000000000000000000000
+	out_data[1]=00000000000000000000000000000000
+	out_data[2]=00000000000000000000000000000000
+	out_data[3]=00000000000000000000000000000000
+	out_data[4]=00000000000000000000000000000000
+	out_valid=00000
+
+**********VC BUFFER STATUS******************
+Port=0, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10101110100011010110011000001011
+Port=0, VC=1, vc_valid=1, vc_empty=0, vc_buffer=11001100110110001111110100111001
+Port=0, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=0, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10111011001111011100011010011001
+Port=1, VC=1, vc_valid=1, vc_empty=0, vc_buffer=00000001111100011001110001100010
+Port=1, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=0, vc_valid=1, vc_empty=0, vc_buffer=01111100101001100011110111001000
+Port=2, VC=1, vc_valid=1, vc_empty=0, vc_buffer=10101100101010000111011111110011
+Port=2, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10001100110010111011010101001100
+Port=3, VC=1, vc_valid=1, vc_empty=0, vc_buffer=11001110001111010011110010100011
+Port=3, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=0, vc_valid=1, vc_empty=0, vc_buffer=00110000110100100111000101011100
+Port=4, VC=1, vc_valid=1, vc_empty=0, vc_buffer=00100001000110001111110100101001
+Port=4, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+**********BUFFER WRITE******************
+Port=0, empty_vc_index=2
+Port=1, empty_vc_index=2
+Port=2, empty_vc_index=2
+Port=3, empty_vc_index=2
+Port=4, empty_vc_index=2
+
+**********ROUTE COMPUTE******************
+Port=0, VC=0, dst_port=00100
+Port=0, VC=1, dst_port=00001
+Port=0, VC=2, dst_port=00000
+Port=0, VC=3, dst_port=00000
+Port=1, VC=0, dst_port=00100
+Port=1, VC=1, dst_port=10000
+Port=1, VC=2, dst_port=00000
+Port=1, VC=3, dst_port=00000
+Port=2, VC=0, dst_port=00100
+Port=2, VC=1, dst_port=00100
+Port=2, VC=2, dst_port=00000
+Port=2, VC=3, dst_port=00000
+Port=3, VC=0, dst_port=00001
+Port=3, VC=1, dst_port=00001
+Port=3, VC=2, dst_port=00000
+Port=3, VC=3, dst_port=00000
+Port=4, VC=0, dst_port=00100
+Port=4, VC=1, dst_port=00100
+Port=4, VC=2, dst_port=00000
+Port=4, VC=3, dst_port=00000
+
+**********VC AVALABILITY******************
+VCAvailability, out port=0, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+
+Mask Generation:
+Port=0, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=0, VC=1, VC dst port=00001, SA dst port=00000, BR dst port=00000, valid=1
+Port=0, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=0, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=1, VC=1, VC dst port=10000, SA dst port=00000, BR dst port=00000, valid=1
+Port=1, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=2, VC=1, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=2, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=0, VC dst port=00001, SA dst port=00000, BR dst port=00000, valid=1
+Port=3, VC=1, VC dst port=00001, SA dst port=00000, BR dst port=00000, valid=1
+Port=3, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=4, VC=1, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=4, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+
+**********VC ALLOCATION******************
+ipvc:0, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:1, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:2, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:3, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:4, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:5, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:6, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:7, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:8, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:9, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:10, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:11, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:12, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:13, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:14, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:15, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:16, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:17, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:18, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:19, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+
+**********SA ALLOCATION******************
+Port=0, sa_allocated_ports=00000
+Port=1, sa_allocated_ports=00000
+Port=2, sa_allocated_ports=00000
+Port=3, sa_allocated_ports=00000
+Port=4, sa_allocated_ports=00000
+
+**********BUFFER READ******************
+Port=0, vc_index=3 vc_valid=0
+Port=1, vc_index=3 vc_valid=0
+Port=2, vc_index=3 vc_valid=0
+Port=3, vc_index=3 vc_valid=0
+Port=4, vc_index=3 vc_valid=0
+Port=0, br_allocated_ports=00000
+Port=1, br_allocated_ports=00000
+Port=2, br_allocated_ports=00000
+Port=3, br_allocated_ports=00000
+Port=4, br_allocated_ports=00000
+
+**********SWITCH TRAVERSAL******************
+Port=0, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=1, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=2, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=3, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=4, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+
+
+********************Time = 160***********
+**********INPUT SIGNALS******************
+Reset = 0
+Input:
+	input_data[0]=11001100110110001111110100111001
+	input_data[1]=00000001111100011001110001100010
+	input_data[2]=10101100101010000111011111110011
+	input_data[3]=11001110001111010011110010100011
+	input_data[4]=00100001000110001111110100101001
+	input_valid=00000
+	op port:          1, op vc:          0, downstream_router_increment=0
+	op port:          1, op vc:          1, downstream_router_increment=0
+	op port:          1, op vc:          2, downstream_router_increment=0
+	op port:          1, op vc:          3, downstream_router_increment=0
+	op port:          2, op vc:          0, downstream_router_increment=0
+	op port:          2, op vc:          1, downstream_router_increment=0
+	op port:          2, op vc:          2, downstream_router_increment=0
+	op port:          2, op vc:          3, downstream_router_increment=0
+	op port:          3, op vc:          0, downstream_router_increment=0
+	op port:          3, op vc:          1, downstream_router_increment=0
+	op port:          3, op vc:          2, downstream_router_increment=0
+	op port:          3, op vc:          3, downstream_router_increment=0
+	op port:          4, op vc:          0, downstream_router_increment=0
+	op port:          4, op vc:          1, downstream_router_increment=0
+	op port:          4, op vc:          2, downstream_router_increment=0
+	op port:          4, op vc:          3, downstream_router_increment=0
+Outputs:
+	ip port:          1, ip vc:          0, upstream_router_increment=0
+	ip port:          1, ip vc:          1, upstream_router_increment=0
+	ip port:          1, ip vc:          2, upstream_router_increment=0
+	ip port:          1, ip vc:          3, upstream_router_increment=0
+	ip port:          2, ip vc:          0, upstream_router_increment=0
+	ip port:          2, ip vc:          1, upstream_router_increment=0
+	ip port:          2, ip vc:          2, upstream_router_increment=0
+	ip port:          2, ip vc:          3, upstream_router_increment=0
+	ip port:          3, ip vc:          0, upstream_router_increment=0
+	ip port:          3, ip vc:          1, upstream_router_increment=0
+	ip port:          3, ip vc:          2, upstream_router_increment=0
+	ip port:          3, ip vc:          3, upstream_router_increment=0
+	ip port:          4, ip vc:          0, upstream_router_increment=0
+	ip port:          4, ip vc:          1, upstream_router_increment=0
+	ip port:          4, ip vc:          2, upstream_router_increment=0
+	ip port:          4, ip vc:          3, upstream_router_increment=0
+	out_data[0]=00000000000000000000000000000000
+	out_data[1]=00000000000000000000000000000000
+	out_data[2]=00000000000000000000000000000000
+	out_data[3]=00000000000000000000000000000000
+	out_data[4]=00000000000000000000000000000000
+	out_valid=00000
+
+**********VC BUFFER STATUS******************
+Port=0, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10101110100011010110011000001011
+Port=0, VC=1, vc_valid=1, vc_empty=0, vc_buffer=11001100110110001111110100111001
+Port=0, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=0, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10111011001111011100011010011001
+Port=1, VC=1, vc_valid=1, vc_empty=0, vc_buffer=00000001111100011001110001100010
+Port=1, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=0, vc_valid=1, vc_empty=0, vc_buffer=01111100101001100011110111001000
+Port=2, VC=1, vc_valid=1, vc_empty=0, vc_buffer=10101100101010000111011111110011
+Port=2, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10001100110010111011010101001100
+Port=3, VC=1, vc_valid=1, vc_empty=0, vc_buffer=11001110001111010011110010100011
+Port=3, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=0, vc_valid=1, vc_empty=0, vc_buffer=00110000110100100111000101011100
+Port=4, VC=1, vc_valid=1, vc_empty=0, vc_buffer=00100001000110001111110100101001
+Port=4, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+**********BUFFER WRITE******************
+Port=0, empty_vc_index=2
+Port=1, empty_vc_index=2
+Port=2, empty_vc_index=2
+Port=3, empty_vc_index=2
+Port=4, empty_vc_index=2
+
+**********ROUTE COMPUTE******************
+Port=0, VC=0, dst_port=00100
+Port=0, VC=1, dst_port=00001
+Port=0, VC=2, dst_port=00000
+Port=0, VC=3, dst_port=00000
+Port=1, VC=0, dst_port=00100
+Port=1, VC=1, dst_port=10000
+Port=1, VC=2, dst_port=00000
+Port=1, VC=3, dst_port=00000
+Port=2, VC=0, dst_port=00100
+Port=2, VC=1, dst_port=00100
+Port=2, VC=2, dst_port=00000
+Port=2, VC=3, dst_port=00000
+Port=3, VC=0, dst_port=00001
+Port=3, VC=1, dst_port=00001
+Port=3, VC=2, dst_port=00000
+Port=3, VC=3, dst_port=00000
+Port=4, VC=0, dst_port=00100
+Port=4, VC=1, dst_port=00100
+Port=4, VC=2, dst_port=00000
+Port=4, VC=3, dst_port=00000
+
+**********VC AVALABILITY******************
+VCAvailability, out port=0, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+
+Mask Generation:
+Port=0, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=0, VC=1, VC dst port=00001, SA dst port=00000, BR dst port=00000, valid=1
+Port=0, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=0, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=1, VC=1, VC dst port=10000, SA dst port=00000, BR dst port=00000, valid=1
+Port=1, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=2, VC=1, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=2, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=0, VC dst port=00001, SA dst port=00000, BR dst port=00000, valid=1
+Port=3, VC=1, VC dst port=00001, SA dst port=00000, BR dst port=00000, valid=1
+Port=3, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=4, VC=1, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=4, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+
+**********VC ALLOCATION******************
+ipvc:0, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:1, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:2, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:3, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:4, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:5, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:6, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:7, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:8, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:9, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:10, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:11, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:12, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:13, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:14, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:15, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:16, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:17, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:18, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:19, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+
+**********SA ALLOCATION******************
+Port=0, sa_allocated_ports=00000
+Port=1, sa_allocated_ports=00000
+Port=2, sa_allocated_ports=00000
+Port=3, sa_allocated_ports=00000
+Port=4, sa_allocated_ports=00000
+
+**********BUFFER READ******************
+Port=0, vc_index=3 vc_valid=0
+Port=1, vc_index=3 vc_valid=0
+Port=2, vc_index=3 vc_valid=0
+Port=3, vc_index=3 vc_valid=0
+Port=4, vc_index=3 vc_valid=0
+Port=0, br_allocated_ports=00000
+Port=1, br_allocated_ports=00000
+Port=2, br_allocated_ports=00000
+Port=3, br_allocated_ports=00000
+Port=4, br_allocated_ports=00000
+
+**********SWITCH TRAVERSAL******************
+Port=0, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=1, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=2, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=3, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=4, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+
+
+********************Time = 180***********
+**********INPUT SIGNALS******************
+Reset = 0
+Input:
+	input_data[0]=11001100110110001111110100111001
+	input_data[1]=00000001111100011001110001100010
+	input_data[2]=10101100101010000111011111110011
+	input_data[3]=11001110001111010011110010100011
+	input_data[4]=00100001000110001111110100101001
+	input_valid=00000
+	op port:          1, op vc:          0, downstream_router_increment=0
+	op port:          1, op vc:          1, downstream_router_increment=0
+	op port:          1, op vc:          2, downstream_router_increment=0
+	op port:          1, op vc:          3, downstream_router_increment=0
+	op port:          2, op vc:          0, downstream_router_increment=0
+	op port:          2, op vc:          1, downstream_router_increment=0
+	op port:          2, op vc:          2, downstream_router_increment=0
+	op port:          2, op vc:          3, downstream_router_increment=0
+	op port:          3, op vc:          0, downstream_router_increment=0
+	op port:          3, op vc:          1, downstream_router_increment=0
+	op port:          3, op vc:          2, downstream_router_increment=0
+	op port:          3, op vc:          3, downstream_router_increment=0
+	op port:          4, op vc:          0, downstream_router_increment=0
+	op port:          4, op vc:          1, downstream_router_increment=0
+	op port:          4, op vc:          2, downstream_router_increment=0
+	op port:          4, op vc:          3, downstream_router_increment=0
+Outputs:
+	ip port:          1, ip vc:          0, upstream_router_increment=0
+	ip port:          1, ip vc:          1, upstream_router_increment=0
+	ip port:          1, ip vc:          2, upstream_router_increment=0
+	ip port:          1, ip vc:          3, upstream_router_increment=0
+	ip port:          2, ip vc:          0, upstream_router_increment=0
+	ip port:          2, ip vc:          1, upstream_router_increment=0
+	ip port:          2, ip vc:          2, upstream_router_increment=0
+	ip port:          2, ip vc:          3, upstream_router_increment=0
+	ip port:          3, ip vc:          0, upstream_router_increment=0
+	ip port:          3, ip vc:          1, upstream_router_increment=0
+	ip port:          3, ip vc:          2, upstream_router_increment=0
+	ip port:          3, ip vc:          3, upstream_router_increment=0
+	ip port:          4, ip vc:          0, upstream_router_increment=0
+	ip port:          4, ip vc:          1, upstream_router_increment=0
+	ip port:          4, ip vc:          2, upstream_router_increment=0
+	ip port:          4, ip vc:          3, upstream_router_increment=0
+	out_data[0]=00000000000000000000000000000000
+	out_data[1]=00000000000000000000000000000000
+	out_data[2]=00000000000000000000000000000000
+	out_data[3]=00000000000000000000000000000000
+	out_data[4]=00000000000000000000000000000000
+	out_valid=00000
+
+**********VC BUFFER STATUS******************
+Port=0, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10101110100011010110011000001011
+Port=0, VC=1, vc_valid=1, vc_empty=0, vc_buffer=11001100110110001111110100111001
+Port=0, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=0, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10111011001111011100011010011001
+Port=1, VC=1, vc_valid=1, vc_empty=0, vc_buffer=00000001111100011001110001100010
+Port=1, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=0, vc_valid=1, vc_empty=0, vc_buffer=01111100101001100011110111001000
+Port=2, VC=1, vc_valid=1, vc_empty=0, vc_buffer=10101100101010000111011111110011
+Port=2, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10001100110010111011010101001100
+Port=3, VC=1, vc_valid=1, vc_empty=0, vc_buffer=11001110001111010011110010100011
+Port=3, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=0, vc_valid=1, vc_empty=0, vc_buffer=00110000110100100111000101011100
+Port=4, VC=1, vc_valid=1, vc_empty=0, vc_buffer=00100001000110001111110100101001
+Port=4, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+**********BUFFER WRITE******************
+Port=0, empty_vc_index=2
+Port=1, empty_vc_index=2
+Port=2, empty_vc_index=2
+Port=3, empty_vc_index=2
+Port=4, empty_vc_index=2
+
+**********ROUTE COMPUTE******************
+Port=0, VC=0, dst_port=00100
+Port=0, VC=1, dst_port=00001
+Port=0, VC=2, dst_port=00000
+Port=0, VC=3, dst_port=00000
+Port=1, VC=0, dst_port=00100
+Port=1, VC=1, dst_port=10000
+Port=1, VC=2, dst_port=00000
+Port=1, VC=3, dst_port=00000
+Port=2, VC=0, dst_port=00100
+Port=2, VC=1, dst_port=00100
+Port=2, VC=2, dst_port=00000
+Port=2, VC=3, dst_port=00000
+Port=3, VC=0, dst_port=00001
+Port=3, VC=1, dst_port=00001
+Port=3, VC=2, dst_port=00000
+Port=3, VC=3, dst_port=00000
+Port=4, VC=0, dst_port=00100
+Port=4, VC=1, dst_port=00100
+Port=4, VC=2, dst_port=00000
+Port=4, VC=3, dst_port=00000
+
+**********VC AVALABILITY******************
+VCAvailability, out port=0, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+
+Mask Generation:
+Port=0, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=0, VC=1, VC dst port=00001, SA dst port=00000, BR dst port=00000, valid=1
+Port=0, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=0, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=1, VC=1, VC dst port=10000, SA dst port=00000, BR dst port=00000, valid=1
+Port=1, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=2, VC=1, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=2, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=0, VC dst port=00001, SA dst port=00000, BR dst port=00000, valid=1
+Port=3, VC=1, VC dst port=00001, SA dst port=00000, BR dst port=00000, valid=1
+Port=3, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=4, VC=1, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=4, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+
+**********VC ALLOCATION******************
+ipvc:0, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:1, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:2, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:3, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:4, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:5, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:6, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:7, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:8, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:9, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:10, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:11, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:12, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:13, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:14, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:15, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:16, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:17, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:18, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:19, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+
+**********SA ALLOCATION******************
+Port=0, sa_allocated_ports=00000
+Port=1, sa_allocated_ports=00000
+Port=2, sa_allocated_ports=00000
+Port=3, sa_allocated_ports=00000
+Port=4, sa_allocated_ports=00000
+
+**********BUFFER READ******************
+Port=0, vc_index=3 vc_valid=0
+Port=1, vc_index=3 vc_valid=0
+Port=2, vc_index=3 vc_valid=0
+Port=3, vc_index=3 vc_valid=0
+Port=4, vc_index=3 vc_valid=0
+Port=0, br_allocated_ports=00000
+Port=1, br_allocated_ports=00000
+Port=2, br_allocated_ports=00000
+Port=3, br_allocated_ports=00000
+Port=4, br_allocated_ports=00000
+
+**********SWITCH TRAVERSAL******************
+Port=0, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=1, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=2, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=3, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=4, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+
+
+********************Time = 200***********
+**********INPUT SIGNALS******************
+Reset = 0
+Input:
+	input_data[0]=11001100110110001111110100111001
+	input_data[1]=00000001111100011001110001100010
+	input_data[2]=10101100101010000111011111110011
+	input_data[3]=11001110001111010011110010100011
+	input_data[4]=00100001000110001111110100101001
+	input_valid=00000
+	op port:          1, op vc:          0, downstream_router_increment=0
+	op port:          1, op vc:          1, downstream_router_increment=0
+	op port:          1, op vc:          2, downstream_router_increment=0
+	op port:          1, op vc:          3, downstream_router_increment=0
+	op port:          2, op vc:          0, downstream_router_increment=0
+	op port:          2, op vc:          1, downstream_router_increment=0
+	op port:          2, op vc:          2, downstream_router_increment=0
+	op port:          2, op vc:          3, downstream_router_increment=0
+	op port:          3, op vc:          0, downstream_router_increment=0
+	op port:          3, op vc:          1, downstream_router_increment=0
+	op port:          3, op vc:          2, downstream_router_increment=0
+	op port:          3, op vc:          3, downstream_router_increment=0
+	op port:          4, op vc:          0, downstream_router_increment=0
+	op port:          4, op vc:          1, downstream_router_increment=0
+	op port:          4, op vc:          2, downstream_router_increment=0
+	op port:          4, op vc:          3, downstream_router_increment=0
+Outputs:
+	ip port:          1, ip vc:          0, upstream_router_increment=0
+	ip port:          1, ip vc:          1, upstream_router_increment=0
+	ip port:          1, ip vc:          2, upstream_router_increment=0
+	ip port:          1, ip vc:          3, upstream_router_increment=0
+	ip port:          2, ip vc:          0, upstream_router_increment=0
+	ip port:          2, ip vc:          1, upstream_router_increment=0
+	ip port:          2, ip vc:          2, upstream_router_increment=0
+	ip port:          2, ip vc:          3, upstream_router_increment=0
+	ip port:          3, ip vc:          0, upstream_router_increment=0
+	ip port:          3, ip vc:          1, upstream_router_increment=0
+	ip port:          3, ip vc:          2, upstream_router_increment=0
+	ip port:          3, ip vc:          3, upstream_router_increment=0
+	ip port:          4, ip vc:          0, upstream_router_increment=0
+	ip port:          4, ip vc:          1, upstream_router_increment=0
+	ip port:          4, ip vc:          2, upstream_router_increment=0
+	ip port:          4, ip vc:          3, upstream_router_increment=0
+	out_data[0]=00000000000000000000000000000000
+	out_data[1]=00000000000000000000000000000000
+	out_data[2]=00000000000000000000000000000000
+	out_data[3]=00000000000000000000000000000000
+	out_data[4]=00000000000000000000000000000000
+	out_valid=00000
+
+**********VC BUFFER STATUS******************
+Port=0, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10101110100011010110011000001011
+Port=0, VC=1, vc_valid=1, vc_empty=0, vc_buffer=11001100110110001111110100111001
+Port=0, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=0, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10111011001111011100011010011001
+Port=1, VC=1, vc_valid=1, vc_empty=0, vc_buffer=00000001111100011001110001100010
+Port=1, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=0, vc_valid=1, vc_empty=0, vc_buffer=01111100101001100011110111001000
+Port=2, VC=1, vc_valid=1, vc_empty=0, vc_buffer=10101100101010000111011111110011
+Port=2, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10001100110010111011010101001100
+Port=3, VC=1, vc_valid=1, vc_empty=0, vc_buffer=11001110001111010011110010100011
+Port=3, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=0, vc_valid=1, vc_empty=0, vc_buffer=00110000110100100111000101011100
+Port=4, VC=1, vc_valid=1, vc_empty=0, vc_buffer=00100001000110001111110100101001
+Port=4, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+**********BUFFER WRITE******************
+Port=0, empty_vc_index=2
+Port=1, empty_vc_index=2
+Port=2, empty_vc_index=2
+Port=3, empty_vc_index=2
+Port=4, empty_vc_index=2
+
+**********ROUTE COMPUTE******************
+Port=0, VC=0, dst_port=00100
+Port=0, VC=1, dst_port=00001
+Port=0, VC=2, dst_port=00000
+Port=0, VC=3, dst_port=00000
+Port=1, VC=0, dst_port=00100
+Port=1, VC=1, dst_port=10000
+Port=1, VC=2, dst_port=00000
+Port=1, VC=3, dst_port=00000
+Port=2, VC=0, dst_port=00100
+Port=2, VC=1, dst_port=00100
+Port=2, VC=2, dst_port=00000
+Port=2, VC=3, dst_port=00000
+Port=3, VC=0, dst_port=00001
+Port=3, VC=1, dst_port=00001
+Port=3, VC=2, dst_port=00000
+Port=3, VC=3, dst_port=00000
+Port=4, VC=0, dst_port=00100
+Port=4, VC=1, dst_port=00100
+Port=4, VC=2, dst_port=00000
+Port=4, VC=3, dst_port=00000
+
+**********VC AVALABILITY******************
+VCAvailability, out port=0, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+
+Mask Generation:
+Port=0, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=0, VC=1, VC dst port=00001, SA dst port=00000, BR dst port=00000, valid=1
+Port=0, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=0, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=1, VC=1, VC dst port=10000, SA dst port=00000, BR dst port=00000, valid=1
+Port=1, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=2, VC=1, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=2, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=0, VC dst port=00001, SA dst port=00000, BR dst port=00000, valid=1
+Port=3, VC=1, VC dst port=00001, SA dst port=00000, BR dst port=00000, valid=1
+Port=3, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=4, VC=1, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=4, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+
+**********VC ALLOCATION******************
+ipvc:0, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:1, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:2, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:3, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:4, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:5, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:6, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:7, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:8, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:9, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:10, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:11, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:12, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:13, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:14, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:15, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:16, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:17, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:18, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:19, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+
+**********SA ALLOCATION******************
+Port=0, sa_allocated_ports=00000
+Port=1, sa_allocated_ports=00000
+Port=2, sa_allocated_ports=00000
+Port=3, sa_allocated_ports=00000
+Port=4, sa_allocated_ports=00000
+
+**********BUFFER READ******************
+Port=0, vc_index=3 vc_valid=0
+Port=1, vc_index=3 vc_valid=0
+Port=2, vc_index=3 vc_valid=0
+Port=3, vc_index=3 vc_valid=0
+Port=4, vc_index=3 vc_valid=0
+Port=0, br_allocated_ports=00000
+Port=1, br_allocated_ports=00000
+Port=2, br_allocated_ports=00000
+Port=3, br_allocated_ports=00000
+Port=4, br_allocated_ports=00000
+
+**********SWITCH TRAVERSAL******************
+Port=0, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=1, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=2, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=3, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=4, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+
+
+********************Time = 220***********
+**********INPUT SIGNALS******************
+Reset = 0
+Input:
+	input_data[0]=11001100110110001111110100111001
+	input_data[1]=00000001111100011001110001100010
+	input_data[2]=10101100101010000111011111110011
+	input_data[3]=11001110001111010011110010100011
+	input_data[4]=00100001000110001111110100101001
+	input_valid=00000
+	op port:          1, op vc:          0, downstream_router_increment=0
+	op port:          1, op vc:          1, downstream_router_increment=0
+	op port:          1, op vc:          2, downstream_router_increment=0
+	op port:          1, op vc:          3, downstream_router_increment=0
+	op port:          2, op vc:          0, downstream_router_increment=0
+	op port:          2, op vc:          1, downstream_router_increment=0
+	op port:          2, op vc:          2, downstream_router_increment=0
+	op port:          2, op vc:          3, downstream_router_increment=0
+	op port:          3, op vc:          0, downstream_router_increment=0
+	op port:          3, op vc:          1, downstream_router_increment=0
+	op port:          3, op vc:          2, downstream_router_increment=0
+	op port:          3, op vc:          3, downstream_router_increment=0
+	op port:          4, op vc:          0, downstream_router_increment=0
+	op port:          4, op vc:          1, downstream_router_increment=0
+	op port:          4, op vc:          2, downstream_router_increment=0
+	op port:          4, op vc:          3, downstream_router_increment=0
+Outputs:
+	ip port:          1, ip vc:          0, upstream_router_increment=0
+	ip port:          1, ip vc:          1, upstream_router_increment=0
+	ip port:          1, ip vc:          2, upstream_router_increment=0
+	ip port:          1, ip vc:          3, upstream_router_increment=0
+	ip port:          2, ip vc:          0, upstream_router_increment=0
+	ip port:          2, ip vc:          1, upstream_router_increment=0
+	ip port:          2, ip vc:          2, upstream_router_increment=0
+	ip port:          2, ip vc:          3, upstream_router_increment=0
+	ip port:          3, ip vc:          0, upstream_router_increment=0
+	ip port:          3, ip vc:          1, upstream_router_increment=0
+	ip port:          3, ip vc:          2, upstream_router_increment=0
+	ip port:          3, ip vc:          3, upstream_router_increment=0
+	ip port:          4, ip vc:          0, upstream_router_increment=0
+	ip port:          4, ip vc:          1, upstream_router_increment=0
+	ip port:          4, ip vc:          2, upstream_router_increment=0
+	ip port:          4, ip vc:          3, upstream_router_increment=0
+	out_data[0]=00000000000000000000000000000000
+	out_data[1]=00000000000000000000000000000000
+	out_data[2]=00000000000000000000000000000000
+	out_data[3]=00000000000000000000000000000000
+	out_data[4]=00000000000000000000000000000000
+	out_valid=00000
+
+**********VC BUFFER STATUS******************
+Port=0, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10101110100011010110011000001011
+Port=0, VC=1, vc_valid=1, vc_empty=0, vc_buffer=11001100110110001111110100111001
+Port=0, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=0, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10111011001111011100011010011001
+Port=1, VC=1, vc_valid=1, vc_empty=0, vc_buffer=00000001111100011001110001100010
+Port=1, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=0, vc_valid=1, vc_empty=0, vc_buffer=01111100101001100011110111001000
+Port=2, VC=1, vc_valid=1, vc_empty=0, vc_buffer=10101100101010000111011111110011
+Port=2, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10001100110010111011010101001100
+Port=3, VC=1, vc_valid=1, vc_empty=0, vc_buffer=11001110001111010011110010100011
+Port=3, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=0, vc_valid=1, vc_empty=0, vc_buffer=00110000110100100111000101011100
+Port=4, VC=1, vc_valid=1, vc_empty=0, vc_buffer=00100001000110001111110100101001
+Port=4, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+**********BUFFER WRITE******************
+Port=0, empty_vc_index=2
+Port=1, empty_vc_index=2
+Port=2, empty_vc_index=2
+Port=3, empty_vc_index=2
+Port=4, empty_vc_index=2
+
+**********ROUTE COMPUTE******************
+Port=0, VC=0, dst_port=00100
+Port=0, VC=1, dst_port=00001
+Port=0, VC=2, dst_port=00000
+Port=0, VC=3, dst_port=00000
+Port=1, VC=0, dst_port=00100
+Port=1, VC=1, dst_port=10000
+Port=1, VC=2, dst_port=00000
+Port=1, VC=3, dst_port=00000
+Port=2, VC=0, dst_port=00100
+Port=2, VC=1, dst_port=00100
+Port=2, VC=2, dst_port=00000
+Port=2, VC=3, dst_port=00000
+Port=3, VC=0, dst_port=00001
+Port=3, VC=1, dst_port=00001
+Port=3, VC=2, dst_port=00000
+Port=3, VC=3, dst_port=00000
+Port=4, VC=0, dst_port=00100
+Port=4, VC=1, dst_port=00100
+Port=4, VC=2, dst_port=00000
+Port=4, VC=3, dst_port=00000
+
+**********VC AVALABILITY******************
+VCAvailability, out port=0, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+
+Mask Generation:
+Port=0, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=0, VC=1, VC dst port=00001, SA dst port=00000, BR dst port=00000, valid=1
+Port=0, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=0, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=1, VC=1, VC dst port=10000, SA dst port=00000, BR dst port=00000, valid=1
+Port=1, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=2, VC=1, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=2, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=0, VC dst port=00001, SA dst port=00000, BR dst port=00000, valid=1
+Port=3, VC=1, VC dst port=00001, SA dst port=00000, BR dst port=00000, valid=1
+Port=3, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=4, VC=1, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=4, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+
+**********VC ALLOCATION******************
+ipvc:0, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:1, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:2, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:3, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:4, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:5, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:6, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:7, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:8, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:9, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:10, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:11, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:12, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:13, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:14, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:15, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:16, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:17, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:18, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:19, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+
+**********SA ALLOCATION******************
+Port=0, sa_allocated_ports=00000
+Port=1, sa_allocated_ports=00000
+Port=2, sa_allocated_ports=00000
+Port=3, sa_allocated_ports=00000
+Port=4, sa_allocated_ports=00000
+
+**********BUFFER READ******************
+Port=0, vc_index=3 vc_valid=0
+Port=1, vc_index=3 vc_valid=0
+Port=2, vc_index=3 vc_valid=0
+Port=3, vc_index=3 vc_valid=0
+Port=4, vc_index=3 vc_valid=0
+Port=0, br_allocated_ports=00000
+Port=1, br_allocated_ports=00000
+Port=2, br_allocated_ports=00000
+Port=3, br_allocated_ports=00000
+Port=4, br_allocated_ports=00000
+
+**********SWITCH TRAVERSAL******************
+Port=0, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=1, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=2, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=3, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=4, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+
+Downstream router op port 2, op vc 2, sends a credit, i=5
+
+
+********************Time = 240***********
+**********INPUT SIGNALS******************
+Reset = 0
+Input:
+	input_data[0]=11001100110110001111110100111001
+	input_data[1]=00000001111100011001110001100010
+	input_data[2]=10101100101010000111011111110011
+	input_data[3]=11001110001111010011110010100011
+	input_data[4]=00100001000110001111110100101001
+	input_valid=00000
+	op port:          1, op vc:          0, downstream_router_increment=0
+	op port:          1, op vc:          1, downstream_router_increment=0
+	op port:          1, op vc:          2, downstream_router_increment=0
+	op port:          1, op vc:          3, downstream_router_increment=0
+	op port:          2, op vc:          0, downstream_router_increment=0
+	op port:          2, op vc:          1, downstream_router_increment=0
+	op port:          2, op vc:          2, downstream_router_increment=0
+	op port:          2, op vc:          3, downstream_router_increment=0
+	op port:          3, op vc:          0, downstream_router_increment=0
+	op port:          3, op vc:          1, downstream_router_increment=0
+	op port:          3, op vc:          2, downstream_router_increment=0
+	op port:          3, op vc:          3, downstream_router_increment=0
+	op port:          4, op vc:          0, downstream_router_increment=0
+	op port:          4, op vc:          1, downstream_router_increment=0
+	op port:          4, op vc:          2, downstream_router_increment=0
+	op port:          4, op vc:          3, downstream_router_increment=0
+Outputs:
+	ip port:          1, ip vc:          0, upstream_router_increment=0
+	ip port:          1, ip vc:          1, upstream_router_increment=0
+	ip port:          1, ip vc:          2, upstream_router_increment=0
+	ip port:          1, ip vc:          3, upstream_router_increment=0
+	ip port:          2, ip vc:          0, upstream_router_increment=0
+	ip port:          2, ip vc:          1, upstream_router_increment=0
+	ip port:          2, ip vc:          2, upstream_router_increment=0
+	ip port:          2, ip vc:          3, upstream_router_increment=0
+	ip port:          3, ip vc:          0, upstream_router_increment=0
+	ip port:          3, ip vc:          1, upstream_router_increment=0
+	ip port:          3, ip vc:          2, upstream_router_increment=0
+	ip port:          3, ip vc:          3, upstream_router_increment=0
+	ip port:          4, ip vc:          0, upstream_router_increment=0
+	ip port:          4, ip vc:          1, upstream_router_increment=0
+	ip port:          4, ip vc:          2, upstream_router_increment=0
+	ip port:          4, ip vc:          3, upstream_router_increment=0
+	out_data[0]=00000000000000000000000000000000
+	out_data[1]=00000000000000000000000000000000
+	out_data[2]=00000000000000000000000000000000
+	out_data[3]=00000000000000000000000000000000
+	out_data[4]=00000000000000000000000000000000
+	out_valid=00000
+
+**********VC BUFFER STATUS******************
+Port=0, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10101110100011010110011000001011
+Port=0, VC=1, vc_valid=1, vc_empty=0, vc_buffer=11001100110110001111110100111001
+Port=0, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=0, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10111011001111011100011010011001
+Port=1, VC=1, vc_valid=1, vc_empty=0, vc_buffer=00000001111100011001110001100010
+Port=1, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=1, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=0, vc_valid=1, vc_empty=0, vc_buffer=01111100101001100011110111001000
+Port=2, VC=1, vc_valid=1, vc_empty=0, vc_buffer=10101100101010000111011111110011
+Port=2, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=2, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=0, vc_valid=1, vc_empty=0, vc_buffer=10001100110010111011010101001100
+Port=3, VC=1, vc_valid=1, vc_empty=0, vc_buffer=11001110001111010011110010100011
+Port=3, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=3, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=0, vc_valid=1, vc_empty=0, vc_buffer=00110000110100100111000101011100
+Port=4, VC=1, vc_valid=1, vc_empty=0, vc_buffer=00100001000110001111110100101001
+Port=4, VC=2, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Port=4, VC=3, vc_valid=0, vc_empty=1, vc_buffer=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+**********BUFFER WRITE******************
+Port=0, empty_vc_index=2
+Port=1, empty_vc_index=2
+Port=2, empty_vc_index=2
+Port=3, empty_vc_index=2
+Port=4, empty_vc_index=2
+
+**********ROUTE COMPUTE******************
+Port=0, VC=0, dst_port=00100
+Port=0, VC=1, dst_port=00001
+Port=0, VC=2, dst_port=00000
+Port=0, VC=3, dst_port=00000
+Port=1, VC=0, dst_port=00100
+Port=1, VC=1, dst_port=10000
+Port=1, VC=2, dst_port=00000
+Port=1, VC=3, dst_port=00000
+Port=2, VC=0, dst_port=00100
+Port=2, VC=1, dst_port=00100
+Port=2, VC=2, dst_port=00000
+Port=2, VC=3, dst_port=00000
+Port=3, VC=0, dst_port=00001
+Port=3, VC=1, dst_port=00001
+Port=3, VC=2, dst_port=00000
+Port=3, VC=3, dst_port=00000
+Port=4, VC=0, dst_port=00100
+Port=4, VC=1, dst_port=00100
+Port=4, VC=2, dst_port=00000
+Port=4, VC=3, dst_port=00000
+
+**********VC AVALABILITY******************
+VCAvailability, out port=0, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=0, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=1, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=2, credits:1001, new_vc_availability:11111111111111111111
+VCAvailability, out port=2, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=3, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=0, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=1, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=2, credits:1000, new_vc_availability:11111111111111111111
+VCAvailability, out port=4, out vc=3, credits:1000, new_vc_availability:11111111111111111111
+
+Mask Generation:
+Port=0, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=0, VC=1, VC dst port=00001, SA dst port=00000, BR dst port=00000, valid=1
+Port=0, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=0, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=1, VC=1, VC dst port=10000, SA dst port=00000, BR dst port=00000, valid=1
+Port=1, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=1, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=2, VC=1, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=2, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=2, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=0, VC dst port=00001, SA dst port=00000, BR dst port=00000, valid=1
+Port=3, VC=1, VC dst port=00001, SA dst port=00000, BR dst port=00000, valid=1
+Port=3, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=3, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=0, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=4, VC=1, VC dst port=00100, SA dst port=00000, BR dst port=00000, valid=1
+Port=4, VC=2, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+Port=4, VC=3, VC dst port=00000, SA dst port=00000, BR dst port=00000, valid=0
+
+**********VC ALLOCATION******************
+ipvc:0, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:1, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:2, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:3, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:4, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:5, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:6, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:7, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:8, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:9, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:10, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:11, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:12, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:13, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:14, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:15, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:16, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:17, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:18, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+ipvc:19, allocated_op_vcs:00000000000000000000, sa_allocated_ports=00000
+
+**********SA ALLOCATION******************
+Port=0, sa_allocated_ports=00000
+Port=1, sa_allocated_ports=00000
+Port=2, sa_allocated_ports=00000
+Port=3, sa_allocated_ports=00000
+Port=4, sa_allocated_ports=00000
+
+**********BUFFER READ******************
+Port=0, vc_index=3 vc_valid=0
+Port=1, vc_index=3 vc_valid=0
+Port=2, vc_index=3 vc_valid=0
+Port=3, vc_index=3 vc_valid=0
+Port=4, vc_index=3 vc_valid=0
+Port=0, br_allocated_ports=00000
+Port=1, br_allocated_ports=00000
+Port=2, br_allocated_ports=00000
+Port=3, br_allocated_ports=00000
+Port=4, br_allocated_ports=00000
+
+**********SWITCH TRAVERSAL******************
+Port=0, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=1, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=2, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=3, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+Port=4, out_data=00000000000000000000000000000000, out_valid=0, valid=00000
+$finish called from file "testbench/tb_router_top.sv", line 187.
+$finish at simulation time              2400000
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 2400000 ps
+CPU Time:      0.480 seconds;       Data structure size:   0.2Mb
+Mon May  2 13:47:44 2022
