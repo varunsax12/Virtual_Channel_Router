@@ -23,11 +23,13 @@
 `define FLIT_DATA_WIDTH       32
 
 // Direction encoding
-`define NORTH   3'b000
-`define SOUTH   3'b001
-`define EAST    3'b010
-`define WEST    3'b011
-`define EJECT   3'b100
+`define EJECT   3'b000
+`define NORTH   3'b001
+`define SOUTH   3'b010
+`define EAST    3'b011
+`define WEST    3'b100
+
+`define NIC_PORT    0
 
 `define ROUND_TRIP 4
 

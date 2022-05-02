@@ -7,10 +7,6 @@
 # make clean    <- remove files created during compilations (but not synthesis)
 # make nuke     <- remove all files created during compilation and synthesis
 #
-# To compile additional files, add them to the TESTBENCH or SIMFILES as needed
-# Every .vg file will need its own rule and one or more synthesis scripts
-# The information contained here (in the rules for those vg files) will be 
-# similar to the information in those scripts but that seems hard to avoid.
 #
 #t
 
@@ -22,9 +18,7 @@ VISFLAGS = -lncurses
 all:    simv
 	./simv | tee program.out
 
-##### 
-# Modify starting here
-#####
+
 
 #TESTBENCH = 	testbench/libs/tb_allocator_wavefront.sv
 TESTBENCH = 	testbench/tb_router_top.sv
@@ -32,22 +26,9 @@ SIMFILES =	rtl/libs/*.sv	rtl/*.sv rtl/router_modules/*.sv\
 	VR_define.vh
 SYNFILES = synth/pipeline.vg
 
-# For visual debugger
-VISTESTBENCH = $(TESTBENCH:testbench.v=visual_testbench.v) \
-		testbench/visual_c_hooks.c
 
-synth/pipeline.vg:        $(SIMFILES) synth/pipeline.tcl
-	cd synth && dc_shell-t -f ./pipeline.tcl | tee synth.out 
-
-#####
-# Should be no need to modify after here
-#####
 simv:	$(SIMFILES) $(TESTBENCH)
 	$(VCS) $(TESTBENCH) $(SIMFILES)	-o simv
-	
-dve:	$(SIMFILES) $(TESTBENCH)
-	$(VCS) +memcbk $(TESTBENCH) $(SIMFILES) -o dve -R -gui
-.PHONY:	dve
 
 # For visual debugger
 vis_simv:	$(SIMFILES) $(VISTESTBENCH)
