@@ -1,5 +1,5 @@
-# Virtual_Channel_Router \
-ECE 6115: Project of configurable virtual channel router \
+# Virtual_Channel_Router
+ECE 6115: Project of configurable virtual channel router
 
 Team:  \
 Member 1:  \
