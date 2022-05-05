@@ -77,7 +77,7 @@ module tb_router_top();
 
         $display("\n**********BUFFER WRITE******************");
         for (int i = 0; i < NUM_PORTS; ++i) begin
-            $display("Port=%0d, vc_index=%0d", i, rt.input_data[i][`FLIT_DATA_WIDTH-1-:VC_BITS]);
+            $display("Port=%0d, VC==%0d", i, rt.input_data[i][`FLIT_DATA_WIDTH-1-:VC_BITS]);
         end
 
         $display("\n**********ROUTE COMPUTE******************");
@@ -104,7 +104,8 @@ module tb_router_top();
         for (int i = 0; i < NUM_PORTS; ++i) begin
             for (int j = 0; j < NUM_VCS; ++j) begin
                 //$display("Port=%0d, VC=%0d, allocated_op_vcs=%b", i, j, rt.allocated_op_vcs[i*NUM_VCS+j]);
-                $display("ipvc:%0d, allocated_op_vcs:%b, sa_allocated_ports=%b", (i*NUM_VCS+j), rt.vcavail.allocated_op_vcs[i*NUM_VCS+j], rt.vcavail.sa_allocated_ports[i]);
+                // $display("Port:%0d, Vc=%0d, allocated_op_vcs:%b, sa_allocated_ports=%b", i, j, rt.vcavail.allocated_op_vcs[i*NUM_VCS+j], rt.vcavail.sa_allocated_ports[i]);
+                $display("Port:%0d, Vc=%0d, allocated_op_vcs:%b", i, j, rt.vca_allocated_op_vcs[i*NUM_VCS+j]);
             end
         end
 
