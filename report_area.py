@@ -43,7 +43,7 @@ for arb in arbiters:
                 plot_val.append(temp_arr[i])
                 plot_legends.append(legends[i])
                 plot_color.append(colours[i])
-        axs[x, y].pie(plot_val, colors=plot_color, autopct=lambda pct: func(pct), pctdistance=1.25)
+        axs[x, y].pie(plot_val, colors=plot_color, autopct=lambda pct: func(pct), pctdistance=1.15)
         axs[x, y].set_title("{} Allocator \n {} Arbiter".format(allocator_name[x], arbiter_name[y]), fontsize=12, fontweight='bold')
         x += 1
     y += 1
