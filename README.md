@@ -1,51 +1,51 @@
 # Virtual_Channel_Router
 ECE 6115: Project of configurable virtual channel router
 
-Team:  \
-Member 1:  \
-Name: Varun Saxena  \
-Member 2:  \
-Name: Venkata Hanuma Sandilya Balemarthy  \
+Team:   <br />
+Member 1:   <br />
+Name: Varun Saxena   <br />
+Member 2:  <br />
+Name: Venkata Hanuma Sandilya Balemarthy <br />  <br />
 
 Source code: <br />
-  -> Github repository: https://github.com/varunsax12/Virtual_Channel_Router
-  -> Tar Ball: virtual_channel_router_files.tar.gz
+  -> Github repository: https://github.com/varunsax12/Virtual_Channel_Router  <br />
+  -> Tar Ball: virtual_channel_router_files.tar.gz  <br />  <br />
 
-Run Environment:
-  -> Server: ece-linlabsrv01.ece.gatech.edu
+Run Environment:  <br />
+  -> Server: ece-linlabsrv01.ece.gatech.edu  <br />  <br />
 
-Tool Setup: (specific to server)
-Run the following commands:
-  -> Synopsys VCS
-      -> export VCS_HOME=/tools/software/synopsys/vcs/R-2020.12-SP2/
-      -> export PATH=/tools/software/synopsys/vcs/R-2020.12-SP2/:/tools/software/synopsys/vcs/R-2020.12-SP2//bin:$PATH
+Tool Setup: (specific to server)  <br />
+Run the following commands:  <br />
+  -> Synopsys VCS  <br />
+      -> export VCS_HOME=/tools/software/synopsys/vcs/R-2020.12-SP2/  <br />
+      -> export PATH=/tools/software/synopsys/vcs/R-2020.12-SP2/:/tools/software/synopsys/vcs/R-2020.12-SP2//bin:$PATH  <br />  <br />
 
-Directory Structure:
-Top folder: Virtual_Channel_Router
-  -> ./rtl: Contains all the RTL source code
-      -> ./libs: Contains all generic library modules created to support router
-      -> ./router_modules: Contains all router stages and custom router modules
-      -> router_top.sv: Top router module
-  -> ./synthesis: Folder for running synthesis
-      -> rtl.tcl: TCL file to run the synthesis
-  -> ./testbench: Contains all the testbenches created to test RTL
-      -> ./libs: Testbenches for a libs modules
-      -> ./router_modules: Testbenches for all router specific modules
-      -> tb_router_top.sv: Testbench for top router module
-  -> ./reports: Contains the reports generated from the synthesis run
-      -> ./alloc_sep_arbit_mat: Contains the results for separable allocator + matrix arbiter
-  	  -> ./alloc_sep_arbit_roundrob: Contains the results for the separable allocator + round robin arbiter
-  	  -> ./alloc_wave_arbit_mat: Contains the results for the wavefront allocator + matrix arbiter
-  	  -> ./alloc_wave_arbit_roundrob: Contains the results for the wavefront allocator + round robin arbiter
-  -> Makefile
-  -> VR_define.vh: Top level define file for changing the router configurations
-  -> README.md: Github readme file
-  -> sample_router_results.log: Sample output from the testbench run of router top module
-  -> sample_topology_results.log: Sample output from the testbench run of the
-  -> area_rep.png: Pie charts representing the area distribution for each of the synthesis results in ./reports
-  -> power_rep.png: Pie charts representing the power distribution for each of the synthesis results in ./reports
-  -> report_area.py: Python script to generate the area pie charts and create the area_rep.png from the ./reports
-  -> report_power.py: Python script to generate the power pie charts and create the power_rep.png from the ./reports
+Directory Structure:  <br />
+Top folder: Virtual_Channel_Router  <br />
+  -> ./rtl: Contains all the RTL source code  <br />
+      -> ./libs: Contains all generic library modules created to support router  <br />
+      -> ./router_modules: Contains all router stages and custom router modules  <br />
+      -> router_top.sv: Top router module  <br />
+  -> ./synthesis: Folder for running synthesis  <br />
+      -> rtl.tcl: TCL file to run the synthesis  <br />
+  -> ./testbench: Contains all the testbenches created to test RTL  <br />
+      -> ./libs: Testbenches for a libs modules  <br />
+      -> ./router_modules: Testbenches for all router specific modules  <br />
+      -> tb_router_top.sv: Testbench for top router module  <br />
+  -> ./reports: Contains the reports generated from the synthesis run  <br />
+      -> ./alloc_sep_arbit_mat: Contains the results for separable allocator + matrix arbiter  <br />
+  	  -> ./alloc_sep_arbit_roundrob: Contains the results for the separable allocator + round robin arbiter  <br />
+  	  -> ./alloc_wave_arbit_mat: Contains the results for the wavefront allocator + matrix arbiter  <br />
+  	  -> ./alloc_wave_arbit_roundrob: Contains the results for the wavefront allocator + round robin arbiter  <br />
+  -> Makefile  <br />
+  -> VR_define.vh: Top level define file for changing the router configurations  <br />
+  -> README.md: Github readme file  <br />
+  -> sample_router_results.log: Sample output from the testbench run of router top module  <br />
+  -> sample_topology_results.log: Sample output from the testbench run of the topology module  <br />
+  -> area_rep.png: Pie charts representing the area distribution for each of the synthesis results in ./reports  <br />
+  -> power_rep.png: Pie charts representing the power distribution for each of the synthesis results in ./reports  <br />
+  -> report_area.py: Python script to generate the area pie charts and create the area_rep.png from the ./reports  <br />
+  -> report_power.py: Python script to generate the power pie charts and create the power_rep.png from the ./reports  <br />  <br />
 
 Steps to run functional verification:
 Running router top testbench:
