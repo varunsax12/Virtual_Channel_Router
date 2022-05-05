@@ -5,11 +5,11 @@ Team:   <br />
 Member 1:   <br />
 Name: Varun Saxena   <br />
 Member 2:  <br />
-Name: Venkata Hanuma Sandilya Balemarthy <br />  <br />
+Name: Venkata Hanuma Sandilya Balemarthy <br />
 
 Source code: <br />
   -> Github repository: https://github.com/varunsax12/Virtual_Channel_Router  <br />
-  -> Tar Ball: virtual_channel_router_files.tar.gz  <br />  <br />
+  -> Tar Ball: virtual_channel_router_files.tar.gz  <br />
 
 Run Environment:  <br />
   -> Server: ece-linlabsrv01.ece.gatech.edu  <br />  <br />
@@ -18,7 +18,7 @@ Tool Setup: (specific to server)  <br />
 Run the following commands:  <br />
   -> Synopsys VCS  <br />
       -> export VCS_HOME=/tools/software/synopsys/vcs/R-2020.12-SP2/  <br />
-      -> export PATH=/tools/software/synopsys/vcs/R-2020.12-SP2/:/tools/software/synopsys/vcs/R-2020.12-SP2//bin:$PATH  <br />  <br />
+      -> export PATH=/tools/software/synopsys/vcs/R-2020.12-SP2/:/tools/software/synopsys/vcs/R-2020.12-SP2//bin:$PATH  <br />
 
 Directory Structure:  <br />
 Top folder: Virtual_Channel_Router  <br />
