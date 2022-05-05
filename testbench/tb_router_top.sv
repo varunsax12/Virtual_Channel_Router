@@ -7,10 +7,12 @@
 `include "VR_define.vh"
 
 module tb_router_top();
-    parameter NUM_PORTS = 5;
-    parameter NUM_VCS = 4;
-    parameter PORT_BITS = $clog2(NUM_PORTS);
-    parameter VC_BITS = $clog2(NUM_VCS);
+    localparam NUM_PORTS = 5;
+    localparam NUM_VCS = 4;
+    localparam PORT_BITS = $clog2(NUM_PORTS);
+    localparam VC_BITS = $clog2(NUM_VCS);
+    localparam NUM_ROUTERS = 16;
+    localparam ROUTER_ID_BITS = $clog2(NUM_ROUTERS);
     reg clk, reset;
     
     logic [`FLIT_DATA_WIDTH-1:0] input_data [NUM_PORTS-1:0];
@@ -75,7 +77,7 @@ module tb_router_top();
 
         $display("\n**********BUFFER WRITE******************");
         for (int i = 0; i < NUM_PORTS; ++i) begin
-            $display("Port=%0d, empty_vc_index=%0d", i, rt.empty_vc_index[i]);
+            $display("Port=%0d, vc_index=%0d", i, rt.input_data[i][`FLIT_DATA_WIDTH-1-:VC_BITS]);
         end
 
         $display("\n**********ROUTE COMPUTE******************");
@@ -140,9 +142,11 @@ module tb_router_top();
             end
         end
         foreach(input_data[i]) begin
-            for(int j = 0; j < `FLIT_DATA_WIDTH/4; ++j) begin
-                input_data[i][`FLIT_DATA_WIDTH-(j*4)-1-:4] = $urandom%16;
-            end
+            input_data [i] = 0;
+            //Embed destination
+            input_data [i][`FLIT_DATA_WIDTH-VC_BITS-1-:ROUTER_ID_BITS] |= $urandom()%NUM_ROUTERS;
+            input_data [i][`FLIT_DATA_WIDTH-1-:VC_BITS] = $urandom()%NUM_VCS;
+            input_data [i] |= $urandom()%2048; // create unique identifier to track the flit
             input_valid[i] = 1;
         end
     endtask
@@ -166,11 +170,12 @@ module tb_router_top();
         //==============Input_data reset==================
         foreach(input_data[i]) begin
             input_valid[i] = 0;
+            input_data[i]  = 0;
         end
         //================================================
 
         //==============Downstream signal=================
-        for (int i = 0; i < 7; ++i) begin
+        for (int i = 0; i < 10; ++i) begin
             @(negedge clk);
             //display();
             if(i==5) begin

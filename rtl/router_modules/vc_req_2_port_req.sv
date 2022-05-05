@@ -2,7 +2,7 @@
 
 module vc_req_2_port_req #(
     parameter NUM_PORTS = 1,
-    parameter NUM_VC    = 1
+    parameter NUM_VC    = 2
 ) (
     input logic [NUM_PORTS*NUM_VC-1:0][NUM_PORTS*NUM_VC-1:0] vc_grants,
     output logic [NUM_PORTS-1:0]       port_req  [NUM_PORTS-1:0]

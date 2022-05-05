@@ -13,6 +13,7 @@ module tb_topology();
     localparam NUM_VC    = 4;
     localparam NUM_ROUTERS = ROW_COUNT * COL_COUNT;
     localparam ROUTER_ID_BITS = $clog2(NUM_ROUTERS);
+    localparam VC_BITS = $clog2(NUM_VC);
 
     logic clk, reset;
     logic [NUM_ROUTERS-1:0]        nic_output_valid;
@@ -37,7 +38,7 @@ module tb_topology();
         $display("\n\n********************Time = %0d***********", $time);
         $display("\nInput data");
         for (int i = 0; i < NUM_ROUTERS; ++i) begin
-            $display("\tRouter=%0d, Dest=%0d, valid=%b, data=%b", i, nic_output_data [i][`FLIT_DATA_WIDTH-1-:ROUTER_ID_BITS], nic_output_valid[i], nic_output_data[i]);
+            $display("\tRouter=%0d, Dest=%0d, valid=%b, data=%b", i, nic_output_data [i][`FLIT_DATA_WIDTH-VC_BITS-1-:ROUTER_ID_BITS], nic_output_valid[i], nic_output_data[i]);
         end
         $display("\nOutput data");
         for (int i = 0; i < NUM_ROUTERS; ++i) begin
@@ -67,11 +68,14 @@ module tb_topology();
         for (int j = 0; j < NUM_ROUTERS; ++j) begin
             @(negedge clk) clear_inputs();
             nic_output_valid[j] = 1;
-            nic_output_data [j][`FLIT_DATA_WIDTH-1-:ROUTER_ID_BITS] |= $urandom()%NUM_ROUTERS;
+            nic_output_data [j] = 0;
+            nic_output_data [j][`FLIT_DATA_WIDTH-VC_BITS-1-:ROUTER_ID_BITS] |= $urandom()%NUM_ROUTERS;
             nic_output_data [j] |= $urandom()%2048; // create unique identifier to track the flit
         end
         @(negedge clk) clear_inputs();
-        #1000;
+        for (int j = 0; j < 100; ++j) begin
+            @(negedge clk);
+        end
         $finish;
     end
 

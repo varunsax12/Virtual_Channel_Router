@@ -11,6 +11,7 @@ module priority_encoder #(
 );
 
     always_comb begin
+        out_index = 0;
         for (int i = NUM_INPUTS-1; i >= 0; --i) begin
             if (in_signals[i]) out_index = i;
         end

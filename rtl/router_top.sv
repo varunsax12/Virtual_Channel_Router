@@ -31,14 +31,13 @@ module router_top #(
     output logic    [NUM_PORTS-1:0]         out_valid
 );
 
-
     /************************************
     *          VC                       *
     ************************************/
     // VC buffers
-    wire [NUM_PORTS-1:0][NUM_VC-1:0][`FLIT_DATA_WIDTH-1:0]        vc_indata, vc_outdata;
+    logic [NUM_PORTS-1:0][NUM_VC-1:0][`FLIT_DATA_WIDTH-1:0]        vc_indata, vc_outdata;
     // Valid signal (also used as empty signal using bitwise not)
-    wire [NUM_PORTS-1:0][NUM_VC-1:0]    vc_valid, vc_empty, vc_full, vc_pop, vc_push;
+    logic [NUM_PORTS-1:0][NUM_VC-1:0]    vc_valid, vc_empty, vc_full, vc_pop, vc_push;
 
     // Generate valid signals
     for (genvar i = 0; i < NUM_PORTS; ++i) begin : vc_valid_signal
@@ -63,25 +62,19 @@ module router_top #(
         end
     end
 
-    // Keep a track of the first empty VC per PORT
-    logic [VC_BITS-1:0]   empty_vc_index [NUM_PORTS-1:0];
-    for (genvar i = 0; i < NUM_PORTS; ++i) begin : vc_empty_index
-        priority_encoder #(
-            .NUM_INPUTS (NUM_VC)
-        ) empty_vc_encoder (
-            .in_signals (vc_empty[i]),
-            .out_index  (empty_vc_index[i])
-        );
-    end
-
-
     /************************************
     *          Buffer write             *
     ************************************/
     for (genvar i = 0; i < NUM_PORTS; ++i) begin : bw_i
         for (genvar j = 0; j < NUM_VC; ++j) begin : bw_j
-            assign vc_push[i][j] = (j==empty_vc_index[i]) ? input_valid[i] : 0;
-            assign vc_indata[i][j] = (j==empty_vc_index[i]) ? input_data[i] : 0;
+            always_comb begin
+                vc_push[i][j] = 0;
+                vc_indata[i][j] = 0;
+                if (input_data[i][`FLIT_DATA_WIDTH-1-:VC_BITS] == j && input_valid[i]) begin
+                    vc_push[i][j] = 1;
+                    vc_indata[i][j] = input_data[i];
+                end
+            end
         end
     end
 
@@ -101,7 +94,7 @@ module router_top #(
                 .ROUTER_PER_ROW (ROUTER_PER_ROW)
             ) rc (
                 .current_router (ROUTER_ID_BITS'(ROUTER_ID)),
-                .dest_router    (vc_outdata[i][j][`FLIT_DATA_WIDTH-1-:ROUTER_ID_BITS]),
+                .dest_router    (vc_outdata[i][j][`FLIT_DATA_WIDTH-VC_BITS-1-:ROUTER_ID_BITS]),
                 .direction      (rc_vc_direction)
             );
 
@@ -329,8 +322,6 @@ module router_top #(
         );
     end
 
-    // Read buffers
-    logic [`FLIT_DATA_WIDTH-1:0]  st_out_buffer_data_per_port [NUM_PORTS-1:0];
 
     // Invalidate or clear the VC being sent out
     // Done at negedge of clk to avoid race condition
@@ -341,7 +332,42 @@ module router_top #(
         // assign st_out_buffer_data_per_port[i] = vc_outdata[i][br_vc_index[i]];
     end
 
+    // Read buffers
+    logic [`FLIT_DATA_WIDTH-1:0]  br_out_data [NUM_PORTS-1:0];
+    logic [VC_BITS-1:0]           br_vc_id    [NUM_PORTS-1:0][NUM_VC-1:0];
+    // Compute the VC id for each out going data flit
+    for (genvar i = 0; i < NUM_PORTS; ++i) begin
+        for (genvar j = 0; j < NUM_VC; ++j) begin
+            logic [VC_BITS-1:0]     br_vc_id_per_port [NUM_PORTS-1:0];
+            for (genvar k = 0; k < NUM_PORTS; ++k) begin
+                priority_encoder #(
+                    .NUM_INPUTS(NUM_VC)
+                ) br_pe (
+                    .in_signals(br_allocated_op_vcs[i*NUM_VC + j][(k+1)*(NUM_VC)-1-:NUM_VC]),
+                    .out_index(br_vc_id_per_port[k])
+                );
+            end
+            always_comb begin
+                br_vc_id[i][j] = 0;
+                for (int k = 0; k < NUM_PORTS; ++k) begin
+                    br_vc_id[i][j] |= br_vc_id_per_port[k];
+                end
+            end
+        end
+    end
+
+    // Add VC ID to flit data
+    for (genvar i = 0; i < NUM_PORTS; ++i) begin
+        // 1. Mask the top VC ID bits
+        // 2. Set a new VC ID
+        assign br_out_data[i] = (vc_outdata[i][br_vc_index[i]] & {{VC_BITS{1'b0}}, {(`FLIT_DATA_WIDTH-VC_BITS){1'b1}}})
+            | {br_vc_id[i][br_vc_index[i]], {(`FLIT_DATA_WIDTH-VC_BITS){1'b0}}};
+    end
+
     logic [NUM_PORTS-1:0] st_allocated_ports [NUM_PORTS-1:0];
+
+    // Read buffers
+    logic [`FLIT_DATA_WIDTH-1:0]  st_out_buffer_data_per_port [NUM_PORTS-1:0];
 
     for (genvar i = 0; i < NUM_PORTS; ++i) begin: br_pipe_1
         pipe_register_1D #(
@@ -362,7 +388,8 @@ module router_top #(
             .clk        (clk),
             .reset      (reset),
             .enable     (1'b1),
-            .in_data    (vc_outdata[i][br_vc_index[i]]),
+            // .in_data    (vc_outdata[i][br_vc_index[i]]),
+            .in_data    (br_out_data[i]),
             .out_data   (st_out_buffer_data_per_port[i])
         );
     end
