@@ -1,11 +1,11 @@
-# Virtual_Channel_Router
-ECE 6115: Project of configurable virtual channel router
+# Virtual_Channel_Router \
+ECE 6115: Project of configurable virtual channel router \
 
-Team:
-Member 1:
-Name: Varun Saxena
-Member 2:
-Name: Venkata Hanuma Sandilya Balemarthy
+Team:  \
+Member 1:  \
+Name: Varun Saxena  \
+Member 2:  \
+Name: Venkata Hanuma Sandilya Balemarthy  \
 
 Source code:
   -> Github repository: https://github.com/varunsax12/Virtual_Channel_Router
