@@ -1,4 +1,6 @@
 // Description: Module torus topology NxN
+// File Details
+//    Author: Varun Saxena
 
 `include "VR_define.vh"
 

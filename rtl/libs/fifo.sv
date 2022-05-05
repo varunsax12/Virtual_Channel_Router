@@ -1,7 +1,6 @@
 // Description: Module for fifo
 // File Details
 //    Author: Varun Saxena
-//    GT id: 903562211
 
 module fifo #(
     parameter FIFO_DEPTH = 8,

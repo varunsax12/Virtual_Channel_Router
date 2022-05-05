@@ -1,7 +1,6 @@
 // Description: Module to convert index bits into one-hot
 // File Details
 //    Author: Varun Saxena
-//    GT id: 903562211
 
 module index_2_one_hot #(
     parameter NUM_BITS     = 2,

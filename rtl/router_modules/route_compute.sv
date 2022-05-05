@@ -1,7 +1,6 @@
 // Description: Module to compute to the out port direction
 // File Details
 //    Author: Varun Saxena
-//    GT id: 903562211
 
 // Assumptions:
 //  1. Mesh structure with DOR XY

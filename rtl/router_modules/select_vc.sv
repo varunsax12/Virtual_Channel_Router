@@ -1,7 +1,6 @@
 // Description: Module to select one VC for a given outport
 // File Details
 //    Author: Varun Saxena
-//    GT id: 903562211
 
 `include "VR_define.vh"
 

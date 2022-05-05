@@ -1,7 +1,6 @@
 // Testbench for mapper between VC alloc and SA
 // File Details
 //    Author: Varun Saxena
-//    GT id: 903562211
 
 `timescale 10ns/1ps
 

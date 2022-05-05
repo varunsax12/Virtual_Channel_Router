@@ -1,4 +1,6 @@
 // Description: Convert the VC request array to port request array
+// File Details
+//    Author: Varun Saxena
 
 module vc_req_2_port_req #(
     parameter NUM_PORTS = 1,

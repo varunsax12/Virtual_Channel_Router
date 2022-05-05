@@ -1,7 +1,6 @@
 // Description: Module to convert one-hot encoding to index
 // File Details
 //    Author: Varun Saxena
-//    GT id: 903562211
 
 module one_hot_2_index #(
     parameter NUM_BITS = 4,

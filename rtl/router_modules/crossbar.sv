@@ -1,7 +1,6 @@
 // Description: Module for the crossbar switch
 // File Details
 //    Author: Varun Saxena
-//    GT id: 903562211
 
 `include "VR_define.vh"
 

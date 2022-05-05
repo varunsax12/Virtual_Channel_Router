@@ -1,7 +1,6 @@
 // Description: Module for the router top
 // File Details
 //    Author: Varun Saxena
-//    GT id: 903562211
 
 module router_top #(
     parameter NUM_PORTS      = 5,

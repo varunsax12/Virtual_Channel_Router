@@ -1,7 +1,6 @@
 // Description: Module for tb fifo
 // File Details
 //    Author: Varun Saxena
-//    GT id: 903562211
 
 `timescale 10ns/1ps
 

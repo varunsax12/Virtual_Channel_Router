@@ -5,7 +5,6 @@
 // Reference: M06-RouterMicroarchitecture in ECE6115, Prof. Tushar Krishna
 // File Details
 //    Author: Sandilya Balemarthy
-//    GT id: 903482005
 
 `timescale 10ns/1ns
 

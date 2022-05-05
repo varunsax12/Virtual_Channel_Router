@@ -2,7 +2,6 @@
 // Reference: Stanford thesis
 // File Details:
 //    Author: Varun Saxena
-//    GT id: 903562211
 
 
 // TODO: The format of the output is:

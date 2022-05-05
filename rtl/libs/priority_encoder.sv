@@ -1,6 +1,8 @@
 // Description: Module to act as priority encoder
 // Possible improvement: If size known, then switch case statement can be
 // used for a better structure
+// File Details
+//    Author: Varun Saxena
 
 module priority_encoder #(
     parameter NUM_INPUTS = 4,

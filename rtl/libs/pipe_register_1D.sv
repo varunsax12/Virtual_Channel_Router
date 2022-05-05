@@ -1,7 +1,6 @@
 // Description: Pipeline register
 // File Details
 //    Author: Varun Saxena
-//    GT id: 903562211
 
 module pipe_register_1D #(
     parameter DATAW = 4
