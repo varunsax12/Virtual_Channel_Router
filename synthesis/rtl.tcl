@@ -8,7 +8,10 @@
 set PDK_DIR /tools/designkits/NCSU/FreePDK45/
 
 # All HDL files, separated by spaces
-set hdl_files {vc_req_2_port_req.sv vc_availability.sv vc_allocator.sv update_vca_sv switch_allocator.sv select_vc.sv route_compute.sv crossbar.sv priority_encoder.sv pipe_register_2D.sv pipe_register_1D.sv one_hot_2_index.sv index_2_one_hot.sv fifo.sv arbiter_top.sv arbiter_round_robin.sv arbiter_matrix.sv allocator_wavefront.sv allocator_top.sv allocator_separable.sv router_top.sv}
+set hdl_files { allocator_top.sv allocator_wavefront.sv arbiter_round_robin.sv arbiter_top.sv index_2_one_hot.sv pipe_register_1D.sv \
+allocator_separable.sv arbiter_matrix.sv fifo.sv one_hot_2_index.sv pipe_register_2D.sv priority_encoder.sv \
+switch_allocator.sv elect_vc.sv route_compute.sv vc_allocator.sv crossbar.sv vc_availability.sv vc_req_2_port_req.sv \
+router_top.sv }
 
 # The Top-level Module, change example multiplyadd
 set DESIGN router_top
@@ -69,4 +72,4 @@ puts "Check timing.rep, area.rep, gate.rep and power.rep for synthesis results"
 puts \n
  
 # Launch GUI
-gui_show
+# gui_show
