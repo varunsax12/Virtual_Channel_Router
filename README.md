@@ -12,7 +12,7 @@ Source code: <br />
   -> Tar Ball: virtual_channel_router_files.tar.gz  <br />
 
 Run Environment:  <br />
-  -> Server: ece-linlabsrv01.ece.gatech.edu  <br />  <br />
+  -> Server: ece-linlabsrv01.ece.gatech.edu  <br />
 
 Tool Setup: (specific to server)  <br />
 Run the following commands:  <br />
@@ -45,7 +45,7 @@ Top folder: Virtual_Channel_Router  <br />
   -> area_rep.png: Pie charts representing the area distribution for each of the synthesis results in ./reports  <br />
   -> power_rep.png: Pie charts representing the power distribution for each of the synthesis results in ./reports  <br />
   -> report_area.py: Python script to generate the area pie charts and create the area_rep.png from the ./reports  <br />
-  -> report_power.py: Python script to generate the power pie charts and create the power_rep.png from the ./reports  <br />  <br />
+  -> report_power.py: Python script to generate the power pie charts and create the power_rep.png from the ./reports  <br />
 
 Steps to run functional verification:  <br />
 Running router top testbench:  <br />
@@ -56,7 +56,7 @@ Running router top testbench:  <br />
 
 Expected Output:  <br />
   -> Command line report generated  <br />
-  -> test.vcd: VCD file for visual debug which can be opened using “gtkwave -f test.vcd”  <br />  <br />
+  -> test.vcd: VCD file for visual debug which can be opened using “gtkwave -f test.vcd”  <br />
 
 The report contains the status of each router stage at each time stamp. Different stages displayed (demarcated by ********* identifiers):  <br />
   -> INPUT SIGNALS: Inputs and outputs to and from the router top connections.  <br />
@@ -66,27 +66,27 @@ The report contains the status of each router stage at each time stamp. Differen
   -> VC ALLOCATION: Shows output VC allocated for each input VC  <br />
   -> SA ALLOCATION: Shows output port allocated for each input port  <br />
   -> BUFFER READ: Shows the buffer which will be read  <br />
-  -> SWITCH TRAVERSAL: Shows outputs signals post switch traversal  <br />  <br />
+  -> SWITCH TRAVERSAL: Shows outputs signals post switch traversal  <br />
 
 The data propagation can be tracked starting “Time = 80” when the inputs are applied.  <br />
 Running topology testbench:  <br /> 
   -> Updated the Makefile. In line 24, edit the line to state: TESTBENCH = testbench/tb_topology.sv  <br />
   -> Run the following commands:  <br />
   -> make clean  <br />
-  -> make  <br />  <br />
+  -> make  <br />
   
 Expected Output:  <br />
   -> Command line report generated  <br />
-  -> test.vcd: VCD file for visual debug which can be opened using “gtkwave -f test.vcd”  <br />  <br />
+  -> test.vcd: VCD file for visual debug which can be opened using “gtkwave -f test.vcd”  <br />
 
 The report contains the flits injected into the network. Flit format (for 5x5 torus configured into the testbench), 7 MSB bits represent the vc id and destination (2 bits + 5 bits). The LSB 11 bits are randomly added to created tracking IDs for tracking the flit across the report. The report shows:  <br />
   -> Input flits injected into each router  <br />
-  -> Output flits ejected from each router  <br />  <br />
+  -> Output flits ejected from each router  <br />
 
 Steps to run synthesis:  <br />
   -> Run: cd ./synthesis  <br />
   -> Run: /tools/software/cadence/genus/latest/bin/genus -legacy_ui  <br />
-  -> Run: source ./rtl.tcl in the genus prompt  <br />  <br />
+  -> Run: source ./rtl.tcl in the genus prompt  <br />
 
 The generated logs and rep can be viewed in the same folder.  <br />
 
