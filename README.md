@@ -16,9 +16,9 @@ Run Environment:  <br />
 
 Tool Setup: (specific to server)  <br />
 Run the following commands:  <br />
-  -> Synopsys VCS  <br />
-      -> export VCS_HOME=/tools/software/synopsys/vcs/R-2020.12-SP2/  <br />
-      -> export PATH=/tools/software/synopsys/vcs/R-2020.12-SP2/:/tools/software/synopsys/vcs/R-2020.12-SP2//bin:$PATH  <br />
+  * Synopsys VCS  <br />
+      * export VCS_HOME=/tools/software/synopsys/vcs/R-2020.12-SP2/  <br />
+      * export PATH=/tools/software/synopsys/vcs/R-2020.12-SP2/:/tools/software/synopsys/vcs/R-2020.12-SP2//bin:$PATH  <br />
 
 Directory Structure:  <br />
 Top folder: Virtual_Channel_Router  <br />
