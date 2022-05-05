@@ -38,11 +38,14 @@ module tb_topology();
         $display("\n\n********************Time = %0d***********", $time);
         $display("\nInput data");
         for (int i = 0; i < NUM_ROUTERS; ++i) begin
-            $display("\tRouter=%0d, Dest=%0d, valid=%b, data=%b", i, nic_output_data [i][`FLIT_DATA_WIDTH-VC_BITS-1-:ROUTER_ID_BITS], nic_output_valid[i], nic_output_data[i]);
+            $display("\tInjected Flit: Router=%0d, Dest=%0d, valid=%b, UniqueID=%0d, data=%b", i,
+                nic_output_data [i][`FLIT_DATA_WIDTH-VC_BITS-1-:ROUTER_ID_BITS], nic_output_valid[i],
+                nic_output_data [i][11:0], nic_output_data[i]);
         end
         $display("\nOutput data");
         for (int i = 0; i < NUM_ROUTERS; ++i) begin
-            $display("\tRouter=%0d, valid=%b, data=%b", i, nic_input_valid[i], nic_input_data[i]);
+            $display("\tEjected Flit: Router=%0d, valid=%b, UniqueID=%0d, data=%b", i, nic_input_valid[i],
+                nic_input_data [i][11:0], nic_input_data[i]);
         end
     endtask
 
