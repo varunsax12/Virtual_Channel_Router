@@ -7,11 +7,11 @@ Name: Varun Saxena   <br />
 Member 2:  <br />
 Name: Venkata Hanuma Sandilya Balemarthy <br />
 
-* Source code: <br />
+* <b>Source code:</b> <br />
   * Github repository: https://github.com/varunsax12/Virtual_Channel_Router  <br />
   * Tar Ball: virtual_channel_router_files.tar.gz  <br />
 
-* Run Environment:  <br />
+* <b>Run Environment:</b>  <br />
   * Server: ece-linlabsrv01.ece.gatech.edu  <br />
 
 * Tool Setup: (specific to server)  <br />
