@@ -15,13 +15,13 @@ Name: Venkata Hanuma Sandilya Balemarthy <br />
   * Server: ece-linlabsrv01.ece.gatech.edu  <br />
 
 * Tool Setup: (specific to server)  <br />
-* Run the following commands:  <br />
+  Run the following commands:  <br />
   * Synopsys VCS  <br />
       * export VCS_HOME=/tools/software/synopsys/vcs/R-2020.12-SP2/  <br />
       * export PATH=/tools/software/synopsys/vcs/R-2020.12-SP2/:/tools/software/synopsys/vcs/R-2020.12-SP2//bin:$PATH  <br />
 
 * Directory Structure:  <br />
-* Top folder: Virtual_Channel_Router  <br />
+  Top folder: Virtual_Channel_Router  <br />
   * ./rtl: Contains all the RTL source code  <br />
       * ./libs: Contains all generic library modules created to support router  <br />
       * ./router_modules: Contains all router stages and custom router modules  <br />
@@ -48,7 +48,7 @@ Name: Venkata Hanuma Sandilya Balemarthy <br />
   * report_power.py: Python script to generate the power pie charts and create the power_rep.png from the ./reports  <br />
 
 * Steps to run functional verification:  <br />
-* Running router top testbench:  <br />
+  Running router top testbench:  <br />
   * Run the tool setup commands mentioned in the “Tool Setup” section  <br />
   * Run the following commands:  <br />
   * make clean  <br />
@@ -69,7 +69,7 @@ Name: Venkata Hanuma Sandilya Balemarthy <br />
   * SWITCH TRAVERSAL: Shows outputs signals post switch traversal  <br />
 
 * The data propagation can be tracked starting “Time = 80” when the inputs are applied.  <br />
-* Running topology testbench:  <br /> 
+  Running topology testbench:  <br /> 
   * Updated the Makefile. In line 24, edit the line to state: TESTBENCH = testbench/tb_topology.sv  <br />
   * Run the following commands:  <br />
   * make clean  <br />
